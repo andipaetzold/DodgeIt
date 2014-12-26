@@ -6,6 +6,7 @@ function Game(container)
 
     // scripts to load
     var scripts = [
+        "script/screen.js",
         "script/menu.js",
         "script/gameplay.js",
         "script/audio.js",
@@ -37,7 +38,8 @@ function Game(container)
     this.menu_show();
 }
 
+var g;
 $(document).ready(function()
 {
-    var g = new Game($("#game"));
+    g = new Game($("#game"));
 });

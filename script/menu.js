@@ -30,10 +30,10 @@ Game.prototype.menu_items = [
     {
         title: "About",
         click: function()
-        { 
-            console.log("About");
+        {
+            g.screen_about();
         } 
-    },
+    }
 ];
 
 Game.prototype.menu_show = function()
