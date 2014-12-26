@@ -7,7 +7,6 @@ function Game(container)
     // scripts to load
     var scripts = [
         "script/screen.js",
-        "script/menu.js",
         "script/gameplay.js",
         "script/audio.js",
         "script/controls.js",
@@ -35,7 +34,7 @@ function Game(container)
     });
 
     this.controls_init();
-    this.menu_show();
+    this.screen_menu();
 }
 
 var g;
