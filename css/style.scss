@@ -19,6 +19,18 @@ body {
     background-repeat: no-repeat;
 }
 
+#wrapperOuter {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+#wrapperInner {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 #game {
     /* border / margin / padding */
     border: thin solid black;
