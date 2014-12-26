@@ -41,17 +41,23 @@ Game.prototype.menu_show = function()
     var container = this.container;
     container.html("");
     var menu = $("<div></div>")
-                    .addClass("menu")
-                    .appendTo(container);
+               .addClass("menu")
+               .appendTo(container);
 
     // add items
     $.each(this.menu_items, function(index, value)
     {
         menu
-            .append(
-                $("<span></span>")
-                    .html(value.title)
-                    .click(value.click)
-            );
+        .append(
+            $("<span></span>")
+                .html(value.title)
+                .click(value.click)
+                .mouseenter(function()
+                {
+                    menu.children().removeClass("selected");
+                    $(this).addClass("selected");
+                })
+        );
     });
+    menu.children().first().addClass("selected");
 };

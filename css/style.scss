@@ -36,6 +36,7 @@ html {
     .menu {
         height: 100%;
 
+        /* flex */
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -43,10 +44,17 @@ html {
         text-align: center;
 
         span {
+            /* font */
             font-size: 30px;
 
+            /* hover */
             &:hover {
                 cursor: pointer;
+            }
+
+            /* selected */
+            &.selected {
+                font-weight: bold;
             }
         }
     }
