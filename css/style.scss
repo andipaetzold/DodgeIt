@@ -12,6 +12,13 @@ html {
     box-sizing: border-box;
 }
 
+body {
+    /* background */
+    background-image: url('../img/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 #game {
     /* border / margin / padding */
     border: thin solid black;
