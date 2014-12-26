@@ -2,7 +2,7 @@ function Game(container)
 {
     // clear container
     this.container = container;
-    container.html("");
+    this.container.html("");
 
     // scripts to load
     var scripts = [
@@ -32,6 +32,8 @@ function Game(container)
             async: false
         });
     });
+
+    this.menu_show();
 }
 
 $(document).ready(function()
