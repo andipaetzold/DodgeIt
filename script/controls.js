@@ -1,28 +1,3 @@
-Game.prototype.controls_enter = function()
-{
-    console.log("enter");
-};
-
-Game.prototype.controls_left = function()
-{
-    console.log("left");
-};
-
-Game.prototype.controls_top = function()
-{
-    console.log("top");
-};
-
-Game.prototype.controls_right = function()
-{
-    console.log("right");
-};
-
-Game.prototype.controls_down = function()
-{
-    console.log("down");
-};
-
 Game.prototype.controls_init = function()
 {
     var that = this;
@@ -49,3 +24,12 @@ Game.prototype.controls_init = function()
         }
     });
 };
+
+Game.prototype.controls_reset = function()
+{
+    Game.prototype.controls_enter   = function() {};
+    Game.prototype.controls_left    = function() {};
+    Game.prototype.controls_top     = function() {};
+    Game.prototype.controls_right   = function() {};
+    Game.prototype.controls_down    = function() {};
+}
