@@ -82,22 +82,54 @@ Game.prototype.screen_menu = function()
 
 Game.prototype.screen_game = function()
 {
-    console.log("game");
 }
 
 Game.prototype.screen_leaderboard = function()
 {
-    console.log("leaderboard");
+    this.container.html("");
+
+    var that = this;
+    this.container
+        .append($("<span></span>")
+            .html("Back")
+            .click(function()
+            {
+                that.screen_menu();
+            })
+        )
+        .append($("<h1></h1>").html("Leaderboard"));
 }
 
 Game.prototype.screen_controls = function()
 {
-    console.log("controls");   
+    this.container.html("");
+
+    var that = this;
+    this.container
+        .append($("<span></span>")
+            .html("Back")
+            .click(function()
+            {
+                that.screen_menu();
+            })
+        )
+        .append($("<h1></h1>").html("Controls"));
 }
 
 Game.prototype.screen_options = function()
 {
-    console.log("options");
+    this.container.html("");
+
+    var that = this;
+    this.container
+        .append($("<span></span>")
+            .html("Back")
+            .click(function()
+            {
+                that.screen_menu();
+            })
+        )
+        .append($("<h1></h1>").html("Options"));
 }
 
 Game.prototype.screen_about = function()
@@ -105,7 +137,6 @@ Game.prototype.screen_about = function()
     this.container.html("");
 
     var that = this;
-
     this.container
         .append($("<span></span>")
             .html("Back")
