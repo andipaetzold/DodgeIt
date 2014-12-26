@@ -33,6 +33,7 @@ function Game(container)
         });
     });
 
+    this.controls_init();
     this.menu_show();
 }
 
