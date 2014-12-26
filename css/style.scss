@@ -2,14 +2,33 @@ $screen-size-factor:    3;
 $screen-size-height:    144px * $screen-size-factor;
 $screen-size-width:     160px * $screen-size-factor;
 
+*, *:before, *:after {
+    /* box-sizing */
+    box-sizing: inherit;
+}
+
+html {
+    /* box-sizing */
+    box-sizing: border-box;
+}
+
 #game {
+    /* border / margin / padding */
     border: thin solid black;
 
     margin-left:    auto;
     margin-right:   auto;
 
+    /* color */
     background-color:   white;
 
+    /* size */
     height: $screen-size-height;
     width:  $screen-size-width;
+
+    /* progress */
+    progress {
+        /* size */
+        width: $screen-size-width;
+    }
 }

@@ -1,1 +1,1 @@
-#game{border:thin solid black;margin-left:auto;margin-right:auto;background-color:white;height:432px;width:480px}
+*,*:before,*:after{box-sizing:inherit}html{box-sizing:border-box}#game{border:thin solid black;margin-left:auto;margin-right:auto;background-color:white;height:432px;width:480px}#game progress{width:480px}
