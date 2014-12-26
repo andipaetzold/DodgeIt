@@ -1,0 +1,15 @@
+$screen-size-factor:    3;
+$screen-size-height:    144px * $screen-size-factor;
+$screen-size-width:     160px * $screen-size-factor;
+
+#game {
+    border: thin solid black;
+
+    margin-left:    auto;
+    margin-right:   auto;
+
+    background-color:   white;
+
+    height: $screen-size-height;
+    width:  $screen-size-width;
+}
