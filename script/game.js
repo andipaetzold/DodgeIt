@@ -34,6 +34,8 @@ function Game(container)
     });
 
     this.controls_init();
+    this.audio.music.init();
+
     this.screen_menu();
 }
 
