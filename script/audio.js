@@ -27,10 +27,16 @@ Game.prototype.audio = {
 
         nextTrack: function()
         {
+            if (this.track_cur == -1)
+            {
+                 this.track_cur = Math.floor(Math.random() * (this.tracks.length + 1));
+            }
+            else
+            {
+                this.track_cur = (this.track_cur + 1) % this.tracks.length;
+            }
+
             this.audioElement.get(0).pause();
-
-            this.track_cur = (this.track_cur + 1) % this.tracks.length;
-
             this.audioElement
                 .empty()
                 .append(
@@ -38,7 +44,6 @@ Game.prototype.audio = {
                         .attr("src", this.tracks[this.track_cur])
                         .attr("type", "audio/mpeg")
                 );
-
             this.audioElement.get(0).play();
         },
         mute_toggle: function()
