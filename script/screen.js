@@ -34,26 +34,27 @@ Game.prototype.screen_menu = function()
     };
 
     // menu-items
+    var that = this;
     var items = [
         {
             title: "Start Game",
-            click: function() { g.screen_game(); }
+            click: function() { that.screen_game(); }
         },
         {
             title: "Leaderboard",
-            click: function() { g.screen_leaderboard(); }
+            click: function() { that.screen_leaderboard(); }
         },
         {
             title: "Controls",
-            click: function() { g.screen_controls(); }
+            click: function() { that.screen_controls(); }
         },
         {
             title: "Options",
-            click: function() { g.screen_options(); }
+            click: function() { that.screen_options(); }
         },
         {
             title: "About",
-            click: function() { g.screen_about(); }
+            click: function() { that.screen_about(); }
         }
     ];
 
