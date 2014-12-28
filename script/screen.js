@@ -98,6 +98,16 @@ Game.prototype.screen_leaderboard = function()
             })
         )
         .append($("<h1></h1>").html("Leaderboard"));
+
+    var table = $("<table></table>").appendTo(this.container);
+    var data = this.leaderboard_get(0, 10);
+    $.each(data, function(index, item)
+    {
+        $("<tr></tr>")
+            .appendTo(table)
+            .append($("<td></td>").html(item.name))
+            .append($("<td></td>").html(item.score));
+    });
 }
 
 Game.prototype.screen_controls = function()
