@@ -24,7 +24,11 @@ Game.prototype.controls_init = function()
             case 40:
                 that.controls_down();
                 break;
+            default:
+                return true;
         }
+
+        return false;
     });
 };
 
