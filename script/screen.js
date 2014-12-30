@@ -1,5 +1,7 @@
 Game.prototype.screen_menu = function()
 {
+    var that = this;
+
     // set controls
     this.controls_reset();
     Game.prototype.controls_enter = function()
@@ -34,7 +36,6 @@ Game.prototype.screen_menu = function()
     };
 
     // menu-items
-    var that = this;
     var items = [
         {
             title: "Start Game",
@@ -87,9 +88,17 @@ Game.prototype.screen_game = function()
 
 Game.prototype.screen_leaderboard = function()
 {
-    this.container.html("");
-
     var that = this;
+
+    // set controls
+    this.controls_reset();
+    Game.prototype.controls_back = function()
+    {
+        that.screen_menu();
+    };
+
+    // screen
+    this.container.html("");
     this.container
         .append($("<span></span>")
             .html("Back")
@@ -113,9 +122,17 @@ Game.prototype.screen_leaderboard = function()
 
 Game.prototype.screen_controls = function()
 {
-    this.container.html("");
-
     var that = this;
+
+    // set controls
+    this.controls_reset();
+    Game.prototype.controls_back = function()
+    {
+        that.screen_menu();
+    };
+
+    // screen
+    this.container.html("");
     this.container
         .append($("<span></span>")
             .html("Back")
@@ -129,9 +146,17 @@ Game.prototype.screen_controls = function()
 
 Game.prototype.screen_options = function()
 {
-    this.container.html("");
-
     var that = this;
+
+    // set controls
+    this.controls_reset();
+    Game.prototype.controls_back = function()
+    {
+        that.screen_menu();
+    };
+
+    // screen
+    this.container.html("");
     this.container
         .append($("<span></span>")
             .html("Back")
@@ -166,9 +191,17 @@ Game.prototype.screen_options = function()
 
 Game.prototype.screen_about = function()
 {
-    this.container.html("");
-
     var that = this;
+
+    // set controls
+    this.controls_reset();
+    Game.prototype.controls_back = function()
+    {
+        that.screen_menu();
+    };
+
+    // screen
+    this.container.html("");
     this.container
         .append($("<span></span>")
             .html("Back")
@@ -195,5 +228,5 @@ Game.prototype.screen_about = function()
             .attr("href", "https://github.com/andipaetzold/DodgeIt")
             .attr("target", "_blank")
             .html("GitHub")
-        ); 
+        );
 }

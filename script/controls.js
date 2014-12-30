@@ -5,6 +5,9 @@ Game.prototype.controls_init = function()
     {
         switch(event.keyCode)
         {
+            case 8:
+                that.controls_back();
+                break;
             case 13:
             case 32:
                 that.controls_enter();
@@ -27,6 +30,7 @@ Game.prototype.controls_init = function()
 
 Game.prototype.controls_reset = function()
 {
+    Game.prototype.controls_back    = function() {};
     Game.prototype.controls_enter   = function() {};
     Game.prototype.controls_left    = function() {};
     Game.prototype.controls_top     = function() {};
