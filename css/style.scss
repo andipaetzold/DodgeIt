@@ -51,6 +51,41 @@ body {
         width: $screen-size-width;
     }
 
+    /* headers */
+    h1 {
+        text-align: center;
+    }
+    h2 {
+        margin-left: 10px;
+    }
+
+    /* input */
+    input[type=range] {
+        margin-left:    75px;
+        margin-right:   75px;
+        width: $screen-size-width - 150px;
+    }
+
+    /* table */
+    table.leaderboard {
+        border-collapse:    collapse;
+
+        margin-top:     50px;
+        margin-left:    75px;
+        margin-right:   75px;
+
+        width: $screen-size-width - 150px;
+
+        tr {
+            td {
+                padding-top:    2px;
+                padding-bottom: 2px;
+
+                font-size: 20px;
+            }
+        }
+    }
+
     /* menu */
     .menu {
         height: 100%;

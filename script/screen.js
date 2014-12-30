@@ -109,7 +109,9 @@ Game.prototype.screen_leaderboard = function()
         )
         .append($("<h1></h1>").html("Leaderboard"));
 
-    var table = $("<table></table>").appendTo(this.container);
+    var table = $("<table></table>")
+        .appendTo(this.container)
+        .attr("class", "leaderboard");
     var data = this.leaderboard_get(0, 10);
     $.each(data, function(index, item)
     {
