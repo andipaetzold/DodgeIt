@@ -6,6 +6,7 @@ function Game(container)
 
     // scripts to load
     var scripts = [
+        "script/jcanvas.js",
         "script/screen.js",
         "script/gameplay.js",
         "script/audio.js",
