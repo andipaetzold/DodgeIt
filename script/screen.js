@@ -140,7 +140,28 @@ Game.prototype.screen_options = function()
                 that.screen_menu();
             })
         )
-        .append($("<h1></h1>").html("Options"));
+        .append($("<h1></h1>").html("Options"))
+        .append($("<h2></h2>").html("Music"))
+        .append($("<input>")
+            .attr("type", "range")
+            .attr("min", "0")
+            .attr("max", this.audio.music.max)
+            .attr("value", this.audio.music.volume_get())
+            .on("change mousemove", function()
+            {
+                that.audio.music.volume_change($(this).val());
+            })
+        )
+        .append($("<h2></h2>").html("Sound Effects"))
+        .append($("<input>")
+            .attr("type", "range")
+            .attr("min", "0")
+            .attr("max", this.audio.sfx.max)
+            .attr("value", this.audio.sfx.volume_get())
+            .on("change mousemove", function()
+            {
+                that.audio.sfx.volume_change($(this).val());
+            }));
 }
 
 Game.prototype.screen_about = function()

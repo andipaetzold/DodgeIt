@@ -56,6 +56,10 @@ Game.prototype.audio = {
             {
                 this.audioElement.get(0).volume = volume / this.max;
             }
+        },
+        volume_get: function()
+        {
+            return this.audioElement.get(0).volume * this.max;
         }
     },
     sfx: {
@@ -74,6 +78,10 @@ Game.prototype.audio = {
         volume_change: function(volume)
         {
             this.volume = volume;
+        },
+        volume_get: function()
+        {
+            return this.volume;
         }
     }
 };
