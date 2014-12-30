@@ -9,22 +9,28 @@ Game.prototype.leaderboard_post = function(name, score)
 
 Game.prototype.leaderboard_get = function(start, count)
 {
-    // sample data (sorted) from spreadsheet
-    var data = [
-        {name: "Player 1", score: 13},
-        {name: "Player 2", score: 12},
-        {name: "Player 3", score: 11},
-        {name: "Player 4", score: 10},
-        {name: "Player 5", score: 9},
-        {name: "Player 6", score: 8},
-        {name: "Player 7", score: 7},
-        {name: "Player 8", score: 6},
-        {name: "Player 9", score: 5},
-        {name: "Player 10", score: 4},
-        {name: "Player 11", score: 3},
-        {name: "Player 12", score: 2},
-        {name: "Player 13", score: 1}
-    ];
+    // get data
+    var table_key = "1bWUyCx4cLJn6EXe_0Y8NxJ3iJhjqMM5pHfSCEuVD8Ec";
+    var query = "select+B,+C+order+by+C+desc";
+    var url = "https://docs.google.com/spreadsheets/d/"+table_key+"/gviz/tq?tq="+query+"&tqx=responseHandler:done";
+    var responseText = $.ajax({
+        type: "GET",
+        url: url,
+        async: false
+    }).responseText;
+    var text_begin = "done(";
+    var text_end   = ");";
+    responseText = responseText.substr(text_begin.length, responseText.length - text_begin.length - text_end.length);
+    responseText = $.parseJSON(responseText);
+
+    var data = [];
+    $.each(responseText.table.rows, function(index, value)
+    {
+        data.push({
+            name:   value.c[0].v,
+            score:  value.c[1].v
+        });
+    });
 
     // filter items
     var output = [];
