@@ -84,6 +84,14 @@ Game.prototype.screen_menu = function()
 
 Game.prototype.screen_game = function()
 {
+    var that = this;
+
+    // set controls
+    this.controls_reset();
+
+    // create screen
+    this.container.html("");
+    this.gameplay_start($("<canvas></canvas>").appendTo(this.container));
 }
 
 Game.prototype.screen_leaderboard = function()
