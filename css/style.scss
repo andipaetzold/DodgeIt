@@ -70,6 +70,15 @@ body {
         width: $screen-size-width - 150px;
     }
 
+    /* back-button */
+    span.back {
+        margin-top: 5px;
+        margin-left: 5px;
+        position: absolute;
+
+        cursor: pointer;
+    }
+
     /* table */
     table.leaderboard {
         border-collapse:    collapse;

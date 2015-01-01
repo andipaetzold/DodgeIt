@@ -110,6 +110,7 @@ Game.prototype.screen_leaderboard = function()
     this.container
         .append($("<span></span>")
             .html("Back")
+            .addClass("back")
             .click(function()
             {
                 that.screen_menu();
@@ -146,6 +147,7 @@ Game.prototype.screen_controls = function()
     this.container
         .append($("<span></span>")
             .html("Back")
+            .addClass("back")
             .click(function()
             {
                 that.screen_menu();
@@ -170,6 +172,7 @@ Game.prototype.screen_options = function()
     this.container
         .append($("<span></span>")
             .html("Back")
+            .addClass("back")
             .click(function()
             {
                 that.screen_menu();
@@ -240,6 +243,7 @@ Game.prototype.screen_about = function()
     this.container
         .append($("<span></span>")
             .html("Back")
+            .addClass("back")
             .click(function()
             {
                 that.screen_menu();
