@@ -46,9 +46,13 @@ Game.prototype.audio = {
                 );
             this.audioElement.get(0).play();
         },
-        mute_toggle: function()
+        mute_set: function(mute)
         {
-            this.audioElement.get(0).muted = !this.audioElement.get(0).muted;
+            this.audioElement.get(0).muted = mute;
+        },
+        mute_get: function()
+        {
+            return this.audioElement.get(0).muted;
         },
         volume_change: function(volume)
         {
@@ -71,9 +75,13 @@ Game.prototype.audio = {
         {
 
         },
-        mute_toggle: function()
+        mute_set: function(mute)
         {
-            this.mute = !this.mute;
+            this.mute = mute;
+        },
+        mute_get: function()
+        {
+            return this.mute;
         },
         volume_change: function(volume)
         {

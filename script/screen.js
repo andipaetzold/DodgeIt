@@ -176,7 +176,19 @@ Game.prototype.screen_options = function()
             })
         )
         .append($("<h1></h1>").html("Options"))
+
         .append($("<h2></h2>").html("Music"))
+        .append($("<label></label>")
+            .append($("<input>")
+                .attr("type", "checkbox")
+                .attr("checked", that.audio.music.mute_get())
+                .on("change", function(event)
+                {
+                    that.audio.music.mute_set(this.checked);
+                })
+            )
+            .append("Mute")
+        )
         .append($("<input>")
             .attr("type", "range")
             .attr("min", "0")
@@ -186,8 +198,20 @@ Game.prototype.screen_options = function()
             {
                 that.audio.music.volume_change($(this).val());
             })
-        )
+        )        
+
         .append($("<h2></h2>").html("Sound Effects"))
+        .append($("<label></label>")
+            .append($("<input>")
+                .attr("type", "checkbox")
+                .attr("checked", that.audio.sfx.mute_get())
+                .on("change", function(event)
+                {
+                    that.audio.sfx.mute_set(this.checked);
+                })
+            )
+            .append("Mute")
+        )
         .append($("<input>")
             .attr("type", "range")
             .attr("min", "0")
@@ -196,7 +220,8 @@ Game.prototype.screen_options = function()
             .on("change mousemove", function()
             {
                 that.audio.sfx.volume_change($(this).val());
-            }));
+            })
+        );     
 }
 
 Game.prototype.screen_about = function()

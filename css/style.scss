@@ -60,9 +60,13 @@ body {
     }
 
     /* input */
+    input[type=checkbox] {
+        margin-left: 15px;
+        margin-right: 5px;
+    }
     input[type=range] {
-        margin-left:    75px;
-        margin-right:   75px;
+        margin-left: 15px;
+
         width: $screen-size-width - 150px;
     }
 
