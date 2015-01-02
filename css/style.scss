@@ -51,88 +51,113 @@ body {
         width: $screen-size-width;
     }
 
-    /* headers */
-    h1 {
-        text-align: center;
-    }
-    h2 {
-        margin-left: 10px;
-    }
+    div {
+        h1 {
+            text-align: center;
+        }
+        h2 {
+            margin-left: 10px;
+        }
 
-    /* input */
-    input[type=checkbox] {
-        margin-left: 15px;
-        margin-right: 5px;
-    }
-    input[type=range] {
-        margin-left: 15px;
+        span.back {
+            margin: 10px;
 
-        width: $screen-size-width - 150px;
-    }
+            display: inline-block;
 
-    /* back-button */
-    span.back {
-        margin-top: 5px;
-        margin-left: 5px;
-        position: absolute;
+            cursor: pointer;
+        }
 
-        cursor: pointer;
-    }
-
-    /* table */
-    table.leaderboard {
-        border-collapse:    collapse;
-
-        margin-top:     50px;
-        margin-left:    75px;
-        margin-right:   75px;
-
-        width: $screen-size-width - 150px;
-
-        tr {
-            td {
-                padding-top:    2px;
-                padding-bottom: 2px;
-
-                font-size: 20px;
+        /* game */
+        &#game {
+            canvas {
+                width:  100%;
+                height: 100%;
             }
         }
-    }
 
-    /* menu */
-    .menu {
-        height: 100%;
+        /* leaderboard */
+        &#leaderboard {
+            table {
+                border-collapse:    collapse;
 
-        /* flex */
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
+                margin-top:     50px;
+                margin-left:    75px;
+                margin-right:   75px;
 
-        text-align: center;
+                width: $screen-size-width - 150px;
 
-        span {
-            /* padding */
-            padding-top: 10px;
-            padding-bottom: 10px;
+                tr {
+                    td {
+                        padding-top:    2px;
+                        padding-bottom: 2px;
 
-            /* font */
-            font-size: 30px;
-
-            /* hover */
-            &:hover {
-                cursor: pointer;
-            }
-
-            /* selected */
-            &.selected {
-                font-weight: bold;
+                        font-size: 20px;
+                    }
+                }
             }
         }
-    }
 
-    /* canvas */
-    canvas {
-        width:  100%;
-        height: 100%;
+        /* controls-screen */
+        &#controls {
+        }
+
+        /* options-screen */
+        &#options {
+            input[type=checkbox] {
+                margin-left: 15px;
+                margin-right: 5px;
+            }
+            input[type=range] {
+                margin-left: 15px;
+
+                width: $screen-size-width - 150px;
+            }
+        }
+
+        /* about-screen */
+        &#about {
+            width: 100%;
+            height: 100%;
+
+            p {
+                padding-left: 10px;
+                padding-right: 10px;
+            }   
+            
+            a, span {
+                text-align: center;
+            }     
+        }
+
+        /* menu */
+        &#menu {
+            height: 100%;
+
+            /* flex */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+
+            text-align: center;
+
+            span {
+                /* padding */
+                padding-top: 10px;
+                padding-bottom: 10px;
+
+                /* font */
+                font-size: 30px;
+
+                /* hover */
+                &:hover {
+                    cursor: pointer;
+                }
+
+                /* selected */
+                &.selected {
+                    font-weight: bold;
+                }
+            }
+        }
     }
 }

@@ -62,7 +62,7 @@ DodgeIt.prototype.screen_menu = function()
     // build menu
     this.container.html("");
     var menu = $("<div></div>")
-               .addClass("menu")
+               .attr("id", "menu")
                .appendTo(this.container);
 
     // add items
@@ -91,7 +91,13 @@ DodgeIt.prototype.screen_game = function()
 
     // create screen
     this.container.html("");
-    this.gameplay_start($("<canvas></canvas>").appendTo(this.container));
+    this.gameplay_start(
+        $("<canvas></canvas>").appendTo(
+            $("<div></div>")
+                .attr("id", "game")
+                .appendTo(this.container)
+        )
+    );
 }
 
 DodgeIt.prototype.screen_leaderboard = function()
@@ -107,7 +113,8 @@ DodgeIt.prototype.screen_leaderboard = function()
 
     // screen
     this.container.html("");
-    this.container
+    var div = $("<div></div>")
+        .attr("id", "leaderboard")
         .append($("<span></span>")
             .html("Back")
             .addClass("back")
@@ -116,11 +123,10 @@ DodgeIt.prototype.screen_leaderboard = function()
                 that.screen_menu();
             })
         )
-        .append($("<h1></h1>").html("Leaderboard"));
+        .append($("<h1></h1>").html("Leaderboard"))
+        .appendTo(this.container);
 
-    var table = $("<table></table>")
-        .appendTo(this.container)
-        .attr("class", "leaderboard");
+    var table = $("<table></table>").appendTo(div);
     var data = this.leaderboard_get(0, 10);
     $.each(data, function(index, item)
     {
@@ -144,7 +150,8 @@ DodgeIt.prototype.screen_controls = function()
 
     // screen
     this.container.html("");
-    this.container
+    this.container.append($("<div></div>")
+        .attr("id", "controls")
         .append($("<span></span>")
             .html("Back")
             .addClass("back")
@@ -153,7 +160,8 @@ DodgeIt.prototype.screen_controls = function()
                 that.screen_menu();
             })
         )
-        .append($("<h1></h1>").html("Controls"));
+        .append($("<h1></h1>").html("Controls"))
+    );
 }
 
 DodgeIt.prototype.screen_options = function()
@@ -169,7 +177,8 @@ DodgeIt.prototype.screen_options = function()
 
     // screen
     this.container.html("");
-    this.container
+    this.container.append($("<div></div>")
+        .attr("id", "options")
         .append($("<span></span>")
             .html("Back")
             .addClass("back")
@@ -224,7 +233,8 @@ DodgeIt.prototype.screen_options = function()
             {
                 that.audio.sfx.volume_change($(this).val());
             })
-        );     
+        )
+    );    
 }
 
 DodgeIt.prototype.screen_about = function()
@@ -240,7 +250,8 @@ DodgeIt.prototype.screen_about = function()
 
     // screen
     this.container.html("");
-    this.container
+    this.container.append($("<div></div>")
+        .attr("id", "about")
         .append($("<span></span>")
             .html("Back")
             .addClass("back")
@@ -267,5 +278,6 @@ DodgeIt.prototype.screen_about = function()
             .attr("href", "https://github.com/andipaetzold/DodgeIt")
             .attr("target", "_blank")
             .html("GitHub")
-        );
+        )
+    );
 }
