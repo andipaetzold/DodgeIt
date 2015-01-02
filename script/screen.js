@@ -1,14 +1,14 @@
-Game.prototype.screen_menu = function()
+DodgeIt.prototype.screen_menu = function()
 {
     var that = this;
 
     // set controls
     this.controls_reset();
-    Game.prototype.controls_enter = function()
+    DodgeIt.prototype.controls_enter = function()
     {
         $("#game div.menu span.selected").click();
     };
-    Game.prototype.controls_top = function()
+    DodgeIt.prototype.controls_top = function()
     {
         var selected = $("#game div.menu span.selected");
         selected.removeClass("selected");
@@ -21,7 +21,7 @@ Game.prototype.screen_menu = function()
             selected.parent().children().last().addClass("selected");   
         }
     };
-    Game.prototype.controls_down = function()
+    DodgeIt.prototype.controls_down = function()
     {
         var selected = $("#game div.menu span.selected");
         selected.removeClass("selected");
@@ -82,7 +82,7 @@ Game.prototype.screen_menu = function()
     menu.children().first().addClass("selected");
 }
 
-Game.prototype.screen_game = function()
+DodgeIt.prototype.screen_game = function()
 {
     var that = this;
 
@@ -94,13 +94,13 @@ Game.prototype.screen_game = function()
     this.gameplay_start($("<canvas></canvas>").appendTo(this.container));
 }
 
-Game.prototype.screen_leaderboard = function()
+DodgeIt.prototype.screen_leaderboard = function()
 {
     var that = this;
 
     // set controls
     this.controls_reset();
-    Game.prototype.controls_back = function()
+    DodgeIt.prototype.controls_back = function()
     {
         that.screen_menu();
     };
@@ -131,13 +131,13 @@ Game.prototype.screen_leaderboard = function()
     });
 }
 
-Game.prototype.screen_controls = function()
+DodgeIt.prototype.screen_controls = function()
 {
     var that = this;
 
     // set controls
     this.controls_reset();
-    Game.prototype.controls_back = function()
+    DodgeIt.prototype.controls_back = function()
     {
         that.screen_menu();
     };
@@ -156,13 +156,13 @@ Game.prototype.screen_controls = function()
         .append($("<h1></h1>").html("Controls"));
 }
 
-Game.prototype.screen_options = function()
+DodgeIt.prototype.screen_options = function()
 {
     var that = this;
 
     // set controls
     this.controls_reset();
-    Game.prototype.controls_back = function()
+    DodgeIt.prototype.controls_back = function()
     {
         that.screen_menu();
     };
@@ -227,13 +227,13 @@ Game.prototype.screen_options = function()
         );     
 }
 
-Game.prototype.screen_about = function()
+DodgeIt.prototype.screen_about = function()
 {
     var that = this;
 
     // set controls
     this.controls_reset();
-    Game.prototype.controls_back = function()
+    DodgeIt.prototype.controls_back = function()
     {
         that.screen_menu();
     };

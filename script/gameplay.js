@@ -1,3 +1,3 @@
-Game.prototype.gameplay_start = function(canvas)
+DodgeIt.prototype.gameplay_start = function(canvas)
 {
 };

@@ -1,4 +1,4 @@
-Game.prototype.audio = {
+DodgeIt.prototype.audio = {
     music: {
         audioElement: null,
         init: function()

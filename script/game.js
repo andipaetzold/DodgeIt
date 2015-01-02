@@ -1,4 +1,4 @@
-function Game(container)
+function DodgeIt(container)
 {
     // clear container
     this.container = container;
@@ -44,5 +44,5 @@ function Game(container)
 var g;
 $(document).ready(function()
 {
-    g = new Game($("#game"));
+    g = new DodgeIt($("#game"));
 });

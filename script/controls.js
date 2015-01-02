@@ -1,4 +1,4 @@
-Game.prototype.controls_init = function()
+DodgeIt.prototype.controls_init = function()
 {
     var that = this;
     $(document).keydown(function(event)
@@ -32,12 +32,12 @@ Game.prototype.controls_init = function()
     });
 };
 
-Game.prototype.controls_reset = function()
+DodgeIt.prototype.controls_reset = function()
 {
-    Game.prototype.controls_back    = function() {};
-    Game.prototype.controls_enter   = function() {};
-    Game.prototype.controls_left    = function() {};
-    Game.prototype.controls_top     = function() {};
-    Game.prototype.controls_right   = function() {};
-    Game.prototype.controls_down    = function() {};
+    DodgeIt.prototype.controls_back    = function() {};
+    DodgeIt.prototype.controls_enter   = function() {};
+    DodgeIt.prototype.controls_left    = function() {};
+    DodgeIt.prototype.controls_top     = function() {};
+    DodgeIt.prototype.controls_right   = function() {};
+    DodgeIt.prototype.controls_down    = function() {};
 }

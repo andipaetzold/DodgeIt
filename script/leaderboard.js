@@ -1,4 +1,4 @@
-Game.prototype.leaderboard_post = function(name, score)
+DodgeIt.prototype.leaderboard_post = function(name, score)
 {
     var url = "https://docs.google.com/forms/d/1O4OfBssi1MZZd1v7gfo_bsyU_r52IVSN8GEYH1I2Luo/formResponse";
     $.post(url, {
@@ -7,7 +7,7 @@ Game.prototype.leaderboard_post = function(name, score)
     });
 };
 
-Game.prototype.leaderboard_get = function(start, count)
+DodgeIt.prototype.leaderboard_get = function(start, count)
 {
     // get data
     var table_key = "1bWUyCx4cLJn6EXe_0Y8NxJ3iJhjqMM5pHfSCEuVD8Ec";
