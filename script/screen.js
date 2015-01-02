@@ -6,7 +6,7 @@ DodgeIt.prototype.screen_menu = function()
     this.controls_reset();
     DodgeIt.prototype.controls_enter = function()
     {
-        $("#game div.menu span.selected").click();
+        $("#game div#menu span.selected").click();
     };
     DodgeIt.prototype.controls_top = function()
     {
@@ -23,7 +23,7 @@ DodgeIt.prototype.screen_menu = function()
     };
     DodgeIt.prototype.controls_down = function()
     {
-        var selected = $("#game div.menu span.selected");
+        var selected = $("#game div#menu span.selected");
         selected.removeClass("selected");
         if (selected.nextAll().length > 0)
         {
