@@ -6,8 +6,9 @@ function DodgeIt(container)
 
     // scripts to load
     var scripts = [
-        "script/jcanvas.js",
         "script/screen.js",
+        "script/include/canvasquery.js",
+        "script/include/playground.js",
         "script/gameplay.js",
         "script/audio.js",
         "script/controls.js",

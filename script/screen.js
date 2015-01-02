@@ -91,12 +91,9 @@ DodgeIt.prototype.screen_game = function()
 
     // create screen
     this.container.html("");
-    this.gameplay_start(
-        $("<canvas></canvas>").appendTo(
-            $("<div></div>")
-                .attr("id", "game")
-                .appendTo(this.container)
-        )
+    this.gameplay_start($("<div></div>")
+        .attr("id", "gameplay")
+        .appendTo(this.container)
     );
 }
 
