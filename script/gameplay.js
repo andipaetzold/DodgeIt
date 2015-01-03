@@ -6,6 +6,11 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         container: container.get(0),
 
+        create: function()
+        {
+            this.loadImages("road");
+        },
+
         step: function(delta)
         {
             var that = this;
@@ -57,7 +62,16 @@ DodgeIt.prototype.gameplay_start = function(container)
         {
             var that = this;
 
+            // clear
             this.layer.clear("#FFFFFF");
+
+            // background-image
+            this.layer.imageLine(this.images.road, 
+                                 false, 
+                                 Math.round((this.width  + this.sidebar.width) / 2), 
+                                 0, Math.round((this.width  + this.sidebar.width) / 2), 
+                                 this.height, 
+                                 (this.width - this.sidebar.width) / this.images.road.naturalWidth);
 
             // character
             this.layer
