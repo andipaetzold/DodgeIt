@@ -28,16 +28,16 @@ DodgeIt.prototype.gameplay_start = function(container)
             this.time += delta;
 
             // move background-image
-            this.background.y = (this.background.y + (100 * delta)) % this.background.height;
+            this.background.y = (this.background.y + (this.obstacle.speed * delta)) % this.background.height;
 
             // move character
             if (this.keyboard.keys.left && !this.keyboard.keys.right)
             {
-                this.character.x -= 300 * delta;
+                this.character.x -= this.character.speed * delta;
             }
             else if (!this.keyboard.keys.left && this.keyboard.keys.right)
             {
-                this.character.x += 300 * delta;
+                this.character.x += this.character.speed * delta;
             }
 
             // check new position
@@ -49,10 +49,10 @@ DodgeIt.prototype.gameplay_start = function(container)
                 this.time - this.obstacles[this.obstacles.length - 1].spawntime >= 1.5) // spawn every 1.5 seconds
             {
                 this.obstacles.push({
-                    x: Math.floor(Math.random() * (this.width - this.sidebar.width - 50)) + this.sidebar.width,
-                    y: -50,
-                    width: 50,
-                    height: 50,
+                    x: Math.floor(Math.random() * (this.width - this.sidebar.width - this.obstacle.width)) + this.sidebar.width,
+                    y: -this.obstacle.height,
+                    width: this.obstacle.width,
+                    height: this.obstacle.height,
                     spawntime: this.time
                 });
             }
@@ -60,7 +60,7 @@ DodgeIt.prototype.gameplay_start = function(container)
             // move obstacles down
             $.each(this.obstacles, function(index, value)
             {
-                value.y += 100 * delta;
+                value.y += that.obstacle.speed * delta;
             });
 
             // remove obstacles
@@ -130,10 +130,16 @@ DodgeIt.prototype.gameplay_start = function(container)
         character: {
             width:  64,
             height: 64,
-            x: 0
+            x: 0,
+            speed: 300
         },
 
         // obstacles
+        obstacle: {
+            width: 50,
+            height: 50,
+            speed: 100
+        },
         obstacles: [],
 
         // time
