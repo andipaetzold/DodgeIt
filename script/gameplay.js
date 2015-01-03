@@ -8,6 +8,8 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         step: function(delta)
         {
+            var that = this;
+
             // inc time
             this.time += delta;
 
@@ -42,6 +44,12 @@ DodgeIt.prototype.gameplay_start = function(container)
             $.each(this.obstacles, function(index, value)
             {
                 value.y += 100 * delta;
+            });
+
+            // remove obstacles
+            this.obstacles = $.grep(this.obstacles, function(value)
+            {
+                return value.y < that.height;
             });
         },
 
