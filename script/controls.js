@@ -3,25 +3,25 @@ DodgeIt.prototype.controls_init = function()
     var that = this;
     $(document).keydown(function(event)
     {
-        switch(event.keyCode)
+        switch(event.key)
         {
-            case 8:
+            case "Backspace":
                 that.controls_back();
                 break;
-            case 13:
-            case 32:
+            case "Enter":
+            case " ":
                 that.controls_enter();
                 break;
-            case 37:
+            case "Left":
                 that.controls_left();
                 break;
-            case 38:
+            case "Top":
                 that.controls_top();
                 break;
-            case 39:
+            case "Right":
                 that.controls_right();
                 break;
-            case 40:
+            case "Down":
                 that.controls_down();
                 break;
             default:
