@@ -9,11 +9,11 @@ DodgeIt.prototype.audio = {
             {
                 if (this.currentTime >= this.duration)
                 {
-                    that.nextTrack();
+                    that.next_track();
                 }
             });
             this.volume_change(5);
-            this.nextTrack();
+            this.next_track();
         },
 
         max: 10,
@@ -25,11 +25,11 @@ DodgeIt.prototype.audio = {
         ],
         track_cur: -1,
 
-        nextTrack: function()
+        next_track: function()
         {
             if (this.track_cur == -1)
             {
-                 this.track_cur = Math.floor(Math.random() * (this.tracks.length + 1));
+                 this.track_cur = Math.floor(Math.random() * this.tracks.length);
             }
             else
             {
