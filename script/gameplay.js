@@ -15,8 +15,8 @@ DodgeIt.prototype.gameplay_start = function(container)
                 img: this.images.road,
                 x: this.sidebar.width,
                 y: 0,
-                width: this.images.road.naturalWidth * scale,
-                height: this.images.road.naturalHeight * scale
+                width:  Math.round(this.images.road.naturalWidth * scale),
+                height: Math.round(this.images.road.naturalHeight * scale)
             };
         },
 
