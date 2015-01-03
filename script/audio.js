@@ -5,12 +5,9 @@ DodgeIt.prototype.audio = {
         {
             this.audioElement = $("<audio></audio");
             var that = this;
-            this.audioElement.bind("timeupdate", function()
+            this.audioElement.bind("ended", function()
             {
-                if (this.currentTime >= this.duration)
-                {
-                    that.next_track();
-                }
+                that.next_track();
             });
 
             // mute
