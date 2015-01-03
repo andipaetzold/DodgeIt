@@ -205,7 +205,7 @@ DodgeIt.prototype.screen_options = function()
             .attr("value", this.audio.music.volume_get())
             .on("change mousemove", function()
             {
-                that.audio.music.volume_change($(this).val());
+                that.audio.music.volume_set($(this).val());
             })
         )        
 
@@ -228,7 +228,7 @@ DodgeIt.prototype.screen_options = function()
             .attr("value", this.audio.sfx.volume_get())
             .on("change mousemove", function()
             {
-                that.audio.sfx.volume_change($(this).val());
+                that.audio.sfx.volume_set($(this).val());
             })
         )
     );    

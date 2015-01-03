@@ -39,6 +39,7 @@ function DodgeIt(container)
 
     this.controls_init();
     this.audio.music.init();
+    this.audio.sfx.init();
 
     this.screen_menu();
 }

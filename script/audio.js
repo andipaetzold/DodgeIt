@@ -12,7 +12,28 @@ DodgeIt.prototype.audio = {
                     that.next_track();
                 }
             });
-            this.volume_change(5);
+
+            // mute
+            if ($.cookie("audio/music/mute"))
+            {
+                this.mute_set($.cookie("audio/music/mute"));
+            }
+            else
+            {
+                this.mute_set(false);
+            }
+
+            // volume
+            if ($.cookie("audio/music/volume"))
+            {
+                this.volume_set($.cookie("audio/music/volume"));
+            }
+            else
+            {
+                this.volume_set(5);
+            }
+
+            // start music
             this.next_track();
         },
 
@@ -48,14 +69,16 @@ DodgeIt.prototype.audio = {
         },
         mute_set: function(mute)
         {
+            $.cookie("audio/music/mute", mute);
             this.audioElement.get(0).muted = mute;
         },
         mute_get: function()
         {
             return this.audioElement.get(0).muted;
         },
-        volume_change: function(volume)
+        volume_set: function(volume)
         {
+            $.cookie("audio/music/volume", volume);
             if (volume >= 0 && volume <= this.max)
             {
                 this.audioElement.get(0).volume = volume / this.max;
@@ -71,20 +94,44 @@ DodgeIt.prototype.audio = {
         max: 10,
         volume: 5,
 
+        init: function()
+        {
+            // mute
+            if ($.cookie("audio/sfx/mute"))
+            {
+                this.mute_set($.cookie("audio/sfx/mute"));
+            }
+            else
+            {
+                this.mute_set(false);
+            }
+
+            // volume
+            if ($.cookie("audio/sfx/volume"))
+            {
+                this.volume_set($.cookie("audio/sfx/volume"));
+            }
+            else
+            {
+                this.volume_set(5);
+            }
+        },
         play: function()
         {
 
         },
         mute_set: function(mute)
         {
+            $.cookie("audio/sfx/mute", mute);
             this.mute = mute;
         },
         mute_get: function()
         {
             return this.mute;
         },
-        volume_change: function(volume)
+        volume_set: function(volume)
         {
+            $.cookie("audio/sfx/volume", volume);
             this.volume = volume;
         },
         volume_get: function()
