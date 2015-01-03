@@ -8,6 +8,9 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         step: function(delta)
         {
+            // inc time
+            this.time += delta;
+
             // move character
             if (this.keyboard.keys.left && !this.keyboard.keys.right)
             {
@@ -22,12 +25,30 @@ DodgeIt.prototype.gameplay_start = function(container)
             this.character.x = Math.max(this.character.x, this.sidebar.width);
             this.character.x = Math.min(this.character.x, this.width - this.character.width);
 
-            // inc time
-            this.time += delta;
+            // create obstacle
+            if (this.obstacles.length == 0 ||
+                this.time - this.obstacles[this.obstacles.length - 1].spawntime >= 1.5) // spawn every 1.5 seconds
+            {
+                this.obstacles.push({
+                    x: Math.floor(Math.random() * (this.width - this.sidebar.width - 50)) + this.sidebar.width,
+                    y: -50,
+                    width: 50,
+                    height: 50,
+                    spawntime: this.time
+                });
+            }
+
+            // move obstacles down
+            $.each(this.obstacles, function(index, value)
+            {
+                value.y += 100 * delta;
+            });
         },
 
         render: function()
         {
+            var that = this;
+
             this.layer.clear("#FFFFFF");
 
             // character
@@ -48,6 +69,14 @@ DodgeIt.prototype.gameplay_start = function(container)
                 .fillStyle("#000000")
                 .font("16px Arial")
                 .wrappedText(Math.round(this.time).toString() + "s", 5, 16);
+
+            // obstacles
+            $.each(this.obstacles, function(index, value)
+            {
+                that.layer
+                    .fillStyle("#000000")
+                    .fillRect(value.x, value.y, value.width, value.height);
+            });
         },
 
         // game screen properties
@@ -63,6 +92,9 @@ DodgeIt.prototype.gameplay_start = function(container)
             height: 64,
             x: 0
         },
+
+        // obstacles
+        obstacles: [],
 
         // time
         time: 0
