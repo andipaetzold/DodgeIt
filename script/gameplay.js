@@ -19,7 +19,7 @@ DodgeIt.prototype.gameplay_start = function(container)
             }
 
             // check new position
-            this.character.x = Math.max(this.character.x, 0);
+            this.character.x = Math.max(this.character.x, this.sidebar.width);
             this.character.x = Math.min(this.character.x, this.width - this.character.width);
 
             // inc time
@@ -32,13 +32,29 @@ DodgeIt.prototype.gameplay_start = function(container)
 
             // character
             this.layer
-                .fillStyle("#000")
+                .fillStyle("#000000")
                 .fillRect(this.character.x, this.height - this.character.height, this.character.width, this.character.height);
+
+            // sidebar
+            this.layer
+                .fillStyle(this.sidebar.bordercolor)
+                .fillRect(0, 0, this.sidebar.border, this.height)
+                .fillRect(this.sidebar.width - this.sidebar.border, 0, this.sidebar.border + 1, this.height) // + 1 because of the grame around the canvas
+                .fillRect(0, 0, this.sidebar.width, this.sidebar.border)
+                .fillRect(0, this.height - this.sidebar.border, this.sidebar.width, this.sidebar.border);
 
             // text
             this.layer
+                .fillStyle("#000000")
                 .font("16px Arial")
                 .wrappedText(Math.round(this.time).toString() + "s", 5, 16);
+        },
+
+        // game screen properties
+        sidebar: {
+            width:  150,
+            border: 2,
+            bordercolor: "#000000"
         },
 
         // character
