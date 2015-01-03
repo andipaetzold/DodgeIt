@@ -89,7 +89,7 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         // game screen properties
         sidebar: {
-            width:  150,
+            width:  Math.floor(this.container.width() / 3.5),
             border: 2,
             bordercolor: "#000000"
         },
