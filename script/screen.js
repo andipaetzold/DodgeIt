@@ -10,7 +10,7 @@ DodgeIt.prototype.screen_menu = function()
     };
     DodgeIt.prototype.controls_top = function()
     {
-        var selected = $("#game div.menu span.selected");
+        var selected = $("#game div#menu span.selected");
         selected.removeClass("selected");
         if (selected.prevAll().length > 0)
         {
