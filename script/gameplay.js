@@ -8,7 +8,16 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         create: function()
         {
+            // background-image
             this.loadImages("road");
+            var  scale = (this.width - this.sidebar.width) / this.images.road.naturalWidth;
+            this.background = {
+                img: this.images.road,
+                x: this.sidebar.width,
+                y: 0,
+                width: this.images.road.naturalWidth * scale,
+                height: this.images.road.naturalHeight * scale
+            };
         },
 
         step: function(delta)
@@ -17,6 +26,9 @@ DodgeIt.prototype.gameplay_start = function(container)
 
             // inc time
             this.time += delta;
+
+            // move background-image
+            this.background.y = (this.background.y + (100 * delta)) % this.background.height;
 
             // move character
             if (this.keyboard.keys.left && !this.keyboard.keys.right)
@@ -66,12 +78,15 @@ DodgeIt.prototype.gameplay_start = function(container)
             this.layer.clear("#FFFFFF");
 
             // background-image
-            this.layer.imageLine(this.images.road, 
-                                 false, 
-                                 Math.round((this.width  + this.sidebar.width) / 2), 
-                                 0, Math.round((this.width  + this.sidebar.width) / 2), 
-                                 this.height, 
-                                 (this.width - this.sidebar.width) / this.images.road.naturalWidth);
+            var y = this.background.y - this.background.height;
+            while (y < this.height)
+            {
+                this.layer.drawImage(this.background.img,
+                                     this.background.x, y,
+                                     this.background.width, this.background.height);
+
+                y += this.background.height - 1; // -1, because of the gap                
+            }
 
             // character
             this.layer
@@ -107,6 +122,9 @@ DodgeIt.prototype.gameplay_start = function(container)
             border: 2,
             bordercolor: "#000000"
         },
+
+        // background
+        background: null,
 
         // character
         character: {
