@@ -20,7 +20,64 @@
     <body>
         <div id="wrapperOuter">
             <div id="wrapperInner">
-                <div id="game">      
+                <div id="game">
+                    <div id="menu">
+                        <span data-screen="gameplay">Start Game</span>
+                        <span data-screen="leaderboard">Leaderboard</span>
+                        <span data-screen="controls">Controls</span>
+                        <span data-screen="options">Options</span>
+                        <span data-screen="about">About</span>
+                    </div>
+
+                    <div id="gameplay">
+                    </div>
+
+                    <div id="leaderboard">
+                        <span class="back">Back</span>
+
+                        <h1>Leaderboard</h1>
+
+                        <table>
+                            <tbody>
+                            </tbod>
+                        </table>
+                    </div>
+
+                    <div id="controls">
+                        <span class="back">Back</span>
+
+                        <h1>Controls</h1>
+                    </div>
+
+                    <div id="options">
+                        <span class="back">Back</span>
+
+                        <h1>Options</h1>
+
+                        <h2>Music</h2>
+                        <label>
+                            <input id="options-music-mute" type="checkbox" checked="checked">Mute
+                        </label>
+                        <input id="options-music-volume" type="range" min="0" max="10" value="5">
+                        
+                        <h2>Sound Effects</h2>
+                        <label>
+                            <input id="options-sfx-mute" type="checkbox" checked="checked">Mute
+                        </label>
+                        <input id="options-sfx-volume" type="range" min="0" max="10" value="5">
+                    </div> 
+
+                    <div id="about">
+                        <span class="back">Back</span>
+
+                        <h1>About</h1>
+
+                        <p>Insert the about-text here..</p>
+
+                        <span>©2015 Andreas Pätzold</span><br>
+                        <a href="mailto:andi.paetzold@gmail.com">andi.paetzold@gmail.com</a><br>
+                        <a href="https://github.com/andipaetzold/DodgeIt" target="_blank">GitHub</a>
+                    </div> 
                 </div>
             </div>
         </div>

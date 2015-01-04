@@ -2,7 +2,6 @@ function DodgeIt(container)
 {
     // clear container
     this.container = container;
-    this.container.html("");
 
     // scripts to load
     var scripts = [
@@ -18,20 +17,10 @@ function DodgeIt(container)
     ];
 
     // load
-    var progress = $("<progress></progress>")
-                   .attr("min", 0)
-                   .attr("max", scripts.length)
-                   .val(0)
-                   .appendTo(this.container);
-
     $.each(scripts, function(index, value)
     {
         $.ajax({
             url: value,
-            success: function()
-            {
-                progress.val(progress.val() + 1);
-            },
             dataType: "script",
             async: false
         });
@@ -41,7 +30,8 @@ function DodgeIt(container)
     this.audio.music.init();
     this.audio.sfx.init();
 
-    this.screen_menu();
+    this.screen_init();
+    this.screen_show("menu");
 }
 
 var g;
