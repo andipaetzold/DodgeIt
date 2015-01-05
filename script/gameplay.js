@@ -74,6 +74,9 @@ DodgeIt.prototype.gameplay_start = function(container)
                 height: Math.round(this.images.road.naturalHeight * scale)
             };
 
+            // set character position
+            this.character.x = this.sidebar.width;
+
             // set time
             this.time = -3;
 
