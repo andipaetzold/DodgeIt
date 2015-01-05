@@ -104,7 +104,7 @@ DodgeIt.prototype.gameplay_start = function(container)
             var that = this;
 
             // inc time
-            if (this.state == this.states.countdown &&
+            if (this.state == this.states.countdown ||
                 this.state == this.states.running)
             {
                 this.time += delta;
