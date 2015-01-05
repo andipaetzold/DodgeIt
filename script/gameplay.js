@@ -60,21 +60,13 @@ DodgeIt.prototype.gameplay_start = function(container)
                 });
             }
 
-            // move obstacles down
+            // move obstacles / collision test
             $.each(this.obstacles, function(index, value)
             {
+                // move
                 value.y += that.obstacle.speed * delta;
-            });
 
-            // remove obstacles
-            this.obstacles = $.grep(this.obstacles, function(value)
-            {
-                return value.y < that.height;
-            });
-
-            // collision test
-            $.each(this.obstacles, function(index, value)
-            {
+                // collision test
                 if (that.character.x < value.x + value.width &&
                    that.character.x + that.character.width > value.x &&
                    that.character.y < value.y + value.height &&
@@ -82,6 +74,12 @@ DodgeIt.prototype.gameplay_start = function(container)
                 {
                     that.collision();
                 }
+            });
+
+            // remove obstacles
+            this.obstacles = $.grep(this.obstacles, function(value)
+            {
+                return value.y < that.height;
             });
         },
 
