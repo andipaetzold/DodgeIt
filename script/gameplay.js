@@ -118,8 +118,7 @@ DodgeIt.prototype.gameplay_start = function(container)
                 }
             }
             else if (this.state == this.states.running)
-            {                
-
+            {
                 // inc score
                 this.score += delta * this.points.time;
 
