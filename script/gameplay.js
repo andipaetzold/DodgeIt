@@ -1,5 +1,6 @@
 DodgeIt.prototype.gameplay_start = function(container)
 {
+    var that = this;
     var game = playground({
         running: true,
 
@@ -137,6 +138,12 @@ DodgeIt.prototype.gameplay_start = function(container)
         collision: function()
         {
             this.running = false;
+
+            var name = prompt("Please enter your name:", "Unknown");
+            if (name != null)
+            {
+                that.leaderboard_post(name, Math.floor(this.time * 10));
+            }
         },
 
         // game screen properties
