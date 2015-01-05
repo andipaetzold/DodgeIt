@@ -8,6 +8,9 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         create: function()
         {
+            // calc character y
+            this.character.y = this.height - this.character.height;
+
             // background-image
             this.loadImages("road");
             var  scale = (this.width - this.sidebar.width) / this.images.road.naturalWidth;
@@ -68,6 +71,18 @@ DodgeIt.prototype.gameplay_start = function(container)
             {
                 return value.y < that.height;
             });
+
+            // collision test
+            $.each(this.obstacles, function(index, value)
+            {
+                if (that.character.x < value.x + value.width &&
+                   that.character.x + that.character.width > value.x &&
+                   that.character.y < value.y + value.height &&
+                   that.character.height + that.character.y > value.y)
+                {
+                    that.collision();
+                }
+            });
         },
 
         render: function()
@@ -91,7 +106,7 @@ DodgeIt.prototype.gameplay_start = function(container)
             // character
             this.layer
                 .fillStyle("#000000")
-                .fillRect(this.character.x, this.height - this.character.height, this.character.width, this.character.height);
+                .fillRect(this.character.x, this.character.y, this.character.width, this.character.height);
 
             // sidebar
             this.layer
@@ -116,6 +131,11 @@ DodgeIt.prototype.gameplay_start = function(container)
             });
         },
 
+        collision: function()
+        {
+            console.log("collision");
+        },
+
         // game screen properties
         sidebar: {
             width:  Math.floor(this.container.width() / 3.5),
@@ -131,6 +151,7 @@ DodgeIt.prototype.gameplay_start = function(container)
             width:  64,
             height: 64,
             x: 0,
+            y: 0, // calculated on start
             speed: 300
         },
 
