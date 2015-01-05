@@ -35,6 +35,9 @@ DodgeIt.prototype.gameplay_start = function(container)
                 // inc time
                 this.time += delta;
 
+                // inc score
+                this.score += delta * 10;
+
                 // move background-image
                 this.background.y = (this.background.y + (this.obstacle.speed * delta)) % this.background.height;
 
@@ -124,7 +127,8 @@ DodgeIt.prototype.gameplay_start = function(container)
             this.layer
                 .fillStyle("#000000")
                 .font("16px Arial")
-                .wrappedText(Math.round(this.time).toString() + "s", 5, 16);
+                .wrappedText("Time:  " + Math.floor(this.time).toString() + "s", 5, 16)
+                .wrappedText("Score: " + Math.floor(this.score).toString(), 5, 40);
 
             // obstacles
             $.each(this.obstacles, function(index, value)
@@ -142,7 +146,7 @@ DodgeIt.prototype.gameplay_start = function(container)
             var name = prompt("Please enter your name:", "Unknown");
             if (name != null)
             {
-                that.leaderboard_post(name, Math.floor(this.time * 10));
+                that.leaderboard_post(name, Math.floor(this.score));
             }
         },
 
@@ -174,6 +178,9 @@ DodgeIt.prototype.gameplay_start = function(container)
         obstacles: [],
 
         // time
-        time: 0
+        time: 0,
+
+        // score
+        score: 0
     });
 };
