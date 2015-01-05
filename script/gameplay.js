@@ -241,6 +241,20 @@ DodgeIt.prototype.gameplay_start = function(container)
                     .fillStyle("#FFFFFF")
                     .wrappedText(text, 200, (this.height + textboundaries.height) / 2);
             }
+
+            // pause
+            if (this.state == this.states.pause)
+            {
+                this.layer
+                    .font("150px Arial");
+
+                var text = "Pause";
+                textboundaries = this.layer.textBoundaries(text);
+
+                this.layer
+                    .fillStyle("#FFFFFF")
+                    .wrappedText(text, 0, (this.height + textboundaries.height) / 2);
+            }
         },
 
         collision: function()
