@@ -30,7 +30,10 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         // obstacles
         obstacle: {
-            width: 50,
+            width: {
+                min: 50,
+                max: 200
+            },
             height: 50,
             speed: 100
         },
@@ -99,10 +102,11 @@ DodgeIt.prototype.gameplay_start = function(container)
                 if (this.obstacles.length == 0 ||
                     this.time - this.obstacles[this.obstacles.length - 1].spawntime >= 1.5) // spawn every 1.5 seconds
                 {
+                    var width = Math.floor(Math.random() * (this.obstacle.width.max - this.obstacle.width.min)) + this.obstacle.width.min;
                     this.obstacles.push({
-                        x: Math.floor(Math.random() * (this.width - this.sidebar.width - this.obstacle.width)) + this.sidebar.width,
+                        x: Math.floor(Math.random() * (this.width - this.sidebar.width - width)) + this.sidebar.width,
                         y: -this.obstacle.height,
-                        width: this.obstacle.width,
+                        width: width,
                         height: this.obstacle.height,
                         spawntime: this.time
                     });
