@@ -2,12 +2,48 @@ DodgeIt.prototype.gameplay_start = function(container)
 {
     var that = this;
     var game = playground({
-        running: true,
-
+        // size
         width: this.container.width(),
         height: this.container.height(),
 
+        // container
         container: container.get(0),
+
+        // game screen properties
+        sidebar: {
+            width:  Math.floor(this.container.width() / 3.5),
+            border: 2,
+            bordercolor: "#000000"
+        },
+
+        // background
+        background: null,
+
+        // character
+        character: {
+            width:  64,
+            height: 64,
+            x: 0,
+            y: 0, // calculated on start
+            speed: 300
+        },
+
+        // obstacles
+        obstacle: {
+            width: 50,
+            height: 50,
+            speed: 100
+        },
+        obstacles: [],
+
+        // game running?
+        running: true,
+
+        // time
+        time: 0,
+
+        // score
+        score: 0,
 
         create: function()
         {
@@ -148,39 +184,6 @@ DodgeIt.prototype.gameplay_start = function(container)
             {
                 that.leaderboard_post(name, Math.floor(this.score));
             }
-        },
-
-        // game screen properties
-        sidebar: {
-            width:  Math.floor(this.container.width() / 3.5),
-            border: 2,
-            bordercolor: "#000000"
-        },
-
-        // background
-        background: null,
-
-        // character
-        character: {
-            width:  64,
-            height: 64,
-            x: 0,
-            y: 0, // calculated on start
-            speed: 300
-        },
-
-        // obstacles
-        obstacle: {
-            width: 50,
-            height: 50,
-            speed: 100
-        },
-        obstacles: [],
-
-        // time
-        time: 0,
-
-        // score
-        score: 0
+        }
     });
 };
