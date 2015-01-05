@@ -74,11 +74,23 @@ DodgeIt.prototype.gameplay_start = function(container)
                 height: Math.round(this.images.road.naturalHeight * scale)
             };
 
+            // start
+            this.start();
+        },
+
+        start: function()
+        {
             // set character position
             this.character.x = this.sidebar.width;
 
+            // remove obstacles
+            this.obstacles = [];
+
             // set time
             this.time = -3;
+
+            // set score
+            this.score = 0;
 
             // start game
             this.state = this.states.countdown;
@@ -229,10 +241,21 @@ DodgeIt.prototype.gameplay_start = function(container)
         {
             this.state = this.states.gameover;
 
+            // leaderboard
             var name = prompt("Please enter your name:", "Unknown");
             if (name != null)
             {
                 that.leaderboard_post(name, Math.floor(this.score));
+            }
+
+            // restart
+            if (confirm("Restart?"))
+            {
+                this.start();
+            }
+            else
+            {
+                that.screen_show("menu");
             }
         }
     });
