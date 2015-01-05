@@ -44,6 +44,10 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         // score
         score: 0,
+        points: {
+            time: 10,
+            obstacle: 10
+        },
 
         create: function()
         {
@@ -72,7 +76,7 @@ DodgeIt.prototype.gameplay_start = function(container)
                 this.time += delta;
 
                 // inc score
-                this.score += delta * 10;
+                this.score += delta * this.points.time;
 
                 // move background-image
                 this.background.y = (this.background.y + (this.obstacle.speed * delta)) % this.background.height;
@@ -123,7 +127,12 @@ DodgeIt.prototype.gameplay_start = function(container)
                 // remove obstacles
                 this.obstacles = $.grep(this.obstacles, function(value)
                 {
-                    return value.y < that.height;
+                    var remove = value.y >= that.height;
+                    if (remove)
+                    {
+                        that.score += that.points.obstacle;
+                    }
+                    return !remove;
                 });
             }
         },
