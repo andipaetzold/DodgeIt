@@ -58,6 +58,9 @@ DodgeIt.prototype.gameplay_start = function(container)
             obstacle: 10
         },
 
+        // prevent keyboard default
+        preventKeyboardDefault: true,
+
         create: function()
         {
             // calc character y
@@ -101,7 +104,11 @@ DodgeIt.prototype.gameplay_start = function(container)
             var that = this;
 
             // inc time
-            this.time += delta;
+            if (this.state == this.states.countdown &&
+                this.state == this.states.running)
+            {
+                this.time += delta;
+            }
 
             if (this.state == this.states.countdown)
             {
@@ -256,6 +263,21 @@ DodgeIt.prototype.gameplay_start = function(container)
             else
             {
                 that.screen_show("menu");
+            }
+        },
+
+        keydown: function(event)
+        {
+            if(event.key == "escape")
+            {
+                if (this.state == this.states.running)
+                {
+                    this.state = this.states.pause;
+                }
+                else if (this.state == this.states.pause)
+                {
+                    this.state = this.states.running;
+                }
             }
         }
     });
