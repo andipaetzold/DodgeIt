@@ -39,8 +39,14 @@ DodgeIt.prototype.gameplay_start = function(container)
         },
         obstacles: [],
 
-        // game running?
-        running: true,
+        // game states
+        states: {
+            countdown:  0,
+            running:    1,
+            pause:      2,
+            gameover:   3
+        },
+        state: 0,
 
         // time
         time: 0,
@@ -67,13 +73,16 @@ DodgeIt.prototype.gameplay_start = function(container)
                 width:  Math.round(this.images.road.naturalWidth * scale),
                 height: Math.round(this.images.road.naturalHeight * scale)
             };
+
+            // start game
+            this.state = this.states.running;
         },
 
         step: function(delta)
         {
             var that = this;
 
-            if (this.running)
+            if (this.state == this.states.running)
             {                
                 // inc time
                 this.time += delta;
@@ -190,7 +199,7 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         collision: function()
         {
-            this.running = false;
+            this.state = this.states.gameover;
 
             var name = prompt("Please enter your name:", "Unknown");
             if (name != null)
