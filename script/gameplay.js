@@ -74,18 +74,29 @@ DodgeIt.prototype.gameplay_start = function(container)
                 height: Math.round(this.images.road.naturalHeight * scale)
             };
 
+            // set time
+            this.time = -3;
+
             // start game
-            this.state = this.states.running;
+            this.state = this.states.countdown;
         },
 
         step: function(delta)
         {
             var that = this;
 
-            if (this.state == this.states.running)
+            // inc time
+            this.time += delta;
+
+            if (this.state == this.states.countdown)
+            {
+                if (this.time >= 0)
+                {
+                    this.state = this.states.running;
+                }
+            }
+            else if (this.state == this.states.running)
             {                
-                // inc time
-                this.time += delta;
 
                 // inc score
                 this.score += delta * this.points.time;
