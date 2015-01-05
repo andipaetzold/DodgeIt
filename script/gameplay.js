@@ -1,6 +1,8 @@
 DodgeIt.prototype.gameplay_start = function(container)
 {
     var game = playground({
+        running: true,
+
         width: this.container.width(),
         height: this.container.height(),
 
@@ -27,60 +29,63 @@ DodgeIt.prototype.gameplay_start = function(container)
         {
             var that = this;
 
-            // inc time
-            this.time += delta;
+            if (this.running)
+            {                
+                // inc time
+                this.time += delta;
 
-            // move background-image
-            this.background.y = (this.background.y + (this.obstacle.speed * delta)) % this.background.height;
+                // move background-image
+                this.background.y = (this.background.y + (this.obstacle.speed * delta)) % this.background.height;
 
-            // move character
-            if (this.keyboard.keys.left && !this.keyboard.keys.right)
-            {
-                this.character.x -= this.character.speed * delta;
-            }
-            else if (!this.keyboard.keys.left && this.keyboard.keys.right)
-            {
-                this.character.x += this.character.speed * delta;
-            }
+                // move character
+                if (this.keyboard.keys.left && !this.keyboard.keys.right)
+                {
+                    this.character.x -= this.character.speed * delta;
+                }
+                else if (!this.keyboard.keys.left && this.keyboard.keys.right)
+                {
+                    this.character.x += this.character.speed * delta;
+                }
 
-            // check new position
-            this.character.x = Math.max(this.character.x, this.sidebar.width);
-            this.character.x = Math.min(this.character.x, this.width - this.character.width);
+                // check new position
+                this.character.x = Math.max(this.character.x, this.sidebar.width);
+                this.character.x = Math.min(this.character.x, this.width - this.character.width);
 
-            // create obstacle
-            if (this.obstacles.length == 0 ||
-                this.time - this.obstacles[this.obstacles.length - 1].spawntime >= 1.5) // spawn every 1.5 seconds
-            {
-                this.obstacles.push({
-                    x: Math.floor(Math.random() * (this.width - this.sidebar.width - this.obstacle.width)) + this.sidebar.width,
-                    y: -this.obstacle.height,
-                    width: this.obstacle.width,
-                    height: this.obstacle.height,
-                    spawntime: this.time
+                // create obstacle
+                if (this.obstacles.length == 0 ||
+                    this.time - this.obstacles[this.obstacles.length - 1].spawntime >= 1.5) // spawn every 1.5 seconds
+                {
+                    this.obstacles.push({
+                        x: Math.floor(Math.random() * (this.width - this.sidebar.width - this.obstacle.width)) + this.sidebar.width,
+                        y: -this.obstacle.height,
+                        width: this.obstacle.width,
+                        height: this.obstacle.height,
+                        spawntime: this.time
+                    });
+                }
+
+                // move obstacles / collision test
+                $.each(this.obstacles, function(index, value)
+                {
+                    // move
+                    value.y += that.obstacle.speed * delta;
+
+                    // collision test
+                    if (that.character.x < value.x + value.width &&
+                       that.character.x + that.character.width > value.x &&
+                       that.character.y < value.y + value.height &&
+                       that.character.height + that.character.y > value.y)
+                    {
+                        that.collision();
+                    }
+                });
+
+                // remove obstacles
+                this.obstacles = $.grep(this.obstacles, function(value)
+                {
+                    return value.y < that.height;
                 });
             }
-
-            // move obstacles / collision test
-            $.each(this.obstacles, function(index, value)
-            {
-                // move
-                value.y += that.obstacle.speed * delta;
-
-                // collision test
-                if (that.character.x < value.x + value.width &&
-                   that.character.x + that.character.width > value.x &&
-                   that.character.y < value.y + value.height &&
-                   that.character.height + that.character.y > value.y)
-                {
-                    that.collision();
-                }
-            });
-
-            // remove obstacles
-            this.obstacles = $.grep(this.obstacles, function(value)
-            {
-                return value.y < that.height;
-            });
         },
 
         render: function()
@@ -131,7 +136,7 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         collision: function()
         {
-            console.log("collision");
+            this.running = false;
         },
 
         // game screen properties
