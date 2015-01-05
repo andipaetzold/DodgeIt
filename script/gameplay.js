@@ -209,6 +209,20 @@ DodgeIt.prototype.gameplay_start = function(container)
                     .fillStyle("#000000")
                     .fillRect(value.x, value.y, value.width, value.height);
             });
+
+            // countdown
+            if (this.state == this.states.countdown)
+            {
+                this.layer
+                    .font("200px Arial");
+
+                var text = Math.abs(Math.floor(this.time)).toString();
+                textboundaries = this.layer.textBoundaries(text);
+
+                this.layer
+                    .fillStyle("#FFFFFF")
+                    .wrappedText(text, 200, (this.height + textboundaries.height) / 2);
+            }
         },
 
         collision: function()
