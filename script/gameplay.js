@@ -239,21 +239,21 @@ DodgeIt.prototype.gameplay_start = function(container)
 
                 this.layer
                     .fillStyle("#FFFFFF")
-                    .wrappedText(text, 200, (this.height + textboundaries.height) / 2);
+                    .wrappedText(text, this.sidebar.width + (this.width - this.sidebar.width - textboundaries.width) / 2, (this.height + textboundaries.height) / 2);
             }
 
             // pause
             if (this.state == this.states.pause)
             {
                 this.layer
-                    .font("150px Arial");
+                    .font("100px Arial");
 
                 var text = "Pause";
                 textboundaries = this.layer.textBoundaries(text);
 
                 this.layer
                     .fillStyle("#FFFFFF")
-                    .wrappedText(text, 0, (this.height + textboundaries.height) / 2);
+                    .wrappedText(text, this.sidebar.width + (this.width - this.sidebar.width - textboundaries.width) / 2, (this.height + textboundaries.height) / 2);
             }
         },
 
