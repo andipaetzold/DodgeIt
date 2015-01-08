@@ -1,5 +1,7 @@
 DodgeIt.prototype.gameplay_start = function(container)
 {
+    container.html("");
+    
     var that = this;
     var game = playground({
         // size
