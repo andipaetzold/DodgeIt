@@ -67,7 +67,7 @@ DodgeIt.prototype.gameplay_start = function(container)
         score: 0,
         points: {
             time: 10,
-            obstacle: 10
+            obstacle: 0.005 // points per pixel
         },
 
         // prevent keyboard default
@@ -188,7 +188,7 @@ DodgeIt.prototype.gameplay_start = function(container)
                     var remove = value.y >= that.height;
                     if (remove)
                     {
-                        that.score += that.points.obstacle;
+                        that.score += that.points.obstacle * (value.width * value.height);
                     }
                     return !remove;
                 });
