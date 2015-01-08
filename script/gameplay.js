@@ -69,7 +69,7 @@ DodgeIt.prototype.gameplay_start = function(container)
             this.character.y = this.height - this.character.height;
 
             // background-image
-            this.loadImages("road");
+            this.loadImages("road.jpg");
             var  scale = (this.width - this.sidebar.width) / this.images.road.naturalWidth;
             this.background = {
                 img: this.images.road,
