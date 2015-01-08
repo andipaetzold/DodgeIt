@@ -23,8 +23,8 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         // character
         character: {
-            width:  64,
-            height: 64,
+            width:  32,
+            height: 32,
             x: 0,
             y: 0, // calculated on start
             speed: 300
