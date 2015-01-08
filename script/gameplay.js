@@ -47,7 +47,9 @@ DodgeIt.prototype.gameplay_start = function(container)
                 }
             ],
 
-            speed: 100
+            speed: 100,
+            speed_time: 10,     // every x seconds the speed changes
+            speed_factor: 1.15  // speed change per step
         },
         obstacles: [],
 
@@ -135,7 +137,7 @@ DodgeIt.prototype.gameplay_start = function(container)
                 this.score += delta * this.points.time;
 
                 // move background-image
-                this.background.y = (this.background.y + (this.obstacle.speed * delta)) % this.background.height;
+                this.background.y = (this.background.y + (this.obstacle.speed * delta * that.getSpeedFactor())) % this.background.height;
 
                 // move character
                 if (this.keyboard.keys.left && !this.keyboard.keys.right)
@@ -170,7 +172,7 @@ DodgeIt.prototype.gameplay_start = function(container)
                 $.each(this.obstacles, function(index, value)
                 {
                     // move
-                    value.y += that.obstacle.speed * delta;
+                    value.y += delta * that.obstacle.speed * that.getSpeedFactor();
 
                     // collision test
                     if (that.character.x < value.x + value.width &&
@@ -305,6 +307,11 @@ DodgeIt.prototype.gameplay_start = function(container)
                     this.state = this.states.running;
                 }
             }
+        },
+
+        getSpeedFactor: function()
+        {
+            return Math.pow(this.obstacle.speed_factor, Math.floor(this.time / this.obstacle.speed_time));
         }
     });
 };
