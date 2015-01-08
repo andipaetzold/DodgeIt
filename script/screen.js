@@ -107,7 +107,7 @@ DodgeIt.prototype.screen_show = function(screen)
             break;
         case "leaderboard":
             var table = $("table tbody", container).empty();
-            var data = this.leaderboard_get(0, 10);
+            var data = this.leaderboard.get(0, 10);
             $.each(data, function(index, item)
             {
                 $("<tr></tr>")

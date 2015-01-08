@@ -267,7 +267,7 @@ DodgeIt.prototype.gameplay_start = function(container)
             var name = prompt("Please enter your name:", "Unknown");
             if (name != null)
             {
-                that.leaderboard_post(name, Math.floor(this.score));
+                that.leaderboard.post(name, Math.floor(this.score));
             }
 
             // restart
