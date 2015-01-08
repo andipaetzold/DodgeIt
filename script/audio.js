@@ -11,9 +11,9 @@ DodgeIt.prototype.audio = {
             });
 
             // mute
-            if ($.cookie("audio/music/mute"))
+            if ($.cookie("audio/music/mute") == "true")
             {
-                this.mute_set($.cookie("audio/music/mute"));
+                this.mute_set($.cookie("audio/music/mute") == "true");
             }
             else
             {
@@ -96,7 +96,7 @@ DodgeIt.prototype.audio = {
             // mute
             if ($.cookie("audio/sfx/mute"))
             {
-                this.mute_set($.cookie("audio/sfx/mute"));
+                this.mute_set($.cookie("audio/sfx/mute") == "true");
             }
             else
             {
