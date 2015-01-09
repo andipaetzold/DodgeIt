@@ -23,11 +23,15 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         // character
         character: {
-            width:  32,
-            height: 32,
+            maxwidth:  48,
+            maxheight: 48,
             x: 0,
             y: 0, // calculated on start
-            speed: 300
+            speed: 300,
+
+            img: null,  // set at start
+            width:  32, // calculated on start
+            height: 32, // calculated on start
         },
 
         // obstacles
@@ -90,6 +94,16 @@ DodgeIt.prototype.gameplay_start = function(container)
                 width:  Math.round(this.images.road.naturalWidth * scale),
                 height: Math.round(this.images.road.naturalHeight * scale)
             };
+
+            // character image
+            this.loadImages("character/car");
+            this.character.img = this.images["character/car"];
+            var scaleWidth = this.character.maxwidth / this.character.img.naturalWidth;
+            var scaleHeight = this.character.maxheight / this.character.img.naturalHeight;
+            var scale = Math.min(scaleWidth, scaleHeight);
+            this.character.width = Math.round(this.character.img.naturalWidth * scale);
+            this.character.height = Math.round(this.character.img.naturalHeight * scale);
+            this.character.y = this.height - this.character.height;
 
             // start
             this.start();
@@ -216,9 +230,11 @@ DodgeIt.prototype.gameplay_start = function(container)
             }
 
             // character
-            this.layer
-                .fillStyle("#000000")
-                .fillRect(this.character.x, this.character.y, this.character.width, this.character.height);
+            this.layer.drawImage(this.character.img,
+                                 this.character.x,
+                                 this.character.y,
+                                 this.character.width,
+                                 this.character.height);
 
             // sidebar
             this.layer
