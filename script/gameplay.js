@@ -19,7 +19,14 @@ DodgeIt.prototype.gameplay_start = function(container)
         },
 
         // background
-        background: null,
+        background: {
+            x: 0,       // this.sidebar.width    
+            y: 0,
+
+            img: null,  // set at start
+            width:  0,  // calculated on start
+            height: 0   // calculated on start
+        },
 
         // character
         character: {
@@ -85,22 +92,24 @@ DodgeIt.prototype.gameplay_start = function(container)
             this.character.y = this.height - this.character.height;
 
             // background-image
-            this.loadImages("road.jpg");
-            var  scale = (this.width - this.sidebar.width) / this.images.road.naturalWidth;
-            this.background = {
-                img: this.images.road,
-                x: this.sidebar.width,
-                y: 0,
-                width:  Math.round(this.images.road.naturalWidth * scale),
-                height: Math.round(this.images.road.naturalHeight * scale)
-            };
+            this.background.x = this.sidebar.width;
+            
+            this.loadImages(that.options.style + "/background.jpg");
+            console.log(this.images);
+            this.background.img = this.images[that.options.style + "/background"];
+
+            var  scale = (this.width - this.sidebar.width) / this.background.img.naturalWidth;
+            this.background.width  = Math.round(this.background.img.naturalWidth * scale);
+            this.background.height = Math.round(this.background.img.naturalHeight * scale);
 
             // character image
-            this.loadImages("character/car");
-            this.character.img = this.images["character/car"];
+            this.loadImages(that.options.style + "/character");
+            this.character.img = this.images[that.options.style + "/character"];
+
             var scaleWidth = this.character.maxwidth / this.character.img.naturalWidth;
             var scaleHeight = this.character.maxheight / this.character.img.naturalHeight;
             var scale = Math.min(scaleWidth, scaleHeight);
+            
             this.character.width = Math.round(this.character.img.naturalWidth * scale);
             this.character.height = Math.round(this.character.img.naturalHeight * scale);
             this.character.y = this.height - this.character.height;

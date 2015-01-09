@@ -30,6 +30,14 @@ DodgeIt.prototype.screen_init = function()
 
     // options
     container = $("div#options", this.container);
+
+    // options - style
+    $("input[data-option=style]", container).on("change", function()
+    {
+        that.options.style = $(this).val();
+    });
+
+    // options - music
     $("input#options-music-mute", container).on("change", function()
     {
         that.audio.music.mute_set(this.checked);
@@ -38,6 +46,8 @@ DodgeIt.prototype.screen_init = function()
     {
         that.audio.music.volume_set($(this).val());
     });
+
+    // options - sfx
     $("input#options-sfx-mute", container).on("change", function()
     {
         that.audio.sfx.mute_set(this.checked);
@@ -119,6 +129,13 @@ DodgeIt.prototype.screen_show = function(screen)
         case "controls":
             break;
         case "options":
+            // style
+            $.each($("input[data-option=style]"), function()
+            {
+                $(this).attr("checked", that.options.style == $(this).val());
+            });
+
+            // music
             $("input#options-music-mute")
                 .attr("checked", this.audio.music.mute_get());
 
@@ -126,6 +143,7 @@ DodgeIt.prototype.screen_show = function(screen)
                 .attr("max", this.audio.max)
                 .val(this.audio.music.volume_get());
 
+            // sfx
             $("input#options-sfx-mute")
                 .attr("checked", this.audio.sfx.mute_get());
 

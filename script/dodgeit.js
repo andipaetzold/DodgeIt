@@ -27,6 +27,12 @@ function DodgeIt(container)
         });
     });
 
+    // default options
+    this.options = {
+        style: "car"
+    };
+
+    // init
     this.controls_init();
     this.audio.music.init();
     this.audio.sfx.init();

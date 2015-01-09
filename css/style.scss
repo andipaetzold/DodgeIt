@@ -105,6 +105,10 @@ body {
 
         /* options-screen */
         &#options {
+            img {
+                max-height: 75px;
+                max-width:  75px;
+            }
             input[type=checkbox] {
                 margin-left: 15px;
                 margin-right: 5px;
