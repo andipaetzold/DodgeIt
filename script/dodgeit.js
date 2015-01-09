@@ -2,6 +2,7 @@ function DodgeIt(container)
 {
     // clear container
     this.container = container;
+    this.container.children().hide();
 
     // scripts to load
     var scripts = [

@@ -150,6 +150,15 @@ DodgeIt.prototype.screen_show = function(screen)
     }
 
     // show screen
-    container.siblings().hide();
-    container.show();
+    if (container.siblings(":visible").length > 0)
+    {
+        container.siblings(":visible").fadeOut(250, function()
+        {
+            container.fadeIn(250);
+        });
+    }
+    else
+    {
+        container.show();
+    }
 }
