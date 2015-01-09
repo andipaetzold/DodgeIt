@@ -1,41 +1,11 @@
-DodgeIt.prototype.audio = {
-    music: {
+function audio()
+{
+    var that = this;
+
+    // MUSIC
+    this.music = {
         audioElement: null,
-        init: function()
-        {
-            this.audioElement = $("<audio></audio");
-            var that = this;
-            this.audioElement.bind("ended", function()
-            {
-                that.next_track();
-            });
-
-            // mute
-            if ($.cookie("audio/music/mute") == "true")
-            {
-                this.mute_set($.cookie("audio/music/mute") == "true");
-            }
-            else
-            {
-                this.mute_set(false);
-            }
-
-            // volume
-            if ($.cookie("audio/music/volume"))
-            {
-                this.volume_set($.cookie("audio/music/volume"));
-            }
-            else
-            {
-                this.volume_set(5);
-            }
-
-            // start music
-            this.next_track();
-        },
-
         max: 10,
-
         tracks: [
             "music/01_A_Night_Of_Dizzy_Spells.mp3",
             "music/02_Underclocked_(underunderclocked_mix).mp3",
@@ -85,34 +55,44 @@ DodgeIt.prototype.audio = {
         {
             return this.audioElement.get(0).volume * this.max;
         }
-    },
-    sfx: {
+    };
+
+    // INIT MUSIC    
+    this.music.audioElement = $("<audio></audio");
+    this.music.audioElement.bind("ended", function()
+    {
+        that.next_track();
+    });
+
+    // mute
+    if ($.cookie("audio/music/mute") == "true")
+    {
+        this.music.mute_set($.cookie("audio/music/mute") == "true");
+    }
+    else
+    {
+        this.music.mute_set(false);
+    }
+
+    // volume
+    if ($.cookie("audio/music/volume"))
+    {
+        this.music.volume_set($.cookie("audio/music/volume"));
+    }
+    else
+    {
+        this.music.volume_set(5);
+    }
+
+    // start music
+    this.music.next_track();
+
+    // SFX
+    this.sfx = {
         mute: false,
         max: 10,
         volume: 5,
 
-        init: function()
-        {
-            // mute
-            if ($.cookie("audio/sfx/mute"))
-            {
-                this.mute_set($.cookie("audio/sfx/mute") == "true");
-            }
-            else
-            {
-                this.mute_set(false);
-            }
-
-            // volume
-            if ($.cookie("audio/sfx/volume"))
-            {
-                this.volume_set($.cookie("audio/sfx/volume"));
-            }
-            else
-            {
-                this.volume_set(5);
-            }
-        },
         play: function()
         {
 
@@ -135,5 +115,26 @@ DodgeIt.prototype.audio = {
         {
             return this.volume;
         }
+    }
+
+    // INIT SFX    
+    // mute
+    if ($.cookie("audio/sfx/mute"))
+    {
+        this.sfx.mute_set($.cookie("audio/sfx/mute") == "true");
+    }
+    else
+    {
+        this.sfx.mute_set(false);
+    }
+
+    // volume
+    if ($.cookie("audio/sfx/volume"))
+    {
+        this.sfx.volume_set($.cookie("audio/sfx/volume"));
+    }
+    else
+    {
+        this.sfx.volume_set(5);
     }
 };
