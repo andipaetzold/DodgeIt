@@ -68,10 +68,11 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         // game states
         states: {
-            countdown:  0,
-            running:    1,
-            pause:      2,
-            gameover:   3
+            create:     0,
+            countdown:  1,
+            running:    2,
+            pause:      3,
+            gameover:   4
         },
         state: 0,
 
@@ -108,51 +109,56 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         start: function()
         {
-            // set character position
-            this.character.x = this.sidebar.width;
-
-            // remove obstacles
-            this.obstacles = [];
-
-            // set time
-            this.time = -3;
-
-            // set score
-            this.score = 0;
-
-            // start game
-            this.state = this.states.countdown;
+            this.state = this.states.create;
         },
 
         step: function(delta)
         {
-            // INIT            
-            // background image
-            if (this.background.img == null)
-            {
-                this.background.img = this.images[this.background.src];
-                
-                var scale = (this.width - this.sidebar.width) / this.background.img.naturalWidth;
-                this.background.width  = Math.round(this.background.img.naturalWidth * scale);
-                this.background.height = Math.round(this.background.img.naturalHeight * scale);
-            }
-
-            // character image
-            if (this.character.img == null)
-            {
-                this.character.img = this.images[this.character.src];
-
-                var scaleWidth = this.character.maxwidth / this.character.img.naturalWidth;
-                var scaleHeight = this.character.maxheight / this.character.img.naturalHeight;
-                var scale = Math.min(scaleWidth, scaleHeight);
-                
-                this.character.width = Math.round(this.character.img.naturalWidth * scale);
-                this.character.height = Math.round(this.character.img.naturalHeight * scale);
-                this.character.y = this.height - this.character.height;                
-            }
-
-            // STEP
             var that = this;
+
+            // INIT  
+            if (this.state == this.states.create)
+            {
+                // remove obstacles
+                this.obstacles = [];
+
+                // set time
+                this.time = -3;
+
+                // set score
+                this.score = 0;
+
+                // start game
+                this.state = this.states.countdown;
+                
+                // background image
+                if (this.background.img == null)
+                {
+                    this.background.img = this.images[this.background.src];
+
+                    var scale = (this.width - this.sidebar.width) / this.background.img.naturalWidth;
+                    this.background.width  = Math.round(this.background.img.naturalWidth * scale);
+                    this.background.height = Math.round(this.background.img.naturalHeight * scale);
+                }
+
+                // character image
+                if (this.character.img == null)
+                {
+                    this.character.img = this.images[this.character.src];
+
+                    var scaleWidth = this.character.maxwidth / this.character.img.naturalWidth;
+                    var scaleHeight = this.character.maxheight / this.character.img.naturalHeight;
+                    var scale = Math.min(scaleWidth, scaleHeight);
+                    
+                    this.character.width = Math.round(this.character.img.naturalWidth * scale);
+                    this.character.height = Math.round(this.character.img.naturalHeight * scale);
+                    this.character.y = this.height - this.character.height;                
+                }
+
+                // set character position
+                this.character.x = (this.width + this.sidebar.width - this.character.width) / 2;
+            }      
+
             // inc time
             if (this.state == this.states.countdown ||
                 this.state == this.states.running)
