@@ -24,6 +24,7 @@ DodgeIt.prototype.gameplay_start = function(container)
             y: 0,
 
             img: null,  // set at start
+            src: "",    // set at start
             width:  0,  // calculated on start
             height: 0   // calculated on start
         },
@@ -37,6 +38,7 @@ DodgeIt.prototype.gameplay_start = function(container)
             speed: 300,
 
             img: null,  // set at start
+            src: "",    // set at start
             width:  32, // calculated on start
             height: 32, // calculated on start
         },
@@ -87,32 +89,18 @@ DodgeIt.prototype.gameplay_start = function(container)
         preventKeyboardDefault: true,
 
         create: function()
-        {
+        {   
             // calc character y
             this.character.y = this.height - this.character.height;
 
-            // background-image
-            this.background.x = this.sidebar.width;
-            
-            this.loadImages(that.options.style + "/background.jpg");
-            console.log(this.images);
-            this.background.img = this.images[that.options.style + "/background"];
-
-            var  scale = (this.width - this.sidebar.width) / this.background.img.naturalWidth;
-            this.background.width  = Math.round(this.background.img.naturalWidth * scale);
-            this.background.height = Math.round(this.background.img.naturalHeight * scale);
+            // background image
+            this.background.x = this.sidebar.width;            
+            this.background.src = that.options.style + "/background";
+            this.loadImages(this.background.src + ".jpg");
 
             // character image
-            this.loadImages(that.options.style + "/character");
-            this.character.img = this.images[that.options.style + "/character"];
-
-            var scaleWidth = this.character.maxwidth / this.character.img.naturalWidth;
-            var scaleHeight = this.character.maxheight / this.character.img.naturalHeight;
-            var scale = Math.min(scaleWidth, scaleHeight);
-            
-            this.character.width = Math.round(this.character.img.naturalWidth * scale);
-            this.character.height = Math.round(this.character.img.naturalHeight * scale);
-            this.character.y = this.height - this.character.height;
+            this.character.src = that.options.style + "/character";
+            this.loadImages(this.character.src);
 
             // start
             this.start();
@@ -138,8 +126,33 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         step: function(delta)
         {
-            var that = this;
+            // INIT            
+            // background image
+            if (this.background.img == null)
+            {
+                this.background.img = this.images[this.background.src];
+                
+                var scale = (this.width - this.sidebar.width) / this.background.img.naturalWidth;
+                this.background.width  = Math.round(this.background.img.naturalWidth * scale);
+                this.background.height = Math.round(this.background.img.naturalHeight * scale);
+            }
 
+            // character image
+            if (this.character.img == null)
+            {
+                this.character.img = this.images[this.character.src];
+
+                var scaleWidth = this.character.maxwidth / this.character.img.naturalWidth;
+                var scaleHeight = this.character.maxheight / this.character.img.naturalHeight;
+                var scale = Math.min(scaleWidth, scaleHeight);
+                
+                this.character.width = Math.round(this.character.img.naturalWidth * scale);
+                this.character.height = Math.round(this.character.img.naturalHeight * scale);
+                this.character.y = this.height - this.character.height;                
+            }
+
+            // STEP
+            var that = this;
             // inc time
             if (this.state == this.states.countdown ||
                 this.state == this.states.running)
