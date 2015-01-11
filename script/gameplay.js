@@ -182,14 +182,47 @@ DodgeIt.prototype.gameplay_start = function(container)
                 this.background.y = (this.background.y + (this.obstacle.speed * delta * that.getSpeedFactor())) % this.background.height;
 
                 // move character
+                var control_speed = 0;
                 if (this.keyboard.keys.left && !this.keyboard.keys.right)
                 {
-                    this.character.x -= this.character.speed * delta;
+                    control_speed = -1;
                 }
                 else if (!this.keyboard.keys.left && this.keyboard.keys.right)
                 {
-                    this.character.x += this.character.speed * delta;
+                    control_speed = 1;
                 }
+                else if (this.gamepads[0])
+                {
+                    // DPAD
+                    if (this.gamepads[0].buttons)
+                    {
+                        if (this.gamepads[0].buttons["left"])
+                        {
+                            control_speed = -1;
+                        }
+                        else if(this.gamepads[0].buttons["right"])
+                        {
+                            control_speed = 1;
+                        }                        
+                    }
+
+                    // Stick 1
+                    var i = 0;
+                    while (control_speed == 0 &&
+                           this.gamepads[0].sticks[i])
+                    {
+                        if (Math.abs(this.gamepads[0].sticks[i]) > 0.1)
+                        {
+                            control_speed = Math.ceil(this.gamepads[0].sticks[i].x) * 
+                                            (Math.abs(this.gamepads[0].sticks[i].x) - 0.1) / 0.9;
+                        }                        
+
+                        // inc i
+                        i++;
+                    }
+                }
+
+                this.character.x += control_speed * this.character.speed * delta;
 
                 // check new position
                 this.character.x = Math.max(this.character.x, this.sidebar.width);
@@ -341,6 +374,21 @@ DodgeIt.prototype.gameplay_start = function(container)
         keydown: function(event)
         {
             if(event.key == "escape")
+            {
+                if (this.state == this.states.running)
+                {
+                    this.state = this.states.pause;
+                }
+                else if (this.state == this.states.pause)
+                {
+                    this.state = this.states.running;
+                }
+            }
+        },
+
+        gamepaddown: function(event)
+        {
+            if (event.button == "start")
             {
                 if (this.state == this.states.running)
                 {
