@@ -130,7 +130,7 @@ DodgeIt.prototype.screen_show = function(screen)
             // set keys
             $.each($("span[data-key]", container), function()
             {
-                $(this).html(that.controls.command[$(this).attr("data-key")].code);
+                $(this).html(that.controls_keyName(that.controls.command[$(this).attr("data-key")].code));
             });
 
             // set change action
@@ -139,7 +139,7 @@ DodgeIt.prototype.screen_show = function(screen)
                 var that2 = this;
                 that.controls_set($(this).attr("data-key"), function(keyCode)
                 {
-                    $("span[data-key=" + $(that2).attr("data-key") + "]").html(keyCode);
+                    $("span[data-key=" + $(that2).attr("data-key") + "]").html(that.controls_keyName(keyCode));
                 });
             });
             break;

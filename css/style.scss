@@ -102,14 +102,10 @@ body {
         /* controls-screen */
         &#controls {
             table tr td {
-                padding: 2px;
+                padding: 5px;
 
                 button {
                     width: 100%;
-                }
-
-                &:nth-child(2) {
-                    text-align: right;
                 }
             }
         }
