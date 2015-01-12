@@ -47,16 +47,25 @@ DodgeIt.prototype.gameplay_start = function(container)
         obstacle: {
             items: [
                 {
+                    img: null,          // set at start
+                    src: "",            // set at start
+                    src_suffix: "-1x1",
                     height: 50,
                     width:  50
                 },
                 {
+                    img: null,          // set at start
+                    src: "",            // set at start
+                    src_suffix: "-1x2",
                     height: 100,
                     width:  50
                 },
                 {
+                    img: null,          // set at start
+                    src: "",            // set at start
+                    src_suffix: "-2x1",
                     height: 50,
-                    width:  100
+                    width:  100,
                 }
             ],
 
@@ -90,18 +99,22 @@ DodgeIt.prototype.gameplay_start = function(container)
         preventKeyboardDefault: true,
 
         create: function()
-        {   
-            // calc character y
-            this.character.y = this.height - this.character.height;
-
-            // background image
-            this.background.x = this.sidebar.width;            
+        {
+            // background image           
             this.background.src = that.options.style + "/background";
             this.loadImages(this.background.src + ".jpg");
 
             // character image
             this.character.src = that.options.style + "/character";
             this.loadImages(this.character.src);
+
+            // obstacles
+            var that2 = this;
+            $.each(this.obstacle.items, function(index, value)
+            {
+                that2.loadImages(that.options.style + "/obstacle" + value.src_suffix);
+                value.src = that.options.style + "/obstacle" + value.src_suffix;
+            });
 
             // start
             this.start();
@@ -134,6 +147,8 @@ DodgeIt.prototype.gameplay_start = function(container)
                 // background image
                 if (this.background.img == null)
                 {
+                    this.background.x = this.sidebar.width; 
+
                     this.background.img = this.images[this.background.src];
 
                     var scale = (this.width - this.sidebar.width) / this.background.img.naturalWidth;
@@ -144,6 +159,8 @@ DodgeIt.prototype.gameplay_start = function(container)
                 // character image
                 if (this.character.img == null)
                 {
+                    this.character.y = this.height - this.character.height;
+
                     this.character.img = this.images[this.character.src];
 
                     var scaleWidth = this.character.maxwidth / this.character.img.naturalWidth;
@@ -157,6 +174,12 @@ DodgeIt.prototype.gameplay_start = function(container)
 
                 // set character position
                 this.character.x = (this.width + this.sidebar.width - this.character.width) / 2;
+
+                // obstacles
+                $.each(this.obstacle.items, function(index, value)
+                {
+                    value.img = that.images[value.src];
+                });
             }      
 
             // inc time
@@ -233,9 +256,11 @@ DodgeIt.prototype.gameplay_start = function(container)
                     this.time - this.obstacles[this.obstacles.length - 1].spawntime >= 1.5) // spawn every 1.5 seconds
                 {
                     var obstacle_id = Math.floor(Math.random() * this.obstacle.items.length);
+                    var obstacle_x = Math.floor(Math.random() * (this.width - this.sidebar.width - this.obstacle.items[obstacle_id].width)) + this.sidebar.width;
 
                     this.obstacles.push({
-                        x: Math.floor(Math.random() * (this.width - this.sidebar.width - this.obstacle.items[obstacle_id].width)) + this.sidebar.width,
+                        img: this.obstacle.items[obstacle_id].img,
+                        x: obstacle_x,
                         y: -this.obstacle.items[obstacle_id].height,
                         width: this.obstacle.items[obstacle_id].width,
                         height: this.obstacle.items[obstacle_id].height,
@@ -315,9 +340,11 @@ DodgeIt.prototype.gameplay_start = function(container)
             // obstacles
             $.each(this.obstacles, function(index, value)
             {
-                that.layer
-                    .fillStyle("#000000")
-                    .fillRect(value.x, value.y, value.width, value.height);
+                that.layer.drawImage(value.img,
+                                     value.x,
+                                     value.y,
+                                     value.width,
+                                     value.height);
             });
 
             // countdown
