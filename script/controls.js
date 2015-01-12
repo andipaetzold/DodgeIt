@@ -1,31 +1,54 @@
 DodgeIt.prototype.controls_init = function()
 {
+    this.options.controls.command["up"]    =   38;
+    this.options.controls.command["down"]  =   40;
+    this.options.controls.command["left"]  =   37;
+    this.options.controls.command["right"] =   39;
+    this.options.controls.command["enter"] =   13;
+    this.options.controls.command["back"]  =    8;
+
     var that = this;
     $(document).keydown(function(event)
     {
-        switch(event.keyCode)
+        if (that.options.controls.set.active == false)
         {
-            case  8: // Backspace
-                that.controls_back();
-                break;
-            case 13: // Enter
-            case 32: // Space
-                that.controls_enter();
-                break;
-            case 37: // Arrow Left
-                that.controls_left();
-                break;
-            case 38: // Arrow Top
-                that.controls_top();
-                break;
-            case 39: // Arrow Right
-                that.controls_right();
-                break;
-            case 40: // Arrow Down
-                that.controls_down();
-                break;
-            default:
-                return true;
+            switch(event.keyCode)
+            {
+                case that.options.controls.command["up"]:     // top
+                    that.controls_top();
+                    break;
+                case that.options.controls.command["down"]:    // down
+                    that.controls_down();
+                    break;
+                case that.options.controls.command["left"]:    // left
+                    that.controls_left();
+                    break;
+                case that.options.controls.command["right"]:   // right
+                    that.controls_right();
+                    break;
+                case that.options.controls.command["enter"]:   // enter
+                    that.controls_enter();
+                    break;
+                case that.options.controls.command["back"]:    // back
+                    that.controls_back();
+                    break;
+                default:
+                    return true;
+            }            
+        }
+        else
+        {
+            // set control
+            if (that.options.controls.set.abort != event.keyCode)
+            {
+                that.options.controls.command[that.options.controls.set.key] = event.keyCode;
+                that.options.controls.set.callback(event.keyCode);
+            }
+            else
+            {
+                that.options.controls.set.callback(null);
+            }
+            that.options.controls.set.active = false;
         }
 
         return false;
@@ -40,4 +63,11 @@ DodgeIt.prototype.controls_reset = function()
     DodgeIt.prototype.controls_top     = function() {};
     DodgeIt.prototype.controls_right   = function() {};
     DodgeIt.prototype.controls_down    = function() {};
+}
+
+DodgeIt.prototype.controls_set = function(key, callback)
+{
+    this.options.controls.set.key = key;
+    this.options.controls.set.callback = callback;
+    this.options.controls.set.active = true;
 }

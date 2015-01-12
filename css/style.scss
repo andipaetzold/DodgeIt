@@ -101,6 +101,17 @@ body {
 
         /* controls-screen */
         &#controls {
+            table tr td {
+                padding: 2px;
+
+                button {
+                    width: 100%;
+                }
+
+                &:nth-child(2) {
+                    text-align: right;
+                }
+            }
         }
 
         /* options-screen */
