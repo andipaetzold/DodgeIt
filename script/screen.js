@@ -78,12 +78,12 @@ DodgeIt.prototype.screen_show = function(screen)
     switch(screen)
     {
         case "menu":
-            DodgeIt.prototype.controls_enter = function()
+            this.controls_command_set("enter", function()
             {
                 $("span.selected", container).click();
-            };
+            });
 
-            DodgeIt.prototype.controls_top = function()
+            this.controls_command_set("up", function()
             {
                 var selected = $("span.selected", container);
                 selected.removeClass("selected");
@@ -95,9 +95,9 @@ DodgeIt.prototype.screen_show = function(screen)
                 {
                     selected.parent().children().last().addClass("selected");   
                 }
-            };
+            });
 
-            DodgeIt.prototype.controls_down = function()
+            this.controls_command_set("down", function()
             {
                 var selected = $("span.selected", container);
                 selected.removeClass("selected");
@@ -109,7 +109,7 @@ DodgeIt.prototype.screen_show = function(screen)
                 {
                     selected.parent().children().first().addClass("selected");   
                 }
-            };
+            });
 
             break;
         case "gameplay":
@@ -130,7 +130,7 @@ DodgeIt.prototype.screen_show = function(screen)
             // set keys
             $.each($("span[data-key]", container), function()
             {
-                $(this).html(that.options.controls.command[$(this).attr("data-key")]);
+                $(this).html(that.controls.command[$(this).attr("data-key")].code);
             });
 
             // set change action
@@ -176,10 +176,10 @@ DodgeIt.prototype.screen_show = function(screen)
     // general
     if ($("span.back", container).length == 1)
     {
-        DodgeIt.prototype.controls_back = function()
+        this.controls_command_set("back", function()
         {
             that.screen_show("menu");
-        };
+        });
     }
 
     // show screen

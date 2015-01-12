@@ -1,73 +1,99 @@
 DodgeIt.prototype.controls_init = function()
 {
-    this.options.controls.command["up"]    =   38;
-    this.options.controls.command["down"]  =   40;
-    this.options.controls.command["left"]  =   37;
-    this.options.controls.command["right"] =   39;
-    this.options.controls.command["enter"] =   13;
-    this.options.controls.command["back"]  =    8;
-
     var that = this;
+
+    // set this.controls
+
+    // default keys
+    var keys = {
+        "up":       38,
+        "down":     40,
+        "left":     37,
+        "right":    39,
+        "enter":    13,
+        "back":     8
+    }
+
+    $.each(keys, function(index, value)
+    {
+        that.controls.command[index] = {
+            code:       value,
+            fn:         function() {},
+            pressed:    false
+        };
+    });
+
+    // keydown
     $(document).keydown(function(event)
     {
-        if (that.options.controls.set.active == false)
+        if (that.controls.set.active == false)
         {
-            switch(event.keyCode)
+            $.each(that.controls.command, function(index, value)
             {
-                case that.options.controls.command["up"]:     // top
-                    that.controls_top();
-                    break;
-                case that.options.controls.command["down"]:    // down
-                    that.controls_down();
-                    break;
-                case that.options.controls.command["left"]:    // left
-                    that.controls_left();
-                    break;
-                case that.options.controls.command["right"]:   // right
-                    that.controls_right();
-                    break;
-                case that.options.controls.command["enter"]:   // enter
-                    that.controls_enter();
-                    break;
-                case that.options.controls.command["back"]:    // back
-                    that.controls_back();
-                    break;
-                default:
-                    return true;
-            }            
+                if (event.keyCode == value.code)
+                {
+                    that.controls.command[index].pressed = true;
+                    that.controls_command(index);
+                    return false;
+                }
+            });          
         }
         else
         {
             // set control
-            if (that.options.controls.set.abort != event.keyCode)
+            if (that.controls.set.abort != event.keyCode)
             {
-                that.options.controls.command[that.options.controls.set.key] = event.keyCode;
-                that.options.controls.set.callback(event.keyCode);
+                that.controls.command[that.controls.set.key].code = event.keyCode;
+                that.controls.set.callback(event.keyCode);
             }
             else
             {
-                that.options.controls.set.callback(null);
+                that.controls.set.callback(null);
             }
-            that.options.controls.set.active = false;
-        }
+            that.controls.set.active = false;
 
-        return false;
+            return false;
+        }
+    });
+
+    // keyup
+    $(document).keyup(function(event)
+    {        
+        $.each(that.controls.command, function(index, value)
+        {
+            if (event.keyCode == value.code)
+            {
+                that.controls.command[index].pressed = false;
+                return false;
+            }
+        });
+
+        return true;
     });
 };
 
 DodgeIt.prototype.controls_reset = function()
 {
-    DodgeIt.prototype.controls_back    = function() {};
-    DodgeIt.prototype.controls_enter   = function() {};
-    DodgeIt.prototype.controls_left    = function() {};
-    DodgeIt.prototype.controls_top     = function() {};
-    DodgeIt.prototype.controls_right   = function() {};
-    DodgeIt.prototype.controls_down    = function() {};
+    var that = this;
+    $.each(this.controls.command, function(index, value)
+    {
+        // that.controls_command_set(index, function() {});
+    });
 }
 
 DodgeIt.prototype.controls_set = function(key, callback)
 {
-    this.options.controls.set.key = key;
-    this.options.controls.set.callback = callback;
-    this.options.controls.set.active = true;
+    this.controls.set.key = key;
+    this.controls.set.callback = callback;
+    this.controls.set.active = true;
+}
+
+DodgeIt.prototype.controls_command = function(command)
+{
+    this.controls.command[command].fn();
+}
+
+DodgeIt.prototype.controls_command_set = function(command, fn)
+{
+    this.controls.command[command].fn = fn;
 }

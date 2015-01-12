@@ -29,27 +29,22 @@ function DodgeIt(container)
 
     // default options
     this.options = {
-        style: "car",
-        controls: {
-            command: {
-                "up":       null,
-                "down":     null,
-                "left":     null,
-                "right":    null,
-                "enter":    null,
-                "back":     null
-            },
-            set: {
-                active:     false,
-                key:        "",
-                abort:      27,
-                callback:   null
-            }
-        }
+        style: "car"
     };
 
-    // init
+    // controls    
+    this.controls = {
+        command: {},
+        set: {
+            active:     false,
+            key:        "",
+            abort:      27,
+            callback:   null
+        }
+    }
     this.controls_init();
+
+    // init
     this.audio.music.init();
     this.audio.sfx.init();
 
