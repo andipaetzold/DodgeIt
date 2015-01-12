@@ -54,7 +54,7 @@ function Playground(args) {
   playground.extend(this, {
     smoothing: 1,
     scale: 1,
-    preventKeyboardDefault: true,
+    // preventKeyboardDefault: true,
     preventContextMenu: true
   }, args);
 
@@ -110,12 +110,12 @@ function Playground(args) {
   this.touch.on("event", this.eventsHandler);
 
   /* keyboard */
-
+  /*
   this.keyboard = new playground.Keyboard();
 
   this.keyboard.preventDefault = this.preventKeyboardDefault;
   this.keyboard.on("event", this.eventsHandler);
-
+  */
   /* gamepads */
 
   this.gamepads = new playground.Gamepads();
@@ -849,7 +849,7 @@ playground.Touch.prototype = {
 playground.extend(playground.Touch.prototype, playground.Events.prototype);
 
 /* Keyboard */
-
+/*
 playground.Keyboard = function() {
 
   playground.Events.call(this);
@@ -956,7 +956,7 @@ playground.Keyboard.prototype = {
 };
 
 playground.extend(playground.Keyboard.prototype, playground.Events.prototype);
-
+*/
 /* Gamepad */
 
 playground.Gamepads = function() {

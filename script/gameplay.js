@@ -95,9 +95,6 @@ DodgeIt.prototype.gameplay_start = function(container)
             obstacle: 0.005 // points per pixel
         },
 
-        // prevent keyboard default
-        preventKeyboardDefault: true,
-
         create: function()
         {
             // background image           
@@ -127,7 +124,7 @@ DodgeIt.prototype.gameplay_start = function(container)
 
         step: function(delta)
         {
-            var that = this;
+            var that2 = this;
 
             // INIT  
             if (this.state == this.states.create)
@@ -178,7 +175,7 @@ DodgeIt.prototype.gameplay_start = function(container)
                 // obstacles
                 $.each(this.obstacle.items, function(index, value)
                 {
-                    value.img = that.images[value.src];
+                    value.img = that2.images[value.src];
                 });
             }      
 
@@ -202,15 +199,15 @@ DodgeIt.prototype.gameplay_start = function(container)
                 this.score += delta * this.points.time;
 
                 // move background-image
-                this.background.y = (this.background.y + (this.obstacle.speed * delta * that.getSpeedFactor())) % this.background.height;
+                this.background.y = (this.background.y + (this.obstacle.speed * delta * that2.getSpeedFactor())) % this.background.height;
 
                 // move character
                 var control_speed = 0;
-                if (this.keyboard.keys.left && !this.keyboard.keys.right)
+                if (that.controls.command["left"].pressed && !that.controls.command["right"].pressed)
                 {
                     control_speed = -1;
                 }
-                else if (!this.keyboard.keys.left && this.keyboard.keys.right)
+                else if (!that.controls.command["left"].pressed && that.controls.command["right"].pressed)
                 {
                     control_speed = 1;
                 }
@@ -272,25 +269,25 @@ DodgeIt.prototype.gameplay_start = function(container)
                 $.each(this.obstacles, function(index, value)
                 {
                     // move
-                    value.y += delta * that.obstacle.speed * that.getSpeedFactor();
+                    value.y += delta * that2.obstacle.speed * that2.getSpeedFactor();
 
                     // collision test
-                    if (that.character.x < value.x + value.width &&
-                       that.character.x + that.character.width > value.x &&
-                       that.character.y < value.y + value.height &&
-                       that.character.height + that.character.y > value.y)
+                    if (that2.character.x < value.x + value.width &&
+                       that2.character.x + that2.character.width > value.x &&
+                       that2.character.y < value.y + value.height &&
+                       that2.character.height + that2.character.y > value.y)
                     {
-                        that.collision();
+                        that2.collision();
                     }
                 });
 
                 // remove obstacles
                 this.obstacles = $.grep(this.obstacles, function(value)
                 {
-                    var remove = value.y >= that.height;
+                    var remove = value.y >= that2.height;
                     if (remove)
                     {
-                        that.score += that.points.obstacle * (value.width * value.height);
+                        that2.score += that2.points.obstacle * (value.width * value.height);
                     }
                     return !remove;
                 });
@@ -398,21 +395,6 @@ DodgeIt.prototype.gameplay_start = function(container)
             }
         },
 
-        keydown: function(event)
-        {
-            if(event.key == "escape")
-            {
-                if (this.state == this.states.running)
-                {
-                    this.state = this.states.pause;
-                }
-                else if (this.state == this.states.pause)
-                {
-                    this.state = this.states.running;
-                }
-            }
-        },
-
         gamepaddown: function(event)
         {
             if (event.button == "start")
@@ -433,4 +415,16 @@ DodgeIt.prototype.gameplay_start = function(container)
             return Math.pow(this.obstacle.speed_factor, Math.floor(this.time / this.obstacle.speed_time));
         }
     });
+
+    this.controls.command["back"].fn = function()
+    {
+        if (game.state == game.states.running)
+        {
+            game.state = game.states.pause;
+        }
+        else if (game.state == game.states.pause)
+        {
+            game.state = game.states.running;
+        }
+    };
 };
