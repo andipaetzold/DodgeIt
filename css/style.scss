@@ -86,7 +86,7 @@ body {
                 margin-left:    75px;
                 margin-right:   75px;
 
-                width: $screen-size-width - 150px;
+                width: $screen-size-width - 200px;
 
                 tr {
                     td {
@@ -94,6 +94,10 @@ body {
                         padding-bottom: 2px;
 
                         font-size: 20px;
+
+                        &:nth-child(2) {
+                            text-align: right;
+                        }
                     }
                 }
             }
