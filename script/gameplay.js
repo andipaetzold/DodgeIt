@@ -1,15 +1,13 @@
-DodgeIt.prototype.gameplay_start = function(container)
+DodgeIt.prototype.gameplay = function()
 {
-    container.html("");
-    
     var that = this;
-    var game = playground({
-        // size
-        width: this.container.width(),
-        height: this.container.height(),
-
+    var game = new Playground({
         // container
-        container: container.get(0),
+        container: $("div#gameplay", this.container).get(0),
+
+        // size
+        width:  this.container.width(),
+        height: this.container.height(),
 
         // game screen properties
         sidebar: {
@@ -391,7 +389,7 @@ DodgeIt.prototype.gameplay_start = function(container)
             }
             else
             {
-                that.screen_show("menu");
+                this.end();
             }
         },
 
@@ -413,6 +411,12 @@ DodgeIt.prototype.gameplay_start = function(container)
         getSpeedFactor: function()
         {
             return Math.pow(this.obstacle.speed_factor, Math.floor(this.time / this.obstacle.speed_time));
+        },
+
+        end: function()
+        {
+            $(this.container).html("");
+            that.screen_show("menu");
         }
     });
 

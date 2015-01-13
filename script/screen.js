@@ -113,7 +113,7 @@ DodgeIt.prototype.screen_show = function(screen)
 
             break;
         case "gameplay":
-            this.gameplay_start(container);
+            this.gameplay();
             break;
         case "leaderboard":
             var table = $("table tbody", container).empty();
