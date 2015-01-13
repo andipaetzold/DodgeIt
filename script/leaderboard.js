@@ -17,7 +17,8 @@ DodgeIt.prototype.leaderboard = {
         var responseText = $.ajax({
             type: "GET",
             url: url,
-            async: false
+            async: false,
+            cache: false
         }).responseText;
         var text_begin = "done(";
         var text_end   = ");";
