@@ -13,7 +13,6 @@ function DodgeIt(container)
         "script/gameplay.js",
         "script/audio.js",
         "script/controls.js",
-        "script/gamepad.js",
         "script/leaderboard.js"
     ];
 
