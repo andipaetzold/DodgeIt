@@ -133,13 +133,19 @@ body {
             height: 100%;
 
             p {
-                padding-left: 10px;
-                padding-right: 10px;
+                padding-left:   10px;
+                padding-right:  10px;
+
+                margin-top:     10px;
+                margin-bottom:  10px;
+
+                text-align: justify;
             }   
             
-            a, span {
+            div {
+                margin-top: 75px;
                 text-align: center;
-            }     
+            }
         }
 
         /* menu */
