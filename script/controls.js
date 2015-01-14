@@ -3,6 +3,24 @@ DodgeIt.prototype.controls_init = function()
     var that = this;
 
     // set this.controls
+    this.controls = {
+        command:    {},
+        gamepad: {
+            index:      null,
+            buttons:    []
+        },
+        set: {
+            active:     false,
+            key:        "",
+            abort:      {
+                // Escape
+                device: "keyboard",
+                type:   null,
+                code:   27
+            },
+            callback:   null
+        }
+    }
 
     // default keys
     var keys = {

@@ -31,28 +31,8 @@ function DodgeIt(container)
         style: "car"
     };
 
-    // controls    
-    this.controls = {
-        command:    {},
-        gamepad: {
-            index:      null,
-            buttons:    []
-        },
-        set: {
-            active:     false,
-            key:        "",
-            abort:      {
-                // Escape
-                device: "keyboard",
-                type:   null,
-                code:   27
-            },
-            callback:   null
-        }
-    }
-    this.controls_init();
-
     // init
+    this.controls_init();
     this.audio.music.init();
     this.audio.sfx.init();
 
