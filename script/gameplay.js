@@ -199,17 +199,33 @@ DodgeIt.prototype.gameplay = function()
                 // move background-image
                 this.background.y = (this.background.y + (this.obstacle.speed * delta * that2.getSpeedFactor())) % this.background.height;
 
-                // move character
-                var control_speed = 0;
+                // move character - left/right
+                var control_speed_x = 0;
                 if (that.controls.command["left"].pressed && !that.controls.command["right"].pressed)
                 {
-                    control_speed = -1;
+                    control_speed_x = -1;
                 }
                 else if (!that.controls.command["left"].pressed && that.controls.command["right"].pressed)
                 {
-                    control_speed = 1;
+                    control_speed_x = 1;
                 }
-                else if (this.gamepads[0])
+
+                // move character - up/down
+                var control_speed_y = 0;
+                if (that.controls.command["up"].pressed && !that.controls.command["down"].pressed)
+                {
+                    control_speed_y = -1;
+                }
+                else if (!that.controls.command["up"].pressed && that.controls.command["down"].pressed)
+                {
+                    control_speed_y = 1;
+                }
+
+                
+
+                // move character - gamepad
+                /*
+                if (this.gamepads[0])
                 {
                     // DPAD
                     if (this.gamepads[0].buttons)
@@ -238,13 +254,16 @@ DodgeIt.prototype.gameplay = function()
                         // inc i
                         i++;
                     }
-                }
-
-                this.character.x += control_speed * this.character.speed * delta;
+                }*/
 
                 // check new position
+                this.character.x += control_speed_x * this.character.speed * delta;
                 this.character.x = Math.max(this.character.x, this.sidebar.width);
                 this.character.x = Math.min(this.character.x, this.width - this.character.width);
+
+                this.character.y += control_speed_y * this.character.speed * delta;
+                this.character.y = Math.max(this.character.y, 0);
+                this.character.y = Math.min(this.character.y, this.height - this.character.height);
 
                 // create obstacle
                 if (this.obstacles.length == 0 ||
