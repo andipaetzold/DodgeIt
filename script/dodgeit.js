@@ -33,11 +33,20 @@ function DodgeIt(container)
 
     // controls    
     this.controls = {
-        command: {},
+        command:    {},
+        gamepad: {
+            index:      null,
+            buttons:    []
+        },
         set: {
             active:     false,
             key:        "",
-            abort:      27,
+            abort:      {
+                // Escape
+                device: "keyboard",
+                type:   null,
+                code:   27
+            },
             callback:   null
         }
     }

@@ -128,18 +128,18 @@ DodgeIt.prototype.screen_show = function(screen)
             break;
         case "controls":
             // set keys
-            $.each($("span[data-key]", container), function()
+            $.each($("span[data-command]", container), function()
             {
-                $(this).html(that.controls_keyName(that.controls.command[$(this).attr("data-key")].code));
+                $(this).html(that.controls_format(that.controls.command[$(this).attr("data-command")]));
             });
 
             // set change action
             $("td button", container).click(function()
             {
                 var that2 = this;
-                that.controls_set($(this).attr("data-key"), function(keyCode)
+                that.controls_set($(this).attr("data-command"), function(control)
                 {
-                    $("span[data-key=" + $(that2).attr("data-key") + "]").html(that.controls_keyName(keyCode));
+                    $("span[data-command=" + $(that2).attr("data-command") + "]").html(that.controls_format(control));
                 });
             });
             break;
