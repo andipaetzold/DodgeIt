@@ -133,6 +133,65 @@ DodgeIt.prototype.screen_show = function(screen)
                 $(this).html(that.controls_format(that.controls.command[$(this).attr("data-command")]));
             });
 
+            // get axes
+            $("div#controls-gamepad-move", container).html("");
+            $.each(this.controls.gamepad.axes, function(index, axes)
+            {
+                $("div#controls-gamepad-move", container)
+                    .append(
+                        $("<div></div>")
+                            .append(
+                                $("<label></label>")
+                                    .append($("<input>")
+                                        .attr("type", "radio")
+                                        .attr("name", "controls-gamepad-move")
+                                        .change(function(event)
+                                        {
+                                            that.controls.gamepad.axes_selected = $(this).parent().parent().prevAll().length;
+                                        })
+                                    )
+                                    .append(
+                                        $("<progress></progress>")
+                                            .attr("min", 0)
+                                            .attr("max", 2)
+                                            .val(axes.x + 1)
+                                    )
+                                    .append(
+                                        $("<progress></progress>")
+                                            .attr("min", 0)
+                                            .attr("max", 2)
+                                            .val(axes.y + 1)
+                                    )
+                            )
+                        );
+            });
+
+            // select
+            if (this.controls.gamepad.axes_selected > this.controls.gamepad.axes.length - 1)
+            {
+                this.controls.gamepad.axes_selected = 0;
+            }
+            $("div#controls-gamepad-move div:nth-child(" + (this.controls.gamepad.axes_selected + 1) + ") label input", container).prop("checked", true);
+
+            // update axes
+            var axes_update = function()
+            {
+                // update progress bars
+                $.each(that.controls.gamepad.axes, function(index, axes)
+                {
+                    var bars = $("div#controls-gamepad-move div:nth-child(" + (index + 1) + ") progress", container);
+                    bars.first().val(axes.x + 1);
+                    bars.last().val(axes.y + 1);
+                });
+
+                // next update
+                if (container.is(":visible"))
+                {
+                    window.requestAnimationFrame(axes_update);   
+                }
+            };
+            window.setTimeout(function() { window.requestAnimationFrame(axes_update); }, 500); // start getting visible
+
             // set change action
             $("td button", container).click(function()
             {

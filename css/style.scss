@@ -112,6 +112,24 @@ body {
                     width: 100%;
                 }
             }
+
+            div#controls-gamepad-move {
+                div {
+                    input[type=radio] {
+                        margin-right: 5px;
+                    }
+
+                    progress {
+                        margin-left: 5px;
+                        margin-right: 5px;
+
+                        padding: 3px;
+
+                        width: 130px;
+                        height: 5px;
+                    }
+                }
+            }
         }
 
         /* options-screen */

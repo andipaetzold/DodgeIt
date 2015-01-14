@@ -8,7 +8,8 @@ DodgeIt.prototype.controls_init = function()
         gamepad: {
             index:      null,
             buttons:    [],
-            axes:       []
+            axes:       [],
+            axes_selected: 0
         },
         set: {
             active:     false,
@@ -79,22 +80,6 @@ DodgeIt.prototype.controls_init = function()
     if (navigator.getGamepads)
     {
         var gamepad_polling = false;
-
-        // window.requestAnimationFrame         
-        if (!window.requestAnimationFrame)
-        {
-            window.requestAnimationFrame = (function()
-            {
-                return window.webkitRequestAnimationFrame ||
-                       window.mozRequestAnimationFrame ||
-                       window.oRequestAnimationFrame ||
-                       window.msRequestAnimationFrame ||
-                       function(callback, element)
-                       {
-                          window.setTimeout(callback, 1000 / 60);
-                       };
-            })();
-        } 
 
         // navigator.getGamepads
         if (!navigator.getGamepads)
