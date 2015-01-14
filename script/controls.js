@@ -7,7 +7,8 @@ DodgeIt.prototype.controls_init = function()
         command:    {},
         gamepad: {
             index:      null,
-            buttons:    []
+            buttons:    [],
+            axes:       []
         },
         set: {
             active:     false,
@@ -139,6 +140,8 @@ DodgeIt.prototype.controls_init = function()
             if (gamepads.length >= 1)
             {
                 var gamepad = gamepads[0];
+
+                // buttons
                 $.each(gamepad.buttons, function(buttonIndex, button)
                 {
                     if (!that.controls.gamepad.buttons[buttonIndex] && button.pressed)
@@ -162,10 +165,26 @@ DodgeIt.prototype.controls_init = function()
         var gamepad_update_status = function(gamepad)
         {
             that.controls.gamepad.index = gamepad.index;
+
+            // buttons
             that.controls.gamepad.buttons = [];
             $.each(gamepad.buttons, function(buttonIndex, button)
             {
                 that.controls.gamepad.buttons[buttonIndex] = button.pressed;
+            });
+
+            // axes
+            that.controls.gamepad.axes = [];
+            $.each(gamepad.axes, function(index, value)
+            {
+                if (index % 2 == 0)
+                {
+                    that.controls.gamepad.axes.push({x: value, y: 0});
+                }
+                else
+                {
+                    that.controls.gamepad.axes[(index - 1) / 2].y = value;
+                }
             });
         };
     }
