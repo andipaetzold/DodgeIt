@@ -139,6 +139,37 @@ DodgeIt.prototype.controls_init = function()
                     }
                 });
 
+                // axes
+                $.each(gamepad_parseaxes(gamepad.axes), function(index, value)
+                {
+                    var compareValues = function(prev, cur, border, code)
+                    {              
+                        if (
+                            (border > 0 && prev < border && cur >= border) ||
+                            (border < 0 && prev > border && cur <= border)
+                            )
+                        {
+                            control_down({device: "gamepad", type: "axes", code: code});
+                        }
+                        else if (
+                                 (border > 0 && prev >= border && cur < border) ||
+                                 (border < 0 && prev <= border && cur > border)
+                                )
+                        {
+                            control_up({device: "gamepad", type: "axes", code: code});
+                        }
+                    };
+
+                    var suffix =  " (Stick " + (index + 1) + ")";
+                    var axes_prev = that.controls.gamepad.axes[index];
+
+                    var border = 0.5;
+                    compareValues(axes_prev.y, value.y,  border, "+Y" + suffix);
+                    compareValues(axes_prev.y, value.y, -border, "-Y" + suffix);
+                    compareValues(axes_prev.x, value.x,  border, "+X" + suffix);
+                    compareValues(axes_prev.x, value.x, -border, "-X" + suffix);
+                });
+
                 // update gamepad status
                 gamepad_update_status(gamepad);
             }
@@ -159,19 +190,26 @@ DodgeIt.prototype.controls_init = function()
             });
 
             // axes
-            that.controls.gamepad.axes = [];
-            $.each(gamepad.axes, function(index, value)
+            that.controls.gamepad.axes = gamepad_parseaxes(gamepad.axes);
+            
+        };
+
+        var gamepad_parseaxes = function(axes)
+        {
+            var output = []
+            $.each(axes, function(index, value)
             {
                 if (index % 2 == 0)
                 {
-                    that.controls.gamepad.axes.push({x: value, y: 0});
+                    output.push({x: value, y: 0});
                 }
                 else
                 {
-                    that.controls.gamepad.axes[(index - 1) / 2].y = value;
+                    output[(index - 1) / 2].y = value;
                 }
             });
-        };
+            return output;
+        }
     }
 
     // controls up / down
@@ -374,6 +412,11 @@ DodgeIt.prototype.controls_format = function(control)
              control.type   == "button")
     {
         return "Gamepad Button " + control.code;
+    }
+    else if (control.device == "gamepad" &&
+             control.type   == "axes")
+    {
+        return "Gamepad Axes " + control.code;
     }
     else
     {

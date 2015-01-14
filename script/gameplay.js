@@ -199,36 +199,39 @@ DodgeIt.prototype.gameplay = function()
                 // move background-image
                 this.background.y = (this.background.y + (this.obstacle.speed * delta * that2.getSpeedFactor())) % this.background.height;
 
-                // move character - left/right
+                // move character
+
                 var control_speed_x = 0;
-                if (that.controls.command["left"].pressed && !that.controls.command["right"].pressed)
+                var control_speed_y = 0;
+
+                // move character - gamepad
+                control_speed_x = that.controls_axes().x;
+                control_speed_y = that.controls_axes().y;
+
+                // move character - left/right
+                if (control_speed_x == 0)
                 {
-                    control_speed_x = -1;
-                }
-                else if (!that.controls.command["left"].pressed && that.controls.command["right"].pressed)
-                {
-                    control_speed_x = 1;
+                    if (that.controls.command["left"].pressed && !that.controls.command["right"].pressed)
+                    {
+                        control_speed_x = -1;
+                    }
+                    else if (!that.controls.command["left"].pressed && that.controls.command["right"].pressed)
+                    {
+                        control_speed_x = 1;
+                    }
                 }
 
                 // move character - up/down
-                var control_speed_y = 0;
-                if (that.controls.command["up"].pressed && !that.controls.command["down"].pressed)
+                if (control_speed_y == 0)
                 {
-                    control_speed_y = -1;
-                }
-                else if (!that.controls.command["up"].pressed && that.controls.command["down"].pressed)
-                {
-                    control_speed_y = 1;
-                }
-
-                
-
-                // move character - gamepad
-                if (control_speed_x == 0 &&
-                    control_speed_y == 0)
-                {
-                    control_speed_x = that.controls_axes().x;
-                    control_speed_y = that.controls_axes().y;
+                    if (that.controls.command["up"].pressed && !that.controls.command["down"].pressed)
+                    {
+                        control_speed_y = -1;
+                    }
+                    else if (!that.controls.command["up"].pressed && that.controls.command["down"].pressed)
+                    {
+                        control_speed_y = 1;
+                    }
                 }
 
                 // check new position
