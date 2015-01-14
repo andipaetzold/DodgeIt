@@ -224,37 +224,12 @@ DodgeIt.prototype.gameplay = function()
                 
 
                 // move character - gamepad
-                /*
-                if (this.gamepads[0])
+                if (control_speed_x == 0 &&
+                    control_speed_y == 0)
                 {
-                    // DPAD
-                    if (this.gamepads[0].buttons)
-                    {
-                        if (this.gamepads[0].buttons["left"])
-                        {
-                            control_speed = -1;
-                        }
-                        else if(this.gamepads[0].buttons["right"])
-                        {
-                            control_speed = 1;
-                        }                        
-                    }
-
-                    // Stick 1
-                    var i = 0;
-                    while (control_speed == 0 &&
-                           this.gamepads[0].sticks[i])
-                    {
-                        if (Math.abs(this.gamepads[0].sticks[i]) > 0.1)
-                        {
-                            control_speed = Math.ceil(this.gamepads[0].sticks[i].x) * 
-                                            (Math.abs(this.gamepads[0].sticks[i].x) - 0.1) / 0.9;
-                        }                        
-
-                        // inc i
-                        i++;
-                    }
-                }*/
+                    control_speed_x = that.controls_axes().x;
+                    control_speed_y = that.controls_axes().y;
+                }
 
                 // check new position
                 this.character.x += control_speed_x * this.character.speed * delta;

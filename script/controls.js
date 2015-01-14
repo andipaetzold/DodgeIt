@@ -263,6 +263,52 @@ DodgeIt.prototype.controls_pressed = function(command)
     return (this.controls.command[command].pressed);
 };
 
+DodgeIt.prototype.controls_axes = function()
+{
+    if (this.controls.gamepad.index != null &&
+        this.controls.gamepad.axes[this.controls.gamepad.axes_selected])
+    {
+        var axes = this.controls.gamepad.axes[this.controls.gamepad.axes_selected];
+
+        var adapt = function(value)
+        {
+            var border = {
+                min: 0.1,
+                max: 0.8
+            }
+
+            if (Math.abs(value) < border.min)
+            {
+                return 0;
+            }
+            else if (value > border.max)
+            {
+                return 1;
+            }
+            else if (value < -border.max)
+            {
+                return -1;
+            }
+            else if (value > 0)
+            {
+                return (value - border.min) / border.max;
+            }
+            else
+            {
+                return (value + border.min) / border.max;
+            }
+        };
+        axes.x = adapt(axes.x);
+        axes.y = adapt(axes.y);
+
+        return axes;
+    }
+    else
+    {
+        return {x: 0, y: 0};
+    }
+}
+
 DodgeIt.prototype.controls_format = function(control)
 {
     if (control.device == "keyboard")
