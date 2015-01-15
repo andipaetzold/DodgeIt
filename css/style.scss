@@ -160,9 +160,13 @@ body {
                         &:nth-child(1) {
                             width: $options-td-1-width;
                         }
+
+                        label {
+                            cursor: pointer;
+                        }
                         
                         &.style {
-                            label {
+                            label {                                
                                 input[type=radio] {
                                     display: none;
                                 }
@@ -197,6 +201,8 @@ body {
                             
                             input[type=range] {
                                 width: $screen-size-width-real - $options-td-1-width - $options-audio-label-width - 2 * $options-checkbox-margin - $options-audio-label-margin;
+
+                                cursor: pointer;
                             }
                         }
                     }
