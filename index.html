@@ -114,28 +114,41 @@
 
                         <h1>Options</h1>
 
-                        <h2>Style</h2>
-                        <label>
-                            <img src="images/car/character.png" alt="Car">
-                            <input name="style" type="radio" data-option="style" value="car">   
-                        </label>
-                        <label>
-                            <img src="images/isaac/character.png" alt="Isaac">
-                            <input name="style" type="radio" data-option="style" value="isaac">    
-                        </label>
-                        
-
-                        <h2>Music</h2>
-                        <label>
-                            <input id="options-music-mute" type="checkbox" checked="checked">Mute
-                        </label>
-                        <input id="options-music-volume" type="range" min="0" max="10" value="5">
-                        
-                        <h2>Sound Effects</h2>
-                        <label>
-                            <input id="options-sfx-mute" type="checkbox" checked="checked">Mute
-                        </label>
-                        <input id="options-sfx-volume" type="range" min="0" max="10" value="5">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Style</td>
+                                    <td class="style">                                        
+                                        <label>
+                                            <input name="style" type="radio" data-option="style" value="car"> 
+                                            <img src="images/car/character.png" alt="Car">
+                                        </label>
+                                        <label>
+                                            <input name="style" type="radio" data-option="style" value="isaac">
+                                            <img src="images/isaac/character.png" alt="Isaac">
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Music</td>
+                                    <td class="audio">
+                                        <label>
+                                            <input id="options-music-mute" type="checkbox" checked="checked">Mute
+                                        </label>
+                                        <input id="options-music-volume" type="range" min="0" max="10" value="5">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sound Effects</td>
+                                    <td class="audio">                                        
+                                        <label>
+                                            <input id="options-sfx-mute" type="checkbox" checked="checked">Mute
+                                        </label>
+                                        <input id="options-sfx-volume" type="range" min="0" max="10" value="5">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div> 
 
                     <div id="about">
