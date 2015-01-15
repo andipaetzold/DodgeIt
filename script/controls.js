@@ -221,7 +221,7 @@ DodgeIt.prototype.controls_format = function(control)
 
         if (control.code >= 48 && control.code <= 90)
         {
-            return "Keyboard " + String.fromCharCode(event.code).toLowerCase();   
+            return "Keyboard " + String.fromCharCode(control.code).toLowerCase();   
         } 
         else
         {
