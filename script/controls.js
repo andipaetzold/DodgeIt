@@ -77,24 +77,17 @@ DodgeIt.prototype.controls_init = function()
     });
 
     // gamepad
-    if (navigator.getGamepads)
+    // navigator.getGamepads
+    if (!navigator.getGamepads)
     {
-        // navigator.getGamepads
-        if (!navigator.getGamepads)
+        navigator.getGamepads = function()
         {
-            navigator.getGamepads = (function()
-            {
-                return navigator.webkitGetGamepads() ||
-                       function()
-                       {
-                          return [];
-                       };
-            });
-        }
-
-        // poll
-        this.controls_gamepad_poll(true);
+            return (navigator.webkitGamepads) ? navigator.webkitGamepads : (function() { return []; });
+        };
     }
+
+    // poll
+    this.controls_gamepad_poll(true);
 };
 
 DodgeIt.prototype.controls_reset = function()
