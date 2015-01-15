@@ -194,9 +194,29 @@ DodgeIt.prototype.screen_show = function(screen)
             $("td button", container).click(function()
             {
                 var that2 = this;
+
+                // block buttons
+                $("button", $(this).parent().parent().siblings().andSelf()).prop("disabled", true);
+
+                // text
+                var textContainer = $("span[data-command=" + $(this).attr("data-command") + "]");
+                var tmp = textContainer.html();
+                textContainer.html("Please press a key... Esc to cancel")
+
                 that.controls_set($(this).attr("data-command"), function(control)
                 {
-                    $("span[data-command=" + $(that2).attr("data-command") + "]").html(that.controls_format(control));
+                    // text
+                    if (control != null)
+                    {
+                        textContainer.html(that.controls_format(control));
+                    }
+                    else
+                    {
+                        textContainer.html(tmp);
+                    }
+
+                    // unblock buttons
+                    $("button", $(that2).parent().parent().siblings().andSelf()).prop("disabled", false);
                 });
             });
 
