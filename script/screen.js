@@ -74,6 +74,8 @@ DodgeIt.prototype.screen_show = function(screen)
 
     var that = this;
 
+    var loop_function = null;
+
     // load data
     switch(screen)
     {
@@ -111,6 +113,12 @@ DodgeIt.prototype.screen_show = function(screen)
                 }
             });
 
+            // loop
+            loop_function = function()
+            {
+                that.controls_gamepad_poll(false);
+            };
+
             break;
         case "gameplay":
             this.gameplay();
@@ -125,8 +133,17 @@ DodgeIt.prototype.screen_show = function(screen)
                     .append($("<td></td>").html(item.name))
                     .append($("<td></td>").html(item.score));
             });
+
+            // loop
+            loop_function = function()
+            {
+                that.controls_gamepad_poll(false);
+            };
             break;
         case "controls":
+            // poll gamepad
+            this.controls_gamepad_poll(true);
+
             // set keys
             $.each($("span[data-command]", container), function()
             {
@@ -173,25 +190,6 @@ DodgeIt.prototype.screen_show = function(screen)
             }
             $("div#controls-gamepad-move div:nth-child(" + (this.controls.gamepad.axes_selected + 1) + ") label input", container).prop("checked", true);
 
-            // update axes
-            var axes_update = function()
-            {
-                // update progress bars
-                $.each(that.controls.gamepad.axes, function(index, axes)
-                {
-                    var bars = $("div#controls-gamepad-move div:nth-child(" + (index + 1) + ") progress", container);
-                    bars.first().val(axes.x + 1);
-                    bars.last().val(axes.y + 1);
-                });
-
-                // next update
-                if (container.is(":visible"))
-                {
-                    window.requestAnimationFrame(axes_update);   
-                }
-            };
-            window.setTimeout(function() { window.requestAnimationFrame(axes_update); }, 500); // start getting visible
-
             // set change action
             $("td button", container).click(function()
             {
@@ -201,8 +199,22 @@ DodgeIt.prototype.screen_show = function(screen)
                     $("span[data-command=" + $(that2).attr("data-command") + "]").html(that.controls_format(control));
                 });
             });
+
+            // update axes
+            loop_function = function()
+            {
+                that.controls_gamepad_poll(true);
+
+                // update progress bars
+                $.each(that.controls.gamepad.axes, function(index, axes)
+                {
+                    var bars = $("div#controls-gamepad-move div:nth-child(" + (index + 1) + ") progress", container);
+                    bars.first().val(axes.x + 1);
+                    bars.last().val(axes.y + 1);
+                });
+            };
             break;
-        case "options":
+        case "options":        
             // style
             $.each($("input[data-option=style]"), function()
             {
@@ -225,8 +237,18 @@ DodgeIt.prototype.screen_show = function(screen)
                 .attr("max", this.audio.max)
                 .val(this.audio.sfx.volume_get());
 
+            // loop
+            loop_function = function()
+            {
+                that.controls_gamepad_poll(false);
+            };
             break;
         case "about":
+            // loop
+            loop_function = function()
+            {
+                that.controls_gamepad_poll(false);
+            };
             break;
         default:
             return;
@@ -252,5 +274,21 @@ DodgeIt.prototype.screen_show = function(screen)
     else
     {
         container.show();
+    }
+
+    // start loop
+    if (loop_function != null)
+    {            
+        var loop = function()
+        {
+            loop_function();
+
+            // next update
+            if (container.is(":visible"))
+            {
+                window.requestAnimationFrame(loop);   
+            }
+        }
+        window.setTimeout(function() { window.requestAnimationFrame(loop); }, 500); // start getting visible
     }
 }

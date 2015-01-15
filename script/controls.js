@@ -49,7 +49,7 @@ DodgeIt.prototype.controls_init = function()
     // keydown
     $(document).keydown(function(event)
     {
-        var preventDefault = control_down({device: "keyboard", type: null, code: event.keyCode});    
+        var preventDefault = that.controls_down({device: "keyboard", type: null, code: event.keyCode});    
         if (!preventDefault)
         {
             event.preventDefault();
@@ -64,7 +64,7 @@ DodgeIt.prototype.controls_init = function()
     // keyup
     $(document).keyup(function(event)
     {
-        var preventDefault = control_up({device: "keyboard", type: null, code: event.keyCode});
+        var preventDefault = that.controls_up({device: "keyboard", type: null, code: event.keyCode});
         if (!preventDefault)
         {
             event.preventDefault();
@@ -79,8 +79,6 @@ DodgeIt.prototype.controls_init = function()
     // gamepad
     if (navigator.getGamepads)
     {
-        var gamepad_polling = false;
-
         // navigator.getGamepads
         if (!navigator.getGamepads)
         {
@@ -94,180 +92,9 @@ DodgeIt.prototype.controls_init = function()
             });
         }
 
-        // update
-        $(window).on("gamepadconnected", function(event)
-        {
-            if (navigator.getGamepads().length == 1)
-            {
-                gamepad_update_status(navigator.getGamepads()[0]);
-            }
-
-            if (!gamepad_polling)
-            {
-                gamepad_polling = true;
-                window.requestAnimationFrame(gamepad_poll);
-            }
-        });
-
-        $(window).on("gamepaddisconnected", function(event)
-        {
-            if (navigator.getGamepads().length == 0)
-            {
-                gamepad_polling = false;
-                that.controls.gamepad.index = null;
-            }
-        });
-
         // poll
-        var gamepad_poll = function()
-        {
-            var gamepads = navigator.getGamepads();
-            if (gamepads.length >= 1)
-            {
-                var gamepad = gamepads[0];
-
-                // buttons
-                $.each(gamepad.buttons, function(buttonIndex, button)
-                {
-                    if (!that.controls.gamepad.buttons[buttonIndex] && button.pressed)
-                    {
-                        control_down({device: "gamepad", type: "button", code: buttonIndex});
-                    }
-                    else if (that.controls.gamepad.buttons[buttonIndex] && !button.pressed)
-                    {
-                        control_up({device: "gamepad", type: "button", code: buttonIndex});
-                    }
-                });
-
-                // axes
-                $.each(gamepad_parseaxes(gamepad.axes), function(index, value)
-                {
-                    var compareValues = function(prev, cur, border, code)
-                    {              
-                        if (
-                            (border > 0 && prev < border && cur >= border) ||
-                            (border < 0 && prev > border && cur <= border)
-                            )
-                        {
-                            control_down({device: "gamepad", type: "axes", code: code});
-                        }
-                        else if (
-                                 (border > 0 && prev >= border && cur < border) ||
-                                 (border < 0 && prev <= border && cur > border)
-                                )
-                        {
-                            control_up({device: "gamepad", type: "axes", code: code});
-                        }
-                    };
-
-                    var suffix =  " (Stick " + (index + 1) + ")";
-                    var axes_prev = that.controls.gamepad.axes[index];
-
-                    var border = 0.5;
-                    compareValues(axes_prev.y, value.y,  border, "+Y" + suffix);
-                    compareValues(axes_prev.y, value.y, -border, "-Y" + suffix);
-                    compareValues(axes_prev.x, value.x,  border, "+X" + suffix);
-                    compareValues(axes_prev.x, value.x, -border, "-X" + suffix);
-                });
-
-                // update gamepad status
-                gamepad_update_status(gamepad);
-            }
-
-            // next poll
-            window.requestAnimationFrame(gamepad_poll);
-        };
-
-        var gamepad_update_status = function(gamepad)
-        {
-            that.controls.gamepad.index = gamepad.index;
-
-            // buttons
-            that.controls.gamepad.buttons = [];
-            $.each(gamepad.buttons, function(buttonIndex, button)
-            {
-                that.controls.gamepad.buttons[buttonIndex] = button.pressed;
-            });
-
-            // axes
-            that.controls.gamepad.axes = gamepad_parseaxes(gamepad.axes);
-            
-        };
-
-        var gamepad_parseaxes = function(axes)
-        {
-            var output = []
-            $.each(axes, function(index, value)
-            {
-                if (index % 2 == 0)
-                {
-                    output.push({x: value, y: 0});
-                }
-                else
-                {
-                    output[(index - 1) / 2].y = value;
-                }
-            });
-            return output;
-        }
+        this.controls_gamepad_poll(true);
     }
-
-    // controls up / down
-    var control_up = function(control)
-    {
-        $.each(that.controls.command, function(commandIndex, command)
-        {
-            if (command.device == control.device &&
-                command.type   == control.type &&
-                command.code   == control.code)
-            {
-                command.pressed = false;
-                return false;
-            }
-        });
-
-        return true;
-    };
-
-    var control_down = function(control)
-    {
-        if (!that.controls.set.active)
-        {
-            $.each(that.controls.command, function(commandIndex, command)
-            {
-                if (command.device == control.device &&
-                    command.type   == control.type &&
-                    command.code   == control.code)
-                {
-                    command.pressed = true;
-                    command.fn();
-                    return false;
-                }
-            });
-            return true;   
-        }
-        else
-        {
-            // set control
-            if (that.controls.set.abort.device != control.device ||
-                that.controls.set.abort.type   != control.type ||
-                that.controls.set.abort.code   != control.code)
-            {
-                that.controls.command[that.controls.set.key].device = control.device;
-                that.controls.command[that.controls.set.key].type   = control.type;
-                that.controls.command[that.controls.set.key].code   = control.code;
-                that.controls.set.callback(control);
-            }
-            else
-            {
-                that.controls.set.callback(null);
-            }
-            that.controls.set.active = false;
-
-            return false;
-        }
-
-    };
 };
 
 DodgeIt.prototype.controls_reset = function()
@@ -345,7 +172,7 @@ DodgeIt.prototype.controls_axes = function()
     {
         return {x: 0, y: 0};
     }
-}
+};
 
 DodgeIt.prototype.controls_format = function(control)
 {
@@ -401,7 +228,7 @@ DodgeIt.prototype.controls_format = function(control)
 
         if (control.code >= 48 && control.code <= 90)
         {
-            return "Keyboard " + String.fromCharCode(e.which).toLowerCase();   
+            return "Keyboard " + String.fromCharCode(event.code).toLowerCase();   
         } 
         else
         {
@@ -414,7 +241,7 @@ DodgeIt.prototype.controls_format = function(control)
         return "Gamepad Button " + control.code;
     }
     else if (control.device == "gamepad" &&
-             control.type   == "axes")
+             control.type.match(/axes-\d/))
     {
         return "Gamepad Axes " + control.code;
     }
@@ -422,4 +249,236 @@ DodgeIt.prototype.controls_format = function(control)
     {
         return "";
     }
+};
+
+DodgeIt.prototype.controls_gamepad_poll = function(poll_all)
+{
+    var that = this;
+
+    var gamepad_parseaxes = function(axes)
+    {
+        var output = []
+        $.each(axes, function(index, value)
+        {
+            if (index % 2 == 0)
+            {
+                output.push({x: value, y: 0});
+            }
+            else
+            {
+                output[(index - 1) / 2].y = value;
+            }
+        });
+        return output;
+    }
+
+    var gamepad_update_status = function(gamepad)
+    {
+        that.controls.gamepad.index = gamepad.index;
+
+        // buttons
+        that.controls.gamepad.buttons = [];
+        $.each(gamepad.buttons, function(buttonIndex, button)
+        {
+            that.controls.gamepad.buttons[buttonIndex] = button.pressed;
+        });
+
+        // axes
+        that.controls.gamepad.axes = gamepad_parseaxes(gamepad.axes);
+    };
+
+    var gamepad_axis_trigger = function(prev, cur, border, down, up)
+    {
+        if (
+            (border > 0 && prev < border && cur >= border) ||
+            (border < 0 && prev > border && cur <= border)
+            )
+        {
+            down();
+        }
+        else if (
+                 (border > 0 && prev >= border && cur < border) ||
+                 (border < 0 && prev <= border && cur > border)
+                )
+        {
+            up();
+        }
+    };
+
+    var gamepads = navigator.getGamepads();
+    if (gamepads.length >= 1 &&
+        gamepads[0] != undefined)
+    {
+        var gamepad = gamepads[0];
+
+        if (this.controls.gamepad.index != null)
+        {
+            if (poll_all)
+            {
+                // buttons
+                $.each(gamepad.buttons, function(buttonIndex, button)
+                {
+                    if (!that.controls.gamepad.buttons[buttonIndex] && button.pressed)
+                    {
+                        that.controls_down({device: "gamepad", type: "button", code: buttonIndex});
+                    }
+                    else if (that.controls.gamepad.buttons[buttonIndex] && !button.pressed)
+                    {
+                        that.controls_up({device: "gamepad", type: "button", code: buttonIndex});
+                    }
+                });
+
+                // axes
+                $.each(gamepad_parseaxes(gamepad.axes), function(index, value)
+                {
+                    var prev = that.controls.gamepad.axes[index];
+
+                    var border = 0.5;
+                    gamepad_axis_trigger(prev.y, value.y, border,
+                                         function() { that.controls_down({device: "gamepad", type: "axes-" + index, code: "0"}); },
+                                         function() { that.controls_up({device: "gamepad", type: "axes-" + index, code: "0"}); }
+                                         );
+                    gamepad_axis_trigger(prev.y, value.y, -border,
+                                         function() { that.controls_down({device: "gamepad", type: "axes-" + index, code: "1"}); },
+                                         function() { that.controls_up({device: "gamepad", type: "axes-" + index, code: "1"}); }
+                                         );
+                    gamepad_axis_trigger(prev.x, value.x,  border,
+                                         function() { that.controls_down({device: "gamepad", type: "axes-" + index, code: "2"}); },
+                                         function() { that.controls_up({device: "gamepad", type: "axes-" + index, code: "2"}); }
+                                         );
+                    gamepad_axis_trigger(prev.x, value.x, -border,
+                                         function() { that.controls_down({device: "gamepad", type: "axes-" + index, code: "3"}); },
+                                         function() { that.controls_up({device: "gamepad", type: "axes-" + index, code: "3"}); }
+                                         );
+                });
+
+                // update gamepad
+                gamepad_update_status(gamepad);
+            }
+            else
+            {
+                // commands
+                $.each(this.controls.command, function(commandIndex, command)
+                {
+                    if (command.device == "gamepad")
+                    {
+                        if (command.type == "button")
+                        {       
+                            if (!command.pressed && gamepad.buttons[command.code].pressed)
+                            {
+                                command.fn();
+                                command.pressed = true;
+                            }
+                            else if (command.pressed && !gamepad.buttons[command.code].pressed)
+                            {
+                                command.pressed = false;
+                            }
+                        }
+                        else if(command.type.match(/axes-\d/))
+                        {
+                            var axe_id = (/axes-(\d)/.exec(command.type))[1];
+                            if (that.controls.gamepad.axes[axe_id])
+                            {
+                                var border = 0.5;
+                                if (command.code == 1 ||
+                                    command.code == 3)
+                                {
+                                    border = -border;
+                                }
+
+                                var cur, prev;
+                                if (command.code == 0 || command.code == 1)
+                                {                         
+                                    prev = that.controls.gamepad.axes[axe_id].y;           
+                                    cur = gamepad_parseaxes(gamepad.axes)[axe_id].y;
+                                }
+                                else
+                                {
+                                    prev = that.controls.gamepad.axes[axe_id].y;
+                                    cur = gamepad_parseaxes(gamepad.axes)[axe_id].x;
+                                }
+
+                                gamepad_axis_trigger(prev, cur, border,
+                                                     function() { command.pressed = true; command.fn(); },
+                                                     function() { command.pressed = false; }
+                                                     );
+
+                            }                  
+                        }
+                    }
+                });
+
+                // gamepad movement
+                if (this.controls.gamepad.axes[this.controls.gamepad.axes_selected])
+                {
+                    that.controls.gamepad.axes = gamepad_parseaxes(gamepad.axes);
+                }
+            }
+        }
+        else
+        {
+            gamepad_update_status(gamepad);
+        }
+    }
+    else
+    {
+        this.controls.gamepad.index = null;
+    }
+}
+
+// controls up / down
+DodgeIt.prototype.controls_up = function(control)
+{
+    $.each(this.controls.command, function(commandIndex, command)
+    {
+        if (command.device == control.device &&
+            command.type   == control.type &&
+            command.code   == control.code)
+        {
+            command.pressed = false;
+            return false;
+        }
+    });
+
+    return true;
+};
+
+DodgeIt.prototype.controls_down = function(control)
+{
+    if (!this.controls.set.active)
+    {
+        $.each(this.controls.command, function(commandIndex, command)
+        {
+            if (command.device == control.device &&
+                command.type   == control.type &&
+                command.code   == control.code)
+            {
+                command.pressed = true;
+                command.fn();
+                return false;
+            }
+        });
+        return true;
+    }
+    else
+    {
+        // set control
+        if (this.controls.set.abort.device != control.device ||
+            this.controls.set.abort.type   != control.type ||
+            this.controls.set.abort.code   != control.code)
+        {
+            this.controls.command[this.controls.set.key].device = control.device;
+            this.controls.command[this.controls.set.key].type   = control.type;
+            this.controls.command[this.controls.set.key].code   = control.code;
+            this.controls.set.callback(control);
+        }
+        else
+        {
+            this.controls.set.callback(null);
+        }
+        this.controls.set.active = false;
+
+        return false;
+    }
+
 };

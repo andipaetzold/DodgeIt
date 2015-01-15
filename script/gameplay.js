@@ -200,6 +200,7 @@ DodgeIt.prototype.gameplay = function()
                 this.background.y = (this.background.y + (this.obstacle.speed * delta * that2.getSpeedFactor())) % this.background.height;
 
                 // move character
+                that.controls_gamepad_poll(false);
 
                 var control_speed_x = 0;
                 var control_speed_y = 0;
