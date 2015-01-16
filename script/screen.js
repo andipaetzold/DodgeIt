@@ -31,6 +31,12 @@ DodgeIt.prototype.screen_init = function()
     // options
     container = $("div#options", this.container);
 
+    $("tbody tr", container).hover(function()
+    {
+        $(this).siblings().removeClass("selected");
+        $(this).addClass("selected");
+    });
+
     // options - style
     $("input[data-option=style]", container).on("change", function()
     {
@@ -234,7 +240,93 @@ DodgeIt.prototype.screen_show = function(screen)
                 });
             };
             break;
-        case "options":        
+        case "options":    
+            // controls
+            this.controls_command_set("up", function()
+            {
+                var selected = $("table tr.selected", container);
+                if (selected.prevAll().length > 0)
+                {
+                    selected.removeClass("selected");
+                    selected.prev().addClass("selected");
+                }
+            });
+
+            this.controls_command_set("down", function()
+            {
+                var selected = $("table tr.selected", container);
+                if (selected.nextAll().length > 0)
+                {
+                    selected.removeClass("selected");
+                    selected.next().addClass("selected");
+                }
+            });
+
+            this.controls_command_set("enter", function()
+            {
+                var td = $("table tr.selected td:nth-child(2)", container);
+                var checkbox = $("input[type=checkbox]", td);
+                if (checkbox.length == 1)
+                {
+                    checkbox.prop("checked", !checkbox.prop("checked"));
+                }
+            });
+
+            this.controls_command_set("left", function()
+            {
+                var td = $("table tr.selected td:nth-child(2)", container);
+
+                // radio
+                var radio = $("input[type=radio]:checked", td);
+                if (radio.length == 1 &&
+                    radio.parent("label").prev().length == 1)
+                {
+                    radio.prop("checked", false);
+                    radio.parent("label").prev().children("input[type=radio]").prop("checked", true);
+                }           
+
+                // range
+                var range = $("input[type=range]", td);
+                if (range.length == 1)
+                {
+                    var step = 1;
+                    if (range.attr("step"))
+                    {
+                        step = parseInt(range.attr("step"));
+                    }
+                    range.val(parseInt(range.val()) - step);
+                }
+            });
+
+            this.controls_command_set("right", function()
+            {
+                var td = $("table tr.selected td:nth-child(2)", container);
+
+                // radio
+                var radio = $("input[type=radio]:checked", td);
+                if (radio.length == 1 &&
+                    radio.parent("label").next().length == 1)
+                {
+                    radio.prop("checked", false);
+                    radio.parent("label").next().children("input[type=radio]").prop("checked", true);
+                }
+
+                // range
+                var range = $("input[type=range]", td);
+                if (range.length == 1)
+                {
+                    var step = 1;
+                    if (range.attr("step"))
+                    {
+                        step = parseInt(range.attr("step"));
+                    }
+                    range.val(parseInt(range.val()) + step);
+                }
+            });
+
+
+            $("table tr:nth-child(1)", container).addClass("selected");
+
             // style
             $.each($("input[data-option=style]"), function()
             {
