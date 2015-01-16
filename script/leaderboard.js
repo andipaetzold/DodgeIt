@@ -17,8 +17,11 @@ DodgeIt.prototype.leaderboard = {
             .empty()
             .append(
                 $("<tr></tr>")
+                    .addClass("loading")
                     .append(
-                        $("<td>Loading...</td>")
+                        $("<td></td>")
+                            .attr("colspan", 3)
+                            .html("Loading...")
                     )
                 );
 
@@ -52,17 +55,31 @@ DodgeIt.prototype.leaderboard = {
 
                 // filter items
                 var output = [];
-                for (var i = start; (i <= data.length - 1) && (i - start <= count - 1); i++)
+                for (var i = start; i - start <= count - 1; i++)
                 {
-                    $("<tr></tr>")
-                        .appendTo(table)
-                        .append($("<td></td>").html(data[i].name))
-                        .append($("<td></td>").html(data[i].score));
+                    if (i <= data.length - 1)
+                    {
+                        $("<tr></tr>")
+                            .appendTo(table)
+                            .append($("<td></td>").html(i + 1))
+                            .append($("<td></td>").html(data[i].name))
+                            .append($("<td></td>").html(data[i].score));                        
+                    }
+                    else
+                    {
+                        // add empty row
+                        $("<tr></tr>")
+                            .appendTo(table)
+                            .append("<td>&nbsp;</td>")
+                            .append("<td>&nbsp;</td>")
+                            .append("<td>&nbsp;</td>");
+                    }
+
                 };
 
                 // add buttons
-                var tr_button = $("<tr></tr>").appendTo(table);
-                var td_1 = $("<td></td>").appendTo(tr_button);
+                var tr_button = $("<tr></tr>").appendTo(table).addClass("buttons");
+                var td_1 = $("<td></td>").attr("colspan", 2).appendTo(tr_button);
                 var td_2 = $("<td></td>").appendTo(tr_button);
 
                 // prev
@@ -70,7 +87,7 @@ DodgeIt.prototype.leaderboard = {
                 {
                     td_1.append(
                         $("<button></button>")
-                            .html("previous" + count)
+                            .html("previous " + count)
                             .click(function()
                             {
                                 that.get(start - count, count, table);
