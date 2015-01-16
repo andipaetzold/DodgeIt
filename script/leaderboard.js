@@ -10,13 +10,17 @@ DodgeIt.prototype.leaderboard = {
 
     get: function(start, count, table)
     {
+        var that = this;
+
         // loading
-        table.append(
-            $("<tr></tr>")
-                .append(
-                    $("<td>Loading...</td>")
-                )
-            );
+        table
+            .empty()
+            .append(
+                $("<tr></tr>")
+                    .append(
+                        $("<td>Loading...</td>")
+                    )
+                );
 
         // get data
         var table_key = "1bWUyCx4cLJn6EXe_0Y8NxJ3iJhjqMM5pHfSCEuVD8Ec";
@@ -55,6 +59,37 @@ DodgeIt.prototype.leaderboard = {
                         .append($("<td></td>").html(data[i].name))
                         .append($("<td></td>").html(data[i].score));
                 };
+
+                // add buttons
+                var tr_button = $("<tr></tr>").appendTo(table);
+                var td_1 = $("<td></td>").appendTo(tr_button);
+                var td_2 = $("<td></td>").appendTo(tr_button);
+
+                // prev
+                if (start != 0)
+                {
+                    td_1.append(
+                        $("<button></button>")
+                            .html("previous" + count)
+                            .click(function()
+                            {
+                                that.get(start - count, count, table);
+                            })
+                    );
+                }
+
+                // next
+                if (data.length >= start + count)
+                {
+                    td_2.append(
+                        $("<button></button>")
+                            .html("next " + count)
+                            .click(function()
+                            {
+                                that.get(start + count, count, table);
+                            })
+                    );
+                }
             },
 
             jsonpCallback: "success"
