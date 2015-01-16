@@ -131,15 +131,7 @@ DodgeIt.prototype.screen_show = function(screen)
             break;
         case "leaderboard":
             var table = $("table tbody", container).empty();
-            var data = this.leaderboard.get(0, 10);
-            $.each(data, function(index, item)
-            {
-                $("<tr></tr>")
-                    .appendTo(table)
-                    .append($("<td></td>").html(item.name))
-                    .append($("<td></td>").html(item.score));
-            });
-
+            var data = this.leaderboard.get(0, 10, table);
             // loop
             loop_function = function()
             {

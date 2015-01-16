@@ -8,38 +8,56 @@ DodgeIt.prototype.leaderboard = {
         });
     },
 
-    get: function(start, count)
+    get: function(start, count, table)
     {
+        // loading
+        table.append(
+            $("<tr></tr>")
+                .append(
+                    $("<td>Loading...</td>")
+                )
+            );
+
         // get data
         var table_key = "1bWUyCx4cLJn6EXe_0Y8NxJ3iJhjqMM5pHfSCEuVD8Ec";
-        var query = "select+B,+C+order+by+C+desc";
-        var url = "https://docs.google.com/spreadsheets/d/"+table_key+"/gviz/tq?tq="+query+"&tqx=responseHandler:done";
-        var responseText = $.ajax({
+        $.ajax({
+            url: "https://docs.google.com/spreadsheets/d/"+table_key+"/gviz/tq?",
+
+            dataType: "jsonp",
             type: "GET",
-            url: url,
-            async: false,
-            cache: false
-        }).responseText;
-        var text_begin = "done(";
-        var text_end   = ");";
-        responseText = responseText.substr(text_begin.length, responseText.length - text_begin.length - text_end.length);
-        responseText = $.parseJSON(responseText);
+            cache: false,
 
-        var data = [];
-        $.each(responseText.table.rows, function(index, value)
-        {
-            data.push({
-                name:   value.c[0].v,
-                score:  value.c[1].v
-            });
+            data: {
+                tq:     "select B, C order by C desc",
+                tqx:    "responseHandler:success"
+            },
+
+            success: function(responseText)
+            {
+                var data = [];
+                $.each(responseText.table.rows, function(index, value)
+                {
+                    data.push({
+                        name:   value.c[0].v,
+                        score:  value.c[1].v
+                    });
+                });
+
+                // clear table
+                table.empty();
+
+                // filter items
+                var output = [];
+                for (var i = start; (i <= data.length - 1) && (i - start <= count - 1); i++)
+                {
+                    $("<tr></tr>")
+                        .appendTo(table)
+                        .append($("<td></td>").html(data[i].name))
+                        .append($("<td></td>").html(data[i].score));
+                };
+            },
+
+            jsonpCallback: "success"
         });
-
-        // filter items
-        var output = [];
-        for (var i = start; (i <= data.length - 1) && (i - start <= count - 1); i++) {
-            output.push(data[i]);
-        };
-
-        return output;
     }
 };
