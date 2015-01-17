@@ -70,6 +70,10 @@ body {
             display: inline-block;
 
             cursor: pointer;
+
+            &:hover {
+                font-weight: bold;
+            }
         }
 
         /* game */
