@@ -1,70 +1,118 @@
 DodgeIt.prototype.screen_init = function()
 {
     var that = this;
-    var container;
+
+    var container = [
+        "menu",
+        "gameplay",
+        "leaderboard",
+        "gameplay-gameover",
+        "controls",
+        "options",
+        "about"
+    ];
+    container = $.map(container, function(val)
+    {
+        return $("div#" + val, this.container);
+    });
 
     // menu
-    container = $("div#menu", this.container);
-
-    $("span", container).hover(function()
+    $("span", container["menu"]).hover(function()
     {
         $(this).siblings().removeClass("selected");
         $(this).addClass("selected");
     });
 
-    $("span", container).click(function()
+    $("span", container["menu"]).click(function()
     {
         that.screen_show($(this).attr("data-screen"));
     });
 
-    $("span:first", container).addClass("selected");
+    $("span:first", container["menu"]).addClass("selected");
 
     // gameplay
-    container = $("div#gameplay", this.container);
+
+    // gameplay-gameover
+    // gameplay-gameover - hover 
+    $("table", container["gameplay-gameover"]).delegate("td", "mouseover", function(v)
+    {
+        $("table tr td", container["options"]).removeClass("selected");
+        $(this).addClass("selected");
+    });
+
+    // gameplay-gameover - restrict input text
+    $("input[type=text]", container["gameplay-gameover"]).keypress(function(event)
+    {
+        var regex = /^[a-zA-Z0-9]*$/;
+        var str = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        return regex.test(str);
+    });
+
+    // gameplay-gameover - click
+    $("table", container["gameplay-gameover"]).delegate("td", "click", function()
+    {
+        var input = $("input[type=text]", container["gameplay-gameover"]);
+        switch ($(this).attr("data-action"))
+        {
+            case "add":
+                if (input.prop("maxlength") > input.val().length)
+                {
+                    input.val(input.val() + $(this).attr("data-symbol"));
+                }
+                break;
+            case "delete":
+                input.val(input.val().slice(0, -1));
+                break;
+            case "cancel":
+                that.screen_show("menu");
+                break;
+            case "submit":
+                that.leaderboard.post(input.val(), $("span.score", container["gameplay-gameover"]).html());
+                that.screen_show("menu");
+                break;
+            default:
+                break;
+        }
+    });
 
     // leaderboard
-    container = $("div#leaderboard", this.container);
 
     // controls
-    container = $("div#controls", this.container);
 
     // options
-    container = $("div#options", this.container);
-
-    $("tbody tr", container).hover(function()
+    $("tbody tr", container["options"]).hover(function()
     {
         $(this).siblings().removeClass("selected");
         $(this).addClass("selected");
     });
 
     // options - style
-    $("input[data-option=style]", container).on("change", function()
+    $("input[data-option=style]", container["options"]).on("change", function()
     {
         that.options.style = $(this).val();
     });
 
     // options - music
-    $("input#options-music-mute", container).on("change", function()
+    $("input#options-music-mute", container["options"]).on("change", function()
     {
         that.audio.music.mute_set(this.checked);
     });
-    $("input#options-music-volume", container).on("change mousemove", function()
+    $("input#options-music-volume", container["options"]).on("change mousemove", function()
     {
         that.audio.music.volume_set($(this).val());
     });
 
     // options - sfx
-    $("input#options-sfx-mute", container).on("change", function()
+    $("input#options-sfx-mute", container["options"]).on("change", function()
     {
         that.audio.sfx.mute_set(this.checked);
     });
-    $("input#options-sfx-volume", container).on("change mousemove", function()
+    $("input#options-sfx-volume", container["options"]).on("change mousemove", function()
     {
         that.audio.sfx.volume_set($(this).val());
     });
 
     // about
-    container = $("div#about", this.container);
 
     // general
     $("span.back", this.container).click(function()
@@ -130,7 +178,108 @@ DodgeIt.prototype.screen_show = function(screen)
             this.gameplay();
             break;
         case "leaderboard":
-            that.leaderboard.get(0, 10, $("table tbody", container));
+            that.leaderboard.get(0, 10, $("table", container));
+            
+            // loop
+            loop_function = function()
+            {
+                that.controls_gamepad_poll(false);
+            };
+            break;
+        case "gameplay-gameover":
+            // controls
+            this.controls_command_set("up", function()
+            {
+                var selected = $("table tr td.selected", container);
+                if (selected.parent().prevAll().length > 0)
+                {
+                    // calc child_id
+                    var child_id = 1;
+                    $.each(selected.prevAll(), function(index, value)
+                    {
+                        child_id += $(value).prop("colspan");
+                    });
+
+                    // select
+                    selected.removeClass("selected");
+
+                    var selected_new = selected.parent().prev().children().first();
+                    while (child_id > 0)
+                    {
+                        var tmp = selected_new.prop("colspan");
+                        if (child_id > selected_new.prop("colspan"))
+                        {
+                            selected_new = selected_new.next();
+                        }
+
+                        child_id -= tmp;
+                    }
+
+                    selected_new.addClass("selected");
+                }
+            });
+
+            this.controls_command_set("down", function()
+            {
+                var selected = $("table tr td.selected", container);
+                if (selected.parent().nextAll().length > 0)
+                {
+                    // calc child_id
+                    var child_id = 1;
+                    $.each(selected.prevAll(), function(index, value)
+                    {
+                        child_id += $(value).prop("colspan");
+                    });
+
+                    // select
+                    selected.removeClass("selected");
+
+                    var selected_new = selected.parent().next().children().first();
+                    while (child_id > 0)
+                    {
+                        var tmp = selected_new.prop("colspan");
+                        if (child_id > selected_new.prop("colspan"))
+                        {
+                            selected_new = selected_new.next();
+                        }
+
+                        child_id -= tmp;
+                    }
+
+                    selected_new.addClass("selected");
+                }
+            });
+
+            this.controls_command_set("left", function()
+            {
+                var selected = $("table tr td.selected", container);
+                if (selected.prevAll().length > 0)
+                {
+                    selected.removeClass("selected");
+                    selected.prev().addClass("selected");
+                }
+            });
+
+            this.controls_command_set("right", function()
+            {
+                var selected = $("table tr td.selected", container);
+                if (selected.nextAll().length > 0)
+                {
+                    selected.removeClass("selected");
+                    selected.next().addClass("selected");
+                }
+            });
+
+            this.controls_command_set("enter", function()
+            {
+                $("table tr td.selected").click();
+            });
+
+            // select first
+            $("table tr:nth-child(1) td:nth-child(1)", container).addClass("selected");
+
+            // set text
+            $("input[type=text]", container).val("Unknown");
             
             // loop
             loop_function = function()

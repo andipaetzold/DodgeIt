@@ -372,23 +372,11 @@ DodgeIt.prototype.gameplay = function()
         collision: function()
         {
             this.state = this.states.gameover;
+            $(this.container).html("");
 
-            // leaderboard
-            var name = prompt("Please enter your name:", "Unknown");
-            if (name != null)
-            {
-                that.leaderboard.post(name, Math.floor(this.score));
-            }
-
-            // restart
-            if (confirm("Restart?"))
-            {
-                this.start();
-            }
-            else
-            {
-                this.end();
-            }
+            // leaderboard post
+            $("div#gameplay-gameover span.score", that.container).html(Math.floor(this.score));
+            that.screen_show("gameplay-gameover");
         },
 
         gamepaddown: function(event)
@@ -409,12 +397,6 @@ DodgeIt.prototype.gameplay = function()
         getSpeedFactor: function()
         {
             return Math.pow(this.obstacle.speed_factor, Math.floor(this.time / this.obstacle.speed_time));
-        },
-
-        end: function()
-        {
-            $(this.container).html("");
-            that.screen_show("menu");
         }
     });
 
