@@ -7,6 +7,7 @@ DodgeIt.prototype.screen_init = function()
         "gameplay",
         "leaderboard",
         "gameplay-gameover",
+        "gameplay-restart",
         "controls",
         "options",
         "about"
@@ -68,11 +69,27 @@ DodgeIt.prototype.screen_init = function()
                 break;
             case "submit":
                 that.leaderboard.post(input.val(), $("span.score", container["gameplay-gameover"]).html());
-                that.screen_show("menu");
+                that.screen_show("gameplay-restart");
                 break;
             default:
                 break;
         }
+    });
+
+    // gameplay-restart
+    $("table tr td:nth-child(1)", container["gameplay-restart"]).click(function(event)
+    {
+        that.screen_show("gameplay");
+    });
+    $("table tr td:nth-child(2)", container["gameplay-restart"]).click(function(event)
+    {
+        that.screen_show("menu");
+    });
+
+    $("table tr td", container["gameplay-restart"]).hover(function()
+    {   
+        $(this).siblings().removeClass("selected");
+        $(this).addClass("selected");
     });
 
     // leaderboard
@@ -281,6 +298,34 @@ DodgeIt.prototype.screen_show = function(screen)
             // set text
             $("input[type=text]", container).val("Unknown");
             
+            // loop
+            loop_function = function()
+            {
+                that.controls_gamepad_poll(false);
+            };
+            break;
+        case "gameplay-restart":
+            this.controls_command_set("left", function()
+            {
+                $("table tr td:nth-child(1)", container).addClass("selected");
+                $("table tr td:nth-child(2)", container).removeClass("selected");
+            });
+
+            this.controls_command_set("right", function()
+            {
+                $("table tr td:nth-child(1)", container).removeClass("selected");
+                $("table tr td:nth-child(2)", container).addClass("selected");
+            });
+
+            this.controls_command_set("enter", function()
+            {
+                $("table tr td.selected", container).click();
+            });
+
+            // select Yes
+            $("table tr td:nth-child(1)", container).addClass("selected");
+            $("table tr td:nth-child(2)", container).removeClass("selected");
+
             // loop
             loop_function = function()
             {

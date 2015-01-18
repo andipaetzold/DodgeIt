@@ -125,6 +125,30 @@ body {
             }
         }
 
+        /* gameplay-restart */
+        &#gameplay-restart {
+            table {
+                margin-top:     100px;
+                margin-left:    auto;
+                margin-right:   auto;
+
+                tr {
+                    td {
+                        padding-left:   15px;
+                        padding-right:  15px;
+
+                        font-size: 25px;
+
+                        cursor: pointer;
+
+                        &.selected {
+                            font-weight:    bold;
+                        }
+                    }
+                }
+            }
+        }
+
         /* leaderboard */
         &#leaderboard {
             table {
