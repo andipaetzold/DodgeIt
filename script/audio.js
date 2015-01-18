@@ -1,14 +1,22 @@
 DodgeIt.prototype.audio = {
-    init: function()
+    init: function(parent)
     {
-        this.music.init();
-        this.sfx.init();
+        // set parent
+        this.parent = parent;
+
+        // init
+        this.music.init(this);
+        this.sfx.init(this);
     },
 
     music: {
         audioElement: null,
-        init: function()
+        init: function(parent)
         {
+            // set parent
+            this.parent = parent;
+
+            // init
             this.audioElement = $("<audio></audio");
             var that = this;
             this.audioElement.bind("ended", function()
@@ -16,25 +24,9 @@ DodgeIt.prototype.audio = {
                 that.next_track();
             });
 
-            // mute
-            if ($.cookie("audio/music/mute") == "true")
-            {
-                this.mute_set($.cookie("audio/music/mute") == "true");
-            }
-            else
-            {
-                this.mute_set(false);
-            }
-
-            // volume
-            if ($.cookie("audio/music/volume"))
-            {
-                this.volume_set($.cookie("audio/music/volume"));
-            }
-            else
-            {
-                this.volume_set(5);
-            }
+            // mute / volume
+            this.mute_set(false);
+            this.volume_set(5);
 
             // start music
             this.next_track();
@@ -72,8 +64,8 @@ DodgeIt.prototype.audio = {
         },
         mute_set: function(mute)
         {
-            $.cookie("audio/music/mute", mute);
             this.audioElement.get(0).muted = mute;
+            this.parent.parent.save();
         },
         mute_get: function()
         {
@@ -81,11 +73,11 @@ DodgeIt.prototype.audio = {
         },
         volume_set: function(volume)
         {
-            $.cookie("audio/music/volume", volume);
             if (volume >= 0 && volume <= this.max)
             {
                 this.audioElement.get(0).volume = volume / this.max;
             }
+            this.parent.parent.save();
         },
         volume_get: function()
         {
@@ -97,27 +89,14 @@ DodgeIt.prototype.audio = {
         max: 10,
         volume: 5,
 
-        init: function()
+        init: function(parent)
         {
-            // mute
-            if ($.cookie("audio/sfx/mute"))
-            {
-                this.mute_set($.cookie("audio/sfx/mute") == "true");
-            }
-            else
-            {
-                this.mute_set(false);
-            }
+            // set parent
+            this.parent = parent;
 
-            // volume
-            if ($.cookie("audio/sfx/volume"))
-            {
-                this.volume_set($.cookie("audio/sfx/volume"));
-            }
-            else
-            {
-                this.volume_set(5);
-            }
+            // init
+            this.mute_set(false);
+            this.volume_set(5);
         },
         play: function()
         {
@@ -125,8 +104,8 @@ DodgeIt.prototype.audio = {
         },
         mute_set: function(mute)
         {
-            $.cookie("audio/sfx/mute", mute);
             this.mute = mute;
+            this.parent.parent.save();
         },
         mute_get: function()
         {
@@ -134,8 +113,8 @@ DodgeIt.prototype.audio = {
         },
         volume_set: function(volume)
         {
-            $.cookie("audio/sfx/volume", volume);
             this.volume = volume;
+            this.parent.parent.save();
         },
         volume_get: function()
         {
