@@ -110,6 +110,7 @@ DodgeIt.prototype.screen_init = function()
     $("input[data-option=style]", container["options"]).on("change", function()
     {
         that.options.style = $(this).val();
+        that.save();
     });
 
     // options - music
