@@ -347,46 +347,6 @@ DodgeIt.prototype.screen_show = function(screen)
                 $(this).html(that.controls_format(that.controls.command[$(this).attr("data-command")]));
             });
 
-            // get axes
-            $("div#controls-gamepad-move", container).html("");
-            $.each(this.controls.gamepad.axes, function(index, axes)
-            {
-                $("div#controls-gamepad-move", container)
-                    .append(
-                        $("<div></div>")
-                            .append(
-                                $("<label></label>")
-                                    .append($("<input>")
-                                        .attr("type", "radio")
-                                        .attr("name", "controls-gamepad-move")
-                                        .change(function(event)
-                                        {
-                                            that.controls.gamepad.axes_selected = $(this).parent().parent().prevAll().length;
-                                        })
-                                    )
-                                    .append(
-                                        $("<progress></progress>")
-                                            .attr("min", 0)
-                                            .attr("max", 2)
-                                            .val(axes.x + 1)
-                                    )
-                                    .append(
-                                        $("<progress></progress>")
-                                            .attr("min", 0)
-                                            .attr("max", 2)
-                                            .val(axes.y + 1)
-                                    )
-                            )
-                        );
-            });
-
-            // select
-            if (this.controls.gamepad.axes_selected > this.controls.gamepad.axes.length - 1)
-            {
-                this.controls.gamepad.axes_selected = 0;
-            }
-            $("div#controls-gamepad-move div:nth-child(" + (this.controls.gamepad.axes_selected + 1) + ") label input", container).prop("checked", true);
-
             // set change action
             $("td button", container).click(function()
             {
@@ -421,6 +381,50 @@ DodgeIt.prototype.screen_show = function(screen)
             loop_function = function()
             {
                 that.controls_gamepad_poll(true);
+
+                // gamepad changed?
+                if (that.controls.gamepad.axes.length != $("div#controls-gamepad-move div", container).length)
+                {
+                    // create dom
+                    $("div#controls-gamepad-move", container).html("");
+                    $.each(that.controls.gamepad.axes, function(index, axes)
+                    {
+                        $("div#controls-gamepad-move", container)
+                            .append(
+                                $("<div></div>")
+                                    .append(
+                                        $("<label></label>")
+                                            .append($("<input>")
+                                                .attr("type", "radio")
+                                                .attr("name", "controls-gamepad-move")
+                                                .change(function(event)
+                                                {
+                                                    that.controls.gamepad.axes_selected = $(this).parent().parent().prevAll().length;
+                                                })
+                                            )
+                                            .append(
+                                                $("<progress></progress>")
+                                                    .attr("min", 0)
+                                                    .attr("max", 2)
+                                                    .val(axes.x + 1)
+                                            )
+                                            .append(
+                                                $("<progress></progress>")
+                                                    .attr("min", 0)
+                                                    .attr("max", 2)
+                                                    .val(axes.y + 1)
+                                            )
+                                    )
+                                );
+                    });
+
+                    // select
+                    if (that.controls.gamepad.axes_selected > that.controls.gamepad.axes.length - 1)
+                    {
+                        that.controls.gamepad.axes_selected = 0;
+                    }
+                    $("div#controls-gamepad-move div:nth-child(" + (that.controls.gamepad.axes_selected + 1) + ") label input", container).prop("checked", true);
+                }
 
                 // update progress bars
                 $.each(that.controls.gamepad.axes, function(index, axes)
