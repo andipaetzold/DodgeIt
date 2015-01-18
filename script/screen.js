@@ -293,6 +293,7 @@ DodgeIt.prototype.screen_show = function(screen)
             });
 
             // select first
+            $("table tr td.selected", container).removeClass("selected");
             $("table tr:nth-child(1) td:nth-child(1)", container).addClass("selected");
 
             // set text
