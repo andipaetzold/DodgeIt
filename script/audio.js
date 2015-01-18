@@ -1,4 +1,10 @@
 DodgeIt.prototype.audio = {
+    init: function()
+    {
+        this.music.init();
+        this.sfx.init();
+    },
+
     music: {
         audioElement: null,
         init: function()

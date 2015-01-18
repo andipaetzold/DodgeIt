@@ -27,8 +27,7 @@ function DodgeIt(container)
 
     // init
     this.controls_init();
-    this.audio.music.init();
-    this.audio.sfx.init();
+    this.audio.init();
 
     this.screen_init();
     this.screen_show("menu");
