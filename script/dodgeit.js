@@ -25,7 +25,14 @@ function DodgeIt(container)
 
         // load
         var data = localStorage.getItem("options");
-        data = JSON.parse(data);
+        try
+        {
+            data = JSON.parse(data);
+        }
+        catch (e)
+        {
+            return;
+        }
 
         // audio
         if (data.audio)
