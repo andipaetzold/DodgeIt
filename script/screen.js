@@ -2,7 +2,8 @@ DodgeIt.prototype.screen_init = function()
 {
     var that = this;
 
-    var container = [
+    // get screens
+    var screens = [
         "menu",
         "gameplay",
         "leaderboard",
@@ -12,9 +13,11 @@ DodgeIt.prototype.screen_init = function()
         "options",
         "about"
     ];
-    container = $.map(container, function(val)
+    container = {};
+
+    $.each(screens, function(index, value)
     {
-        return $("div#" + val, this.container);
+        container[value] = $("div#" + value, this.container);
     });
 
     // menu
@@ -289,7 +292,7 @@ DodgeIt.prototype.screen_show = function(screen)
 
             this.controls_command_set("enter", function()
             {
-                $("table tr td.selected").click();
+                $("table tr td.selected", container).click();
             });
 
             // select first
