@@ -115,21 +115,21 @@ DodgeIt.prototype.screen_init = function()
     // options - music
     $("input#options-music-mute", container["options"]).on("change", function()
     {
-        that.audio.music.mute_set(this.checked);
+        that.audio.music.mute = this.checked;
     });
     $("input#options-music-volume", container["options"]).on("change mousemove", function()
     {
-        that.audio.music.volume_set($(this).val());
+        that.audio.music.volume = $(this).val();
     });
 
     // options - sfx
     $("input#options-sfx-mute", container["options"]).on("change", function()
     {
-        that.audio.sfx.mute_set(this.checked);
+        that.audio.sfx.mute = this.checked;
     });
     $("input#options-sfx-volume", container["options"]).on("change mousemove", function()
     {
-        that.audio.sfx.volume_set($(this).val());
+        that.audio.sfx.volume = $(this).val();
     });
 
     // about
@@ -525,19 +525,19 @@ DodgeIt.prototype.screen_show = function(screen)
 
             // music
             $("input#options-music-mute")
-                .attr("checked", this.audio.music.mute_get());
+                .attr("checked", this.audio.music.mute);
 
             $("input#options-music-volume")
                 .attr("max", this.audio.max)
-                .val(this.audio.music.volume_get());
+                .val(this.audio.music.volume);
 
             // sfx
             $("input#options-sfx-mute")
-                .attr("checked", this.audio.sfx.mute_get());
+                .attr("checked", this.audio.sfx.mute);
 
             $("input#options-sfx-volume")
                 .attr("max", this.audio.max)
-                .val(this.audio.sfx.volume_get());
+                .val(this.audio.sfx.volume);
 
             // loop
             loop_function = function()

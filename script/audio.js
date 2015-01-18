@@ -25,8 +25,34 @@ DodgeIt.prototype.audio = {
             });
 
             // mute / volume
-            this.mute_set(false);
-            this.volume_set(5);
+            Object.defineProperty(this, "mute", {
+                get: function()
+                {
+                    return this.audioElement.get(0).muted;
+                },
+                set: function(value)
+                {
+                    this.audioElement.get(0).muted = value;
+                    this.parent.parent.save();
+                }
+            });
+            this.mute = false;
+
+            Object.defineProperty(this, "volume", {
+                get: function()
+                {
+                    return this.audioElement.get(0).volume * this.max;
+                },
+                set: function(value)
+                {
+                    if (value >= 0 && value <= this.max)
+                    {
+                        this.audioElement.get(0).volume = value / this.max;
+                    }
+                    this.parent.parent.save();
+                }
+            });
+            this.volume = 5;
 
             // start music
             this.next_track();
@@ -61,33 +87,14 @@ DodgeIt.prototype.audio = {
                         .attr("type", "audio/mpeg")
                 );
             this.audioElement.get(0).play();
-        },
-        mute_set: function(mute)
-        {
-            this.audioElement.get(0).muted = mute;
-            this.parent.parent.save();
-        },
-        mute_get: function()
-        {
-            return this.audioElement.get(0).muted;
-        },
-        volume_set: function(volume)
-        {
-            if (volume >= 0 && volume <= this.max)
-            {
-                this.audioElement.get(0).volume = volume / this.max;
-            }
-            this.parent.parent.save();
-        },
-        volume_get: function()
-        {
-            return this.audioElement.get(0).volume * this.max;
         }
     },
     sfx: {
-        mute: false,
+        options: {
+            mute: false,
+            volume: 5            
+        },
         max: 10,
-        volume: 5,
 
         init: function(parent)
         {
@@ -95,30 +102,37 @@ DodgeIt.prototype.audio = {
             this.parent = parent;
 
             // init
-            this.mute_set(false);
-            this.volume_set(5);
+            // mute / volume
+            Object.defineProperty(this, "mute", {
+                get: function()
+                {
+                    return this.options.mute;
+                },
+                set: function(value)
+                {
+                    this.options.mute = value;
+                    this.parent.parent.save();
+                }
+            });
+            this.mute = false;
+
+            Object.defineProperty(this, "volume", {
+                get: function()
+                {
+                    return this.options.volume;
+                },
+                set: function(value)
+                {
+                    this.options.volume = value;
+                    this.parent.parent.save();
+                }
+            });
+            this.volume = 5;
         },
+
         play: function()
         {
 
-        },
-        mute_set: function(mute)
-        {
-            this.mute = mute;
-            this.parent.parent.save();
-        },
-        mute_get: function()
-        {
-            return this.mute;
-        },
-        volume_set: function(volume)
-        {
-            this.volume = volume;
-            this.parent.parent.save();
-        },
-        volume_get: function()
-        {
-            return this.volume;
         }
     }
 };

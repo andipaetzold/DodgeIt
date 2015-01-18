@@ -30,11 +30,11 @@ function DodgeIt(container)
         // audio
         if (data.audio)
         {
-            that.audio.music.mute_set(data.audio.music.mute);
-            that.audio.music.volume_set(data.audio.music.volume);
+            that.audio.music.mute   = data.audio.music.mute;
+            that.audio.music.volume = data.audio.music.volume;
 
-            that.audio.sfx.mute_set(data.audio.sfx.mute);
-            that.audio.sfx.volume_set(data.audio.sfx.volume);
+            that.audio.sfx.mute     = data.audio.sfx.mute;
+            that.audio.sfx.volume   = data.audio.sfx.volume;
         }
 
         // options
@@ -56,13 +56,13 @@ function DodgeIt(container)
                 // audio
                 audio: {
                     music: {
-                        mute:   that.audio.music.mute_get(),
-                        volume: that.audio.music.volume_get()
+                        mute:   that.audio.music.mute,
+                        volume: that.audio.music.volume
                     },
 
                     sfx: {
-                        mute:   that.audio.sfx.mute_get(),
-                        volume: that.audio.sfx.volume_get()
+                        mute:   that.audio.sfx.mute,
+                        volume: that.audio.sfx.volume
                     }
                 },
                 
