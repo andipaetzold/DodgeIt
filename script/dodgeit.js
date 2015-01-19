@@ -91,7 +91,8 @@ function DodgeIt(container)
 
     // default options
     this.options = {
-        style: "car"
+        name:   "Unknown",
+        style:  "car"
     };
 
     // init

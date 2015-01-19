@@ -72,6 +72,7 @@ DodgeIt.prototype.screen_init = function()
                 break;
             case "submit":
                 that.leaderboard.post(input.val(), $("span.score", container["gameplay-gameover"]).html());
+                that.options.name = input.val(); that.save();
                 that.screen_show("gameplay-restart");
                 break;
             default:
@@ -301,7 +302,7 @@ DodgeIt.prototype.screen_show = function(screen)
             $("table tr:nth-child(1) td:nth-child(1)", container).addClass("selected");
 
             // set text
-            $("input[type=text]", container).val("Unknown");
+            $("input[type=text]", container).val(that.options.name);
             
             // loop
             loop_function = function()
