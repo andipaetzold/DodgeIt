@@ -34,20 +34,23 @@ function DodgeIt(container)
             return;
         }
 
-        // audio
-        if (data.audio)
-        {
-            that.audio.music.mute   = data.audio.music.mute;
-            that.audio.music.volume = data.audio.music.volume;
+        if (data)
+        {            
+            // audio
+            if (data.audio)
+            {
+                that.audio.music.mute   = data.audio.music.mute;
+                that.audio.music.volume = data.audio.music.volume;
 
-            that.audio.sfx.mute     = data.audio.sfx.mute;
-            that.audio.sfx.volume   = data.audio.sfx.volume;
-        }
+                that.audio.sfx.mute     = data.audio.sfx.mute;
+                that.audio.sfx.volume   = data.audio.sfx.volume;
+            }
 
-        // options
-        if (data.options)
-        {
-            that.options = data.options;            
+            // options
+            if (data.options)
+            {
+                that.options = data.options;            
+            }
         }
 
         allowSaving = true;
