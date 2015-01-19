@@ -40,7 +40,7 @@ DodgeIt.prototype.screen_init = function()
     // gameplay-gameover - hover 
     $("table", container["gameplay-gameover"]).delegate("td", "mouseover", function(v)
     {
-        $("table tr td", container["options"]).removeClass("selected");
+        $("table tr td", container["gameplay-gameover"]).removeClass("selected");
         $(this).addClass("selected");
     });
 
