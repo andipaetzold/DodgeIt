@@ -9,16 +9,9 @@ DodgeIt.prototype.gameplay = function()
         width:  this.container.width(),
         height: this.container.height(),
 
-        // game screen properties
-        sidebar: {
-            width:  Math.floor(this.container.width() / 3.5),
-            border: 2,
-            bordercolor: "#000000"
-        },
-
         // background
         background: {
-            x: 0,       // this.sidebar.width    
+            x: 0,  
             y: 0,
 
             img: null,  // set at start
@@ -142,11 +135,9 @@ DodgeIt.prototype.gameplay = function()
                 // background image
                 if (this.background.img == null)
                 {
-                    this.background.x = this.sidebar.width; 
-
                     this.background.img = this.images[this.background.src];
 
-                    var scale = (this.width - this.sidebar.width) / this.background.img.naturalWidth;
+                    var scale = this.width / this.background.img.naturalWidth;
                     this.background.width  = Math.round(this.background.img.naturalWidth * scale);
                     this.background.height = Math.round(this.background.img.naturalHeight * scale);
                 }
@@ -154,8 +145,6 @@ DodgeIt.prototype.gameplay = function()
                 // character image
                 if (this.character.img == null)
                 {
-                    this.character.y = this.height - this.character.height;
-
                     this.character.img = this.images[this.character.src];
 
                     var scaleWidth = this.character.maxwidth / this.character.img.naturalWidth;
@@ -164,11 +153,10 @@ DodgeIt.prototype.gameplay = function()
                     
                     this.character.width = Math.round(this.character.img.naturalWidth * scale);
                     this.character.height = Math.round(this.character.img.naturalHeight * scale);
+
+                    this.character.x = (this.width - this.character.width) / 2;
                     this.character.y = this.height - this.character.height;                
                 }
-
-                // set character position
-                this.character.x = (this.width + this.sidebar.width - this.character.width) / 2;
 
                 // obstacles
                 $.each(this.obstacle.items, function(index, value)
@@ -237,7 +225,7 @@ DodgeIt.prototype.gameplay = function()
 
                 // check new position
                 this.character.x += control_speed_x * this.character.speed * delta;
-                this.character.x = Math.max(this.character.x, this.sidebar.width);
+                this.character.x = Math.max(this.character.x, 0);
                 this.character.x = Math.min(this.character.x, this.width - this.character.width);
 
                 this.character.y += control_speed_y * this.character.speed * delta;
@@ -249,7 +237,7 @@ DodgeIt.prototype.gameplay = function()
                     this.time - this.obstacles[this.obstacles.length - 1].spawntime >= 1.5) // spawn every 1.5 seconds
                 {
                     var obstacle_id = Math.floor(Math.random() * this.obstacle.items.length);
-                    var obstacle_x = Math.floor(Math.random() * (this.width - this.sidebar.width - this.obstacle.items[obstacle_id].width)) + this.sidebar.width;
+                    var obstacle_x = Math.floor(Math.random() * (this.width - this.obstacle.items[obstacle_id].width));
 
                     this.obstacles.push({
                         img: this.obstacle.items[obstacle_id].img,
@@ -305,7 +293,7 @@ DodgeIt.prototype.gameplay = function()
                                      this.background.x, y,
                                      this.background.width, this.background.height);
 
-                y += this.background.height - 1; // -1, because of the gap                
+                y += this.background.height - 1; // -1, because of the gap        
             }
 
             // character
@@ -314,21 +302,6 @@ DodgeIt.prototype.gameplay = function()
                                  this.character.y,
                                  this.character.width,
                                  this.character.height);
-
-            // sidebar
-            this.layer
-                .fillStyle(this.sidebar.bordercolor)
-                .fillRect(0, 0, this.sidebar.border, this.height)
-                .fillRect(this.sidebar.width - this.sidebar.border, 0, this.sidebar.border + 1, this.height) // + 1 because of the grame around the canvas
-                .fillRect(0, 0, this.sidebar.width, this.sidebar.border)
-                .fillRect(0, this.height - this.sidebar.border, this.sidebar.width, this.sidebar.border);
-
-            // text
-            this.layer
-                .fillStyle("#000000")
-                .font("16px Arial")
-                .wrappedText("Time:  " + Math.floor(this.time).toString() + "s", 5, 16)
-                .wrappedText("Score: " + Math.floor(this.score).toString(), 5, 40);
 
             // obstacles
             $.each(this.obstacles, function(index, value)
@@ -339,6 +312,13 @@ DodgeIt.prototype.gameplay = function()
                                      value.width,
                                      value.height);
             });
+
+            // text
+            this.layer
+                .fillStyle("#FFFFFF")
+                .font("16px Arial")
+                .wrappedText("Time:  " + Math.floor(this.time).toString() + "s", 5, 16)
+                .wrappedText("Score: " + Math.floor(this.score).toString(), 5, 40);
 
             // countdown
             if (this.state == this.states.countdown)
@@ -351,7 +331,7 @@ DodgeIt.prototype.gameplay = function()
 
                 this.layer
                     .fillStyle("#FFFFFF")
-                    .wrappedText(text, this.sidebar.width + (this.width - this.sidebar.width - textboundaries.width) / 2, (this.height + textboundaries.height) / 2);
+                    .wrappedText(text, (this.width - textboundaries.width) / 2, (this.height + textboundaries.height) / 2);
             }
 
             // pause
@@ -365,7 +345,7 @@ DodgeIt.prototype.gameplay = function()
 
                 this.layer
                     .fillStyle("#FFFFFF")
-                    .wrappedText(text, this.sidebar.width + (this.width - this.sidebar.width - textboundaries.width) / 2, (this.height + textboundaries.height) / 2);
+                    .wrappedText(text, (this.width - textboundaries.width) / 2, (this.height + textboundaries.height) / 2);
             }
         },
 
