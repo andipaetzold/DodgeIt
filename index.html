@@ -199,41 +199,45 @@
 
                         <table>
                             <tbody>
-                                <tr>
+                                <tr data-option="style">
                                     <td>Style</td>
-                                    <td class="style">                                        
+                                    <td colspan="2">                                        
                                         <label>
-                                            <input name="style" type="radio" data-option="style" value="car"> 
+                                            <input name="style" type="radio" value="car"> 
                                             <img src="images/car/character.png" alt="Car">
                                         </label>
                                         <label>
-                                            <input name="style" type="radio" data-option="style" value="isaac">
+                                            <input name="style" type="radio" value="isaac">
                                             <img src="images/isaac/character.png" alt="Isaac">
                                         </label>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr data-option="volume">
                                     <td>Music</td>
-                                    <td class="audio">
+                                    <td>
                                         <label>
-                                            <input id="options-music-mute" type="checkbox" checked="checked">Mute
+                                            <input data-optionname="music"type="checkbox" checked="checked">Mute
                                         </label>
-                                        <input id="options-music-volume" type="range" min="0" max="10" value="5">
+                                    </td>
+                                    <td>
+                                        <input data-optionname="music" type="range" min="0" max="10" value="5">
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr data-option="volume">
                                     <td>Sound Effects</td>
-                                    <td class="audio">                                        
+                                    <td>                                        
                                         <label>
-                                            <input id="options-sfx-mute" type="checkbox" checked="checked">Mute
+                                            <input data-optionname="sfx" type="checkbox" checked="checked">Mute
                                         </label>
-                                        <input id="options-sfx-volume" type="range" min="0" max="10" value="5">
+                                    </td>
+                                    <td>
+                                        <input data-optionname="sfx" type="range" min="0" max="10" value="5">
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr data-option="range">
                                     <td>Movement Speed</td>
-                                    <td class="speed">
-                                        <input id="options-movement-speed" type="range" min="200" max="600" step="25" value="300">
+                                    <td colspan="2">
+                                        <input data-optionname="speed" type="range" min="200" max="600" step="25" value="300">
                                     </td>
                                 </tr>
                             </tbody>

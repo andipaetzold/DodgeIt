@@ -107,38 +107,24 @@ DodgeIt.prototype.screen_init = function()
         $(this).addClass("selected");
     });
 
-    // options - style
-    $("input[data-option=style]", container["options"]).on("change", function()
+    $("input", container["options"]).on("change mousemove", function()
     {
-        that.options.style = $(this).val();
-        that.save();
-    });
+        // style
+        that.options.style      = $("tr[data-option=style]  input[type=radio]:checked", container["options"]).val();
 
-    // options - music
-    $("input#options-music-mute", container["options"]).on("change", function()
-    {
-        that.audio.music.mute = this.checked;
-    });
-    $("input#options-music-volume", container["options"]).on("change mousemove", function()
-    {
-        that.audio.music.volume = $(this).val();
-    });
+        // music
+        that.audio.music.mute   = $("tr[data-option=volume] input[type=checkbox][data-optionname=music]", container["options"]).prop("checked");
+        that.audio.music.volume = $("tr[data-option=volume] input[type=range][data-optionname=music]", container["options"]).val();
 
-    // options - sfx
-    $("input#options-sfx-mute", container["options"]).on("change", function()
-    {
-        that.audio.sfx.mute = this.checked;
-    });
-    $("input#options-sfx-volume", container["options"]).on("change mousemove", function()
-    {
-        that.audio.sfx.volume = $(this).val();
-    });
+        // sfx
+        that.audio.sfx.mute     = $("tr[data-option=volume] input[type=checkbox][data-optionname=sfx]", container["options"]).prop("checked");
+        that.audio.sfx.volume   = $("tr[data-option=volume] input[type=range][data-optionname=sfx]", container["options"]).val();
 
-    // options - speed
-    $("input#options-movement-speed", container["options"]).on("change mousemove", function()
-    {
-        that.options.speed = $(this).val();
-        that.save();
+        // speed
+        that.options.speed      = $("tr[data-option=range]  input[type=range][data-optionname=speed]", container["options"]).val(); 
+
+        // save 
+        that.save(); 
     });
 
     // about
@@ -467,8 +453,7 @@ DodgeIt.prototype.screen_show = function(screen)
 
             this.controls_command_set("enter", function()
             {
-                var td = $("table tr.selected td:nth-child(2)", container);
-                var checkbox = $("input[type=checkbox]", td);
+                var checkbox = $("table tr.selected input[type=checkbox]", container);
                 if (checkbox.length == 1)
                 {
                     checkbox.prop("checked", !checkbox.prop("checked"));
@@ -477,10 +462,10 @@ DodgeIt.prototype.screen_show = function(screen)
 
             this.controls_command_set("left", function()
             {
-                var td = $("table tr.selected td:nth-child(2)", container);
+                var tr = $("table tr.selected", container);
 
                 // radio
-                var radio = $("input[type=radio]:checked", td);
+                var radio = $("input[type=radio]:checked", tr);
                 if (radio.length == 1 &&
                     radio.parent("label").prev().length == 1)
                 {
@@ -489,7 +474,7 @@ DodgeIt.prototype.screen_show = function(screen)
                 }           
 
                 // range
-                var range = $("input[type=range]", td);
+                var range = $("input[type=range]", tr);
                 if (range.length == 1)
                 {
                     var step = 1;
@@ -503,10 +488,10 @@ DodgeIt.prototype.screen_show = function(screen)
 
             this.controls_command_set("right", function()
             {
-                var td = $("table tr.selected td:nth-child(2)", container);
+                var tr = $("table tr.selected", container);
 
                 // radio
-                var radio = $("input[type=radio]:checked", td);
+                var radio = $("input[type=radio]:checked", tr);
                 if (radio.length == 1 &&
                     radio.parent("label").next().length == 1)
                 {
@@ -515,7 +500,7 @@ DodgeIt.prototype.screen_show = function(screen)
                 }
 
                 // range
-                var range = $("input[type=range]", td);
+                var range = $("input[type=range]", tr);
                 if (range.length == 1)
                 {
                     var step = 1;
@@ -531,30 +516,18 @@ DodgeIt.prototype.screen_show = function(screen)
             $("table tr:nth-child(1)", container).addClass("selected");
 
             // style
-            $.each($("input[data-option=style]"), function()
-            {
-                $(this).attr("checked", that.options.style == $(this).val());
-            });
+            $("tr[data-option=style]  input[type=radio][value=" + that.options.style + "]", container["options"]).prop("checked", true);
 
             // music
-            $("input#options-music-mute")
-                .attr("checked", this.audio.music.mute);
-
-            $("input#options-music-volume")
-                .attr("max", this.audio.max)
-                .val(this.audio.music.volume);
+            $("tr[data-option=volume] input[type=checkbox][data-optionname=music]", container["options"]).prop("checked", that.audio.music.mute);
+            $("tr[data-option=volume] input[type=range][data-optionname=music]", container["options"]).val(that.audio.music.volume);
 
             // sfx
-            $("input#options-sfx-mute")
-                .attr("checked", this.audio.sfx.mute);
+            $("tr[data-option=volume] input[type=checkbox][data-optionname=sfx]", container["options"]).prop("checked", that.audio.sfx.mute);
+            $("tr[data-option=volume] input[type=range][data-optionname=sfx]", container["options"]).val(that.audio.sfx.volume);
 
-            $("input#options-sfx-volume")
-                .attr("max", this.audio.max)
-                .val(this.audio.sfx.volume);
-
-            // sfx
-            $("options-movement-speed")
-                .val(this.options.speed);
+            // speed
+            $("tr[data-option=range]  input[type=range][data-optionname=speed]", container["options"]).val(that.options.speed); 
 
             // loop
             loop_function = function()

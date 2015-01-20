@@ -255,57 +255,50 @@ body {
                             width: $options-td-1-width;
                         }
 
+                        /*
+                        CSS 4
+                        &:has(> input[type=range]) {
+                            width: 100%;
+                        }
+                        */
+
                         label {
                             cursor: pointer;
                         }
+
+                        input[type=range] {
+                            width: 100%;
+                            cursor: pointer;
+                        }
+                    }
                         
-                        &.style {
-                            label {                                
-                                input[type=radio] {
-                                    display: none;
-                                }
+                    &[data-option=style] {
+                        label {                                
+                            input[type=radio] {
+                                display: none;
+                            }
 
-                                img {
-                                    max-height: 75px;
-                                    max-width:  75px;
-                                }
+                            img {
+                                max-height: 75px;
+                                max-width:  75px;
+                            }
 
-                                input[type=radio]:checked + img {
-                                    border: 3px black dotted;
-                                }
+                            input[type=radio]:checked + img {
+                                border: 3px black dotted;
+                            }
 
-                                input[type=radio]:not(:checked) + img {
-                                    border: 3px transparent solid;
-                                }
+                            input[type=radio]:not(:checked) + img {
+                                border: 3px transparent solid;
                             }
                         }
+                    }
 
-                        &.audio {
-                            label {
-                                width:      $options-audio-label-width;
-                                max-width:  $options-audio-label-width;
-
-                                margin-right: $options-audio-label-margin;
-
-                                input[type=checkbox] {
-                                    margin-left:    $options-checkbox-margin;
-                                    margin-right:   $options-checkbox-margin;
-                                }
+                    &[data-option=volume] {
+                        label {
+                            input[type=checkbox] {
+                                margin-left:    $options-checkbox-margin;
+                                margin-right:   $options-checkbox-margin;
                             }
-                            
-                            input[type=range] {
-                                width: $screen-size-width-real - $options-td-1-width - $options-audio-label-width - 2 * $options-checkbox-margin - $options-audio-label-margin - 4 * $options-td-padding-side;
-
-                                cursor: pointer;
-                            }
-                        }
-
-                        &.speed {
-                            input[type=range] {
-                                width: 100%;
-
-                                cursor: pointer;
-                            }                            
                         }
                     }
                 }
