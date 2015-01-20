@@ -13,6 +13,11 @@ DodgeIt.prototype.controls_init = function()
             timestamp: 0,
         },
 
+        orientation: {
+            beta:   null,
+            gamma:  null
+        },
+
         set: {
             active:     false,
             key:        "",
@@ -90,6 +95,13 @@ DodgeIt.prototype.controls_init = function()
 
     // poll
     this.controls_gamepad_poll(true);
+
+    // mobile - device orientation
+    window.addEventListener("deviceorientation", function(event)
+    {
+        that.controls.orientation.beta  = event.beta;
+        that.controls.orientation.gamma = event.gamma;
+    }, true);
 };
 
 DodgeIt.prototype.controls_reset = function()
@@ -173,6 +185,20 @@ DodgeIt.prototype.controls_axes = function(axis)
         axes.y = adapt(axes.y);
 
         return axes;
+    }
+    else if (this.controls.orientation.beta != null && this.controls.orientation.gamma != null)
+    {
+        var x;
+        x = this.controls.orientation.gamma / 45;
+        x = Math.min(1, x);
+        x = Math.max(-1, x);
+
+        var y;
+        y = this.controls.orientation.beta / 45;
+        y = Math.min(1, y);
+        y = Math.max(-1, y);
+
+        return {x: x, y: y};
     }
     else
     {
