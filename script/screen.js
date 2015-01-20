@@ -456,7 +456,9 @@ DodgeIt.prototype.screen_show = function(screen)
                 var checkbox = $("table tr.selected input[type=checkbox]", container);
                 if (checkbox.length == 1)
                 {
-                    checkbox.prop("checked", !checkbox.prop("checked"));
+                    checkbox
+                        .prop("checked", !checkbox.prop("checked"))
+                        .trigger("change");
                 }
             });
 
@@ -470,7 +472,9 @@ DodgeIt.prototype.screen_show = function(screen)
                     radio.parent("label").prev().length == 1)
                 {
                     radio.prop("checked", false);
-                    radio.parent("label").prev().children("input[type=radio]").prop("checked", true);
+                    radio.parent("label").prev().children("input[type=radio]")
+                        .prop("checked", true)
+                        .trigger("change");
                 }           
 
                 // range
@@ -482,7 +486,9 @@ DodgeIt.prototype.screen_show = function(screen)
                     {
                         step = parseInt(range.attr("step"));
                     }
-                    range.val(parseInt(range.val()) - step);
+                    range
+                        .val(parseInt(range.val()) - step)
+                        .trigger("change");;
                 }
             });
 
@@ -496,7 +502,9 @@ DodgeIt.prototype.screen_show = function(screen)
                     radio.parent("label").next().length == 1)
                 {
                     radio.prop("checked", false);
-                    radio.parent("label").next().children("input[type=radio]").prop("checked", true);
+                    radio.parent("label").next().children("input[type=radio]")
+                        .prop("checked", true)
+                        .trigger("change");;
                 }
 
                 // range
@@ -508,7 +516,9 @@ DodgeIt.prototype.screen_show = function(screen)
                     {
                         step = parseInt(range.attr("step"));
                     }
-                    range.val(parseInt(range.val()) + step);
+                    range
+                        .val(parseInt(range.val()) + step)
+                        .trigger("change");;
                 }
             });
 
