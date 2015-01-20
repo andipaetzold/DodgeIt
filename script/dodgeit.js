@@ -95,7 +95,8 @@ function DodgeIt(container)
     // default options
     this.options = {
         name:   "Unknown",
-        style:  "car"
+        style:  "car",
+        speed:  300
     };
 
     // init

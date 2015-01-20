@@ -134,6 +134,13 @@ DodgeIt.prototype.screen_init = function()
         that.audio.sfx.volume = $(this).val();
     });
 
+    // options - speed
+    $("input#options-movement-speed", container["options"]).on("change mousemove", function()
+    {
+        that.options.speed = $(this).val();
+        that.save();
+    });
+
     // about
 
     // general
@@ -544,6 +551,10 @@ DodgeIt.prototype.screen_show = function(screen)
             $("input#options-sfx-volume")
                 .attr("max", this.audio.max)
                 .val(this.audio.sfx.volume);
+
+            // sfx
+            $("options-movement-speed")
+                .val(this.options.speed);
 
             // loop
             loop_function = function()

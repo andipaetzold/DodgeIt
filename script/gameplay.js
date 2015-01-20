@@ -26,7 +26,6 @@ DodgeIt.prototype.gameplay = function()
             maxheight: 48,
             x: 0,
             y: 0, // calculated on start
-            speed: 300,
 
             img: null,  // set at start
             src: "",    // set at start
@@ -224,17 +223,17 @@ DodgeIt.prototype.gameplay = function()
                 }
 
                 // check new position
-                this.character.x += control_speed_x * this.character.speed * delta;
+                this.character.x += control_speed_x * that.options.speed * delta;
                 this.character.x = Math.max(this.character.x, 0);
                 this.character.x = Math.min(this.character.x, this.width - this.character.width);
 
-                this.character.y += control_speed_y * this.character.speed * delta;
+                this.character.y += control_speed_y * that.options.speed * delta;
                 this.character.y = Math.max(this.character.y, 0);
                 this.character.y = Math.min(this.character.y, this.height - this.character.height);
 
                 // create obstacle
                 if (this.obstacles.length == 0 ||
-                    this.time - this.obstacles[this.obstacles.length - 1].spawntime >= 1.5) // spawn every 1.5 seconds
+                    this.time - this.obstacles[this.obstacles.length - 1].spawntime >= 1) // spawn every second
                 {
                     var obstacle_id = Math.floor(Math.random() * this.obstacle.items.length);
                     var obstacle_x = Math.floor(Math.random() * (this.width - this.obstacle.items[obstacle_id].width));
