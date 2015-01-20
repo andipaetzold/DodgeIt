@@ -10,12 +10,14 @@ DodgeIt.prototype.controls_init = function()
             axes:       [],
 
             axes_selected: 0,
-            timestamp: 0,
+            timestamp:  0,
+            available:  false
         },
 
         orientation: {
-            beta:   null,
-            gamma:  null
+            beta:       null,
+            gamma:      null,
+            available:  false
         },
 
         set: {
@@ -85,6 +87,7 @@ DodgeIt.prototype.controls_init = function()
 
     // gamepad
     // navigator.getGamepads
+    this.controls.gamepad.available = (navigator.getGamepads || navigator.webkitGamepads);
     if (!navigator.getGamepads)
     {
         navigator.getGamepads = function()
@@ -97,6 +100,7 @@ DodgeIt.prototype.controls_init = function()
     this.controls_gamepad_poll(true);
 
     // mobile - device orientation
+    that.controls.orientation.available = (!!window.DeviceOrientationEvent)
     window.addEventListener("deviceorientation", function(event)
     {
         that.controls.orientation.beta  = event.beta;
@@ -136,6 +140,23 @@ DodgeIt.prototype.controls_pressed = function(command)
 };
 
 DodgeIt.prototype.controls_axes = function(axis)
+{
+    var output = {x: 0, y: 0};
+    if (this.controls.gamepad.available)
+    {
+        output = this.controls_axes_gamepad(axis);
+    }
+
+    if (output.x == 0 && output.y == 0 &&
+        this.controls.orientation.available)
+    {
+        output = this.controls_axes_orientation();
+    }
+
+    return output;
+};
+
+DodgeIt.prototype.controls_axes_gamepad = function(axis)
 {
     // axes default = this.controls.axes_selected
     if (axis == undefined)
@@ -186,24 +207,25 @@ DodgeIt.prototype.controls_axes = function(axis)
 
         return axes;
     }
-    else if (this.controls.orientation.beta != null && this.controls.orientation.gamma != null)
-    {
-        var x;
-        x = this.controls.orientation.gamma / 45;
-        x = Math.min(1, x);
-        x = Math.max(-1, x);
-
-        var y;
-        y = this.controls.orientation.beta / 45;
-        y = Math.min(1, y);
-        y = Math.max(-1, y);
-
-        return {x: x, y: y};
-    }
     else
     {
         return {x: 0, y: 0};
     }
+};
+
+DodgeIt.prototype.controls_axes_orientation = function()
+{    
+    var x;
+    x = this.controls.orientation.gamma / 45;
+    x = Math.min(1, x);
+    x = Math.max(-1, x);
+
+    var y;
+    y = this.controls.orientation.beta / 45;
+    y = Math.min(1, y);
+    y = Math.max(-1, y);
+
+    return {x: x, y: y};
 };
 
 DodgeIt.prototype.controls_format = function(control)
