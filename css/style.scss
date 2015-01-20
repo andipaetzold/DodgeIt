@@ -70,6 +70,10 @@ body {
             display: inline-block;
 
             cursor: pointer;
+
+            &:hover {
+                font-weight: bold;
+            }
         }
 
         /* game */
@@ -80,14 +84,80 @@ body {
             }
         }
 
+        /* gameplay-gameover */
+        &#gameplay-gameover {
+            text-align: center;
+
+            input[type=text] {
+                width: 360px;
+                height: 50px;
+
+
+                font-size: 30px;
+                text-align: center;
+                text-transform: uppercase;
+            }
+
+            table {
+                width: 360px;
+
+                margin-top:     5px;
+                margin-left:    auto;
+                margin-right:   auto;
+
+                tr {
+                    td {
+                        height: 40px;
+                        width:  40px;
+
+                        border: 1px lightgray solid;
+
+                        text-align: center;
+    
+                        cursor: pointer;
+
+                        &.selected {
+                            font-weight:    bold;
+                            font-size:      25px;
+                        }
+                    }
+                }
+            }
+        }
+
+        /* gameplay-restart */
+        &#gameplay-restart {
+            table {
+                margin-top:     100px;
+                margin-left:    auto;
+                margin-right:   auto;
+
+                tr {
+                    td {
+                        padding-left:   15px;
+                        padding-right:  15px;
+
+                        font-size: 25px;
+
+                        cursor: pointer;
+
+                        &.selected {
+                            font-weight:    bold;
+                        }
+                    }
+                }
+            }
+        }
+
         /* leaderboard */
         &#leaderboard {
             table {
                 border-collapse:    collapse;
 
-                margin-top:     50px;
-                margin-left:    75px;
-                margin-right:   75px;
+                width: 350px;
+
+                margin-left:    auto;
+                margin-right:   auto;
 
                 width: $screen-size-width - 200px;
 
@@ -98,8 +168,30 @@ body {
 
                         font-size: 20px;
 
-                        &:nth-child(2) {
+                        &:nth-child(1), &:nth-child(3) {
                             text-align: right;
+                        }
+
+                        &:nth-child(1) {
+                            padding-right: 10px;
+                        }
+                    }
+
+                    &.loading {
+                        td {
+                            text-align: center;
+                        }
+                    }
+
+                    &.buttons {
+                        td {
+                            &:nth-child(1) button {
+                                float: left;
+                            }
+
+                            &:nth-child(2) button {
+                                float: right;
+                            }
                         }
                     }
                 }

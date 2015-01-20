@@ -14,7 +14,17 @@
         
         <!-- JavaScript -->
         <script src="script/include/jquery.js"></script>
+        <script src="script/include/jquery.cookie.js"></script>
+
         <script src="script/dodgeit.js"></script>
+        <script src="script/screen.js"></script>
+        <script src="script/gameplay.js"></script>
+        <script src="script/audio.js"></script>
+        <script src="script/controls.js"></script>
+        <script src="script/leaderboard.js"></script>
+        
+        <script src="script/include/canvasquery.js"></script>
+        <script src="script/include/playground.js"></script>
     </head>
 
     <body>
@@ -32,14 +42,87 @@
                     <div id="gameplay">
                     </div>
 
+                    <div id="gameplay-gameover">
+                        <h1>Game Over</h1>
+
+                        <p>You scored <span class="score"></span> points.<br>Please enter your name:</p>
+
+                        <input maxlength="16" type="text">
+
+                        <table>
+                            <tr>
+                                <td data-action="add" data-symbol="Q">Q</td>
+                                <td data-action="add" data-symbol="W">W</td>
+                                <td data-action="add" data-symbol="E">E</td>
+                                <td data-action="add" data-symbol="R">R</td>
+                                <td data-action="add" data-symbol="T">T</td>
+                                <td data-action="add" data-symbol="Y">Y</td>
+                                <td data-action="add" data-symbol="U">U</td>
+                                <td data-action="add" data-symbol="I">I</td>
+                                <td data-action="add" data-symbol="O">O</td>
+                            </tr>
+
+                            <tr>
+                                <td data-action="add" data-symbol="A">A</td>
+                                <td data-action="add" data-symbol="S">S</td>
+                                <td data-action="add" data-symbol="D">D</td>
+                                <td data-action="add" data-symbol="F">F</td>
+                                <td data-action="add" data-symbol="G">G</td>
+                                <td data-action="add" data-symbol="H">H</td>
+                                <td data-action="add" data-symbol="J">J</td>
+                                <td data-action="add" data-symbol="K">K</td>
+                                <td data-action="add" data-symbol="L">L</td>
+                            </tr>
+
+                            <tr>
+                                <td data-action="add" data-symbol="Z">Z</td>
+                                <td data-action="add" data-symbol="X">X</td>
+                                <td data-action="add" data-symbol="C">C</td>
+                                <td data-action="add" data-symbol="V">V</td>
+                                <td data-action="add" data-symbol="B">B</td>
+                                <td data-action="add" data-symbol="N">N</td>
+                                <td data-action="add" data-symbol="M">M</td>
+                                <td data-action="add" data-symbol="Z">Z</td>
+                                <td data-action="add" data-symbol="0">0</td>
+                            </tr>
+
+                            <tr>
+                                <td data-action="add" data-symbol="1">1</td>
+                                <td data-action="add" data-symbol="2">2</td>
+                                <td data-action="add" data-symbol="3">3</td>
+                                <td data-action="add" data-symbol="4">4</td>
+                                <td data-action="add" data-symbol="5">5</td>
+                                <td data-action="add" data-symbol="6">6</td>
+                                <td data-action="add" data-symbol="7">7</td>
+                                <td data-action="add" data-symbol="8">8</td>
+                                <td data-action="add" data-symbol="9">9</td>
+                            </tr>
+
+                            <tr>
+                                <td data-action="delete">&#x232B;</td>
+                                <td colspan="4" data-action="cancel">Cancel</td>
+                                <td colspan="4" data-action="submit">Submit</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div id="gameplay-restart">
+                        <h1>Restart?</h1>
+
+                        <table>
+                            <tr>
+                                <td>Yes</td>
+                                <td>No</td>
+                            </tr>
+                        </table>
+                    </div>
+
                     <div id="leaderboard">
                         <span class="back">Back</span>
 
                         <h1>Leaderboard</h1>
 
                         <table>
-                            <tbody>
-                            </tbod>
                         </table>
                     </div>
 

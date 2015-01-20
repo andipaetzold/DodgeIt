@@ -1,8 +1,22 @@
 DodgeIt.prototype.audio = {
+    init: function(parent)
+    {
+        // set parent
+        this.parent = parent;
+
+        // init
+        this.music.init(this);
+        this.sfx.init(this);
+    },
+
     music: {
         audioElement: null,
-        init: function()
+        init: function(parent)
         {
+            // set parent
+            this.parent = parent;
+
+            // init
             this.audioElement = $("<audio></audio");
             var that = this;
             this.audioElement.bind("ended", function()
@@ -10,25 +24,35 @@ DodgeIt.prototype.audio = {
                 that.next_track();
             });
 
-            // mute
-            if ($.cookie("audio/music/mute") == "true")
-            {
-                this.mute_set($.cookie("audio/music/mute") == "true");
-            }
-            else
-            {
-                this.mute_set(false);
-            }
+            // mute / volume
+            Object.defineProperty(this, "mute", {
+                get: function()
+                {
+                    return this.audioElement.get(0).muted;
+                },
+                set: function(value)
+                {
+                    this.audioElement.get(0).muted = value;
+                    this.parent.parent.save();
+                }
+            });
+            this.mute = false;
 
-            // volume
-            if ($.cookie("audio/music/volume"))
-            {
-                this.volume_set($.cookie("audio/music/volume"));
-            }
-            else
-            {
-                this.volume_set(5);
-            }
+            Object.defineProperty(this, "volume", {
+                get: function()
+                {
+                    return this.audioElement.get(0).volume * this.max;
+                },
+                set: function(value)
+                {
+                    if (value >= 0 && value <= this.max)
+                    {
+                        this.audioElement.get(0).volume = value / this.max;
+                    }
+                    this.parent.parent.save();
+                }
+            });
+            this.volume = 5;
 
             // start music
             this.next_track();
@@ -63,77 +87,52 @@ DodgeIt.prototype.audio = {
                         .attr("type", "audio/mpeg")
                 );
             this.audioElement.get(0).play();
-        },
-        mute_set: function(mute)
-        {
-            $.cookie("audio/music/mute", mute);
-            this.audioElement.get(0).muted = mute;
-        },
-        mute_get: function()
-        {
-            return this.audioElement.get(0).muted;
-        },
-        volume_set: function(volume)
-        {
-            $.cookie("audio/music/volume", volume);
-            if (volume >= 0 && volume <= this.max)
-            {
-                this.audioElement.get(0).volume = volume / this.max;
-            }
-        },
-        volume_get: function()
-        {
-            return this.audioElement.get(0).volume * this.max;
         }
     },
     sfx: {
-        mute: false,
-        max: 10,
-        volume: 5,
-
-        init: function()
-        {
-            // mute
-            if ($.cookie("audio/sfx/mute"))
-            {
-                this.mute_set($.cookie("audio/sfx/mute") == "true");
-            }
-            else
-            {
-                this.mute_set(false);
-            }
-
-            // volume
-            if ($.cookie("audio/sfx/volume"))
-            {
-                this.volume_set($.cookie("audio/sfx/volume"));
-            }
-            else
-            {
-                this.volume_set(5);
-            }
+        options: {
+            mute: false,
+            volume: 5            
         },
+        max: 10,
+
+        init: function(parent)
+        {
+            // set parent
+            this.parent = parent;
+
+            // init
+            // mute / volume
+            Object.defineProperty(this, "mute", {
+                get: function()
+                {
+                    return this.options.mute;
+                },
+                set: function(value)
+                {
+                    this.options.mute = value;
+                    this.parent.parent.save();
+                }
+            });
+            this.mute = false;
+
+            Object.defineProperty(this, "volume", {
+                get: function()
+                {
+                    return this.options.volume;
+                },
+                set: function(value)
+                {
+                    this.options.volume = value;
+                    this.parent.parent.save();
+                }
+            });
+            this.volume = 5;
+        },
+
         play: function()
         {
 
-        },
-        mute_set: function(mute)
-        {
-            $.cookie("audio/sfx/mute", mute);
-            this.mute = mute;
-        },
-        mute_get: function()
-        {
-            return this.mute;
-        },
-        volume_set: function(volume)
-        {
-            $.cookie("audio/sfx/volume", volume);
-            this.volume = volume;
-        },
-        volume_get: function()
-        {
-            return this.volume;
         }
     }
 };
