@@ -40,16 +40,17 @@ DodgeIt.prototype.gameplay = function()
                     img: null,          // set at start
                     src: "",            // set at start
                     src_suffix: "-1x1",
-                    create: function(time, screenwidth)
+                    create: function(game)
                     {
                         return {
                             img:    this.img,
-                            x:      Math.round(Math.randomRange(0, screenwidth - 50)),
+                            x:      Math.round(Math.randomRange(0, game.width - 50)),
                             y:      -50,
                             width:  50,
                             height: 50,
-                            spawntime: time,
-                            calc: function(delta, speed) { this.y += delta * speed; }
+                            spawntime: game.time,
+                            game: game,
+                            calc: function(delta) { this.y += delta * game.obstacle.speed * game.getSpeedFactor(); }
                         }
                     }
                 },
@@ -57,53 +58,56 @@ DodgeIt.prototype.gameplay = function()
                     img: null,          // set at start
                     src: "",            // set at start
                     src_suffix: "-1x2",
-                    create: function(time, screenwidth)
+                    create: function(game)
                     {
                         return {
                             img:    this.img,
-                            x:      Math.round(Math.randomRange(0, screenwidth - 50)),
+                            x:      Math.round(Math.randomRange(0, game.width - 50)),
                             y:      -100,
                             width:  50,
                             height: 100,
-                            spawntime: time,
-                            calc: function(delta, speed) { this.y += delta * speed; }
-                        }
+                            spawntime: game.time,
+                            game: game,
+                            calc: function(delta) { this.y += delta * game.obstacle.speed * game.getSpeedFactor(); }
+                        };
                     }
                 },
                 {
                     img: null,          // set at start
                     src: "",            // set at start
                     src_suffix: "-2x1",
-                    create: function(time, screenwidth)
+                    create: function(game)
                     {
                         return {
                             img:    this.img,
-                            x:      Math.round(Math.randomRange(0, screenwidth - 100)),
+                            x:      Math.round(Math.randomRange(0, game.width - 100)),
                             y:      -50,
                             width:  100,
                             height: 50,
-                            spawntime: time,
-                            calc: function(delta, speed) { this.y += delta * speed; }
-                        }
+                            spawntime: game.time,
+                            game: game,
+                            calc: function(delta) { this.y += delta * game.obstacle.speed * game.getSpeedFactor(); }
+                        };
                     }
                 },
                 {
                     img: null,          // set at start
                     src: "",            // set at start
                     src_suffix: "-1x1",
-                    create: function(time, screenwidth)
+                    create: function(game)
                     {
                         return {
                             img:    this.img,
-                            x:      Math.round(Math.randomRange(0, screenwidth - 50)),
+                            x:      Math.round(Math.randomRange(0, game.width - 50)),
                             y:      -50,
                             width:  50,
                             height: 50,
-                            spawntime: time,
-                            calc: function(delta, speed) { this.y += delta * speed * 2; }
-                        }
+                            spawntime: game.time,
+                            game: game,
+                            calc: function(delta) { this.y += delta * game.obstacle.speed * game.getSpeedFactor() * 2; }
+                        };
                     }
-                },
+                }
             ],
 
             next: {
@@ -290,7 +294,7 @@ DodgeIt.prototype.gameplay = function()
                 if (this.time >= this.obstacle.next.time)
                 {
                     var obstacle_id = Math.round(Math.randomRange(0, this.obstacle.items.length - 1));
-                    this.obstacles.push(this.obstacle.items[obstacle_id].create(this.time, this.width));
+                    this.obstacles.push(this.obstacle.items[obstacle_id].create(this));
 
                     // calc next spawn time
                     this.obstacle.next.calc(this.time);
@@ -300,7 +304,7 @@ DodgeIt.prototype.gameplay = function()
                 $.each(this.obstacles, function(index, obstacle)
                 {
                     // move
-                    obstacle.calc(delta, that2.obstacle.speed * that2.getSpeedFactor());
+                    obstacle.calc(delta);
 
                     // collision test
                     if (that2.character.x < obstacle.x + obstacle.width &&
