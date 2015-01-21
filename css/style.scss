@@ -243,13 +243,6 @@ body {
 
         /* options-screen */
         &#options {
-            $options-td-padding:   10px;
-            $options-td-padding-side:   5px;
-            $options-td-1-width:  125px;
-            $options-audio-label-width: 75px;
-            $options-audio-label-margin: 5px;
-            $options-checkbox-margin: 5px;
-
             table {
                 width: 100%;
 
@@ -259,14 +252,14 @@ body {
                     }
 
                     td {
-                        padding-top:    $options-td-padding;
-                        padding-bottom: $options-td-padding;
+                        padding-top:    10px;
+                        padding-bottom: 10px;
 
-                        padding-left:   $options-td-padding-side;
-                        padding-right:  $options-td-padding-side;
+                        padding-left:   5px;
+                        padding-right:  5px;
 
                         &:nth-child(1) {
-                            width: $options-td-1-width;
+                            width: 125px;
                         }
 
                         /*
@@ -310,8 +303,8 @@ body {
                     &[data-option=volume] {
                         label {
                             input[type=checkbox] {
-                                margin-left:    $options-checkbox-margin;
-                                margin-right:   $options-checkbox-margin;
+                                margin-left:    5px;
+                                margin-right:   5px;
                             }
                         }
                     }
