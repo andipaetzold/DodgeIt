@@ -45,10 +45,11 @@ DodgeIt.prototype.gameplay = function()
                         return {
                             img:    this.img,
                             x:      Math.round(Math.randomRange(0, screenwidth - 50)),
-                            y:      -100,
+                            y:      -50,
                             width:  50,
                             height: 50,
-                            spawntime: time
+                            spawntime: time,
+                            calc: function(delta, speed) { this.y += delta * speed; }
                         }
                     }
                 },
@@ -61,10 +62,11 @@ DodgeIt.prototype.gameplay = function()
                         return {
                             img:    this.img,
                             x:      Math.round(Math.randomRange(0, screenwidth - 50)),
-                            y:      -150,
+                            y:      -100,
                             width:  50,
                             height: 100,
-                            spawntime: time
+                            spawntime: time,
+                            calc: function(delta, speed) { this.y += delta * speed; }
                         }
                     }
                 },
@@ -77,10 +79,11 @@ DodgeIt.prototype.gameplay = function()
                         return {
                             img:    this.img,
                             x:      Math.round(Math.randomRange(0, screenwidth - 100)),
-                            y:      -100,
+                            y:      -50,
                             width:  100,
                             height: 50,
-                            spawntime: time
+                            spawntime: time,
+                            calc: function(delta, speed) { this.y += delta * speed; }
                         }
                     }
                 }
@@ -277,16 +280,16 @@ DodgeIt.prototype.gameplay = function()
                 }
 
                 // move obstacles / collision test
-                $.each(this.obstacles, function(index, value)
+                $.each(this.obstacles, function(index, obstacle)
                 {
                     // move
-                    value.y += delta * that2.obstacle.speed * that2.getSpeedFactor();
+                    obstacle.calc(delta, that2.obstacle.speed * that2.getSpeedFactor());
 
                     // collision test
-                    if (that2.character.x < value.x + value.width &&
-                       that2.character.x + that2.character.width > value.x &&
-                       that2.character.y < value.y + value.height &&
-                       that2.character.height + that2.character.y > value.y)
+                    if (that2.character.x < obstacle.x + obstacle.width &&
+                       that2.character.x + that2.character.width > obstacle.x &&
+                       that2.character.y < obstacle.y + obstacle.height &&
+                       that2.character.height + that2.character.y > obstacle.y)
                     {
                         that2.collision();
                     }
