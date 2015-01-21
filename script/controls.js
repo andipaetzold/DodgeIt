@@ -216,12 +216,12 @@ DodgeIt.prototype.controls_axes_gamepad = function(axis)
 DodgeIt.prototype.controls_axes_orientation = function()
 {    
     var x;
-    x = this.controls.orientation.gamma / 45;
+    x = this.controls.orientation.gamma / 30;
     x = Math.min(1, x);
     x = Math.max(-1, x);
 
     var y;
-    y = this.controls.orientation.beta / 45;
+    y = this.controls.orientation.beta / 30;
     y = Math.min(1, y);
     y = Math.max(-1, y);
 

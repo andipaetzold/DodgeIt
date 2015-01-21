@@ -99,6 +99,15 @@ DodgeIt.prototype.screen_init = function()
     // leaderboard
 
     // controls
+    if (!that.controls.gamepad.available)
+    {
+        $("tr[data-controlname=gamepad]").hide();   
+    }
+
+    if (!that.controls.orientation.available)
+    {
+        $("tr[data-controlname=orientation]").hide();    
+    }
 
     // options
     $("tbody tr", container["options"]).hover(function()
@@ -374,59 +383,66 @@ DodgeIt.prototype.screen_show = function(screen)
             // update axes
             loop_function = function()
             {
-                that.controls_gamepad_poll(true);
-
-                // gamepad changed?
-                if (that.controls.gamepad.axes.length != $("div#controls-gamepad-move div", container).length)
+                // gamepad
+                if (that.controls.gamepad.available)
                 {
-                    // create dom
-                    $("div#controls-gamepad-move", container).html("");
+                    that.controls_gamepad_poll(true);
+                    
+                    if (that.controls.gamepad.axes.length != $("tr[data-controlname=gamepad] td:nth-child(2) label", container).length)
+                    {
+                        // create dom
+                        $("tr[data-controlname=gamepad] td:nth-child(2)", container).html("");
+                        $.each(that.controls.gamepad.axes, function(index, axes)
+                        {
+                            $("tr[data-controlname=gamepad] td:nth-child(2)", container).append(
+                                $("<label></label>")
+                                    .append(
+                                        $("<input>")
+                                            .attr("type", "radio")
+                                            .attr("name", "controls-gamepad-move")
+                                            .change(function(event)
+                                            {
+                                                that.controls.gamepad.axes_selected = $(this).parent().parent().prevAll().length;
+                                            })
+                                    )
+                                    .append(
+                                        $("<progress></progress>")
+                                            .attr("min", 0)
+                                            .attr("max", 2)
+                                            .val(axes.x + 1)
+                                    )
+                                    .append(
+                                        $("<progress></progress>")
+                                            .attr("min", 0)
+                                            .attr("max", 2)
+                                            .val(axes.y + 1)
+                                    )
+                            );
+                        });
+
+                        // select
+                        if (that.controls.gamepad.axes_selected > that.controls.gamepad.axes.length - 1)
+                        {
+                            that.controls.gamepad.axes_selected = 0;
+                        }
+                        $("tr[data-controlname=gamepad] td:nth-child(2) label:nth-child(" + (that.controls.gamepad.axes_selected + 1) + ") input[type=radio]", container).prop("checked", true);
+                    }
+
+
+                    // update progress bars
                     $.each(that.controls.gamepad.axes, function(index, axes)
                     {
-                        $("div#controls-gamepad-move", container)
-                            .append(
-                                $("<div></div>")
-                                    .append(
-                                        $("<label></label>")
-                                            .append($("<input>")
-                                                .attr("type", "radio")
-                                                .attr("name", "controls-gamepad-move")
-                                                .change(function(event)
-                                                {
-                                                    that.controls.gamepad.axes_selected = $(this).parent().parent().prevAll().length;
-                                                })
-                                            )
-                                            .append(
-                                                $("<progress></progress>")
-                                                    .attr("min", 0)
-                                                    .attr("max", 2)
-                                                    .val(axes.x + 1)
-                                            )
-                                            .append(
-                                                $("<progress></progress>")
-                                                    .attr("min", 0)
-                                                    .attr("max", 2)
-                                                    .val(axes.y + 1)
-                                            )
-                                    )
-                                );
+                        $("tr[data-controlname=gamepad] td:nth-child(2) label:nth-child(" + (index + 1) + ") progress:nth-child(1)", container).val(axes.x + 1);
+                        $("tr[data-controlname=gamepad] td:nth-child(2) label:nth-child(" + (index + 1) + ") progress:nth-child(2)", container).val(axes.y + 1);
                     });
-
-                    // select
-                    if (that.controls.gamepad.axes_selected > that.controls.gamepad.axes.length - 1)
-                    {
-                        that.controls.gamepad.axes_selected = 0;
-                    }
-                    $("div#controls-gamepad-move div:nth-child(" + (that.controls.gamepad.axes_selected + 1) + ") label input", container).prop("checked", true);
                 }
 
-                // update progress bars
-                $.each(that.controls.gamepad.axes, function(index, axes)
+                // mobile device orientation
+                if (that.controls.orientation.available)
                 {
-                    var bars = $("div#controls-gamepad-move div:nth-child(" + (index + 1) + ") progress", container);
-                    bars.first().val(axes.x + 1);
-                    bars.last().val(axes.y + 1);
-                });
+                    $("tr[data-controlname=orientation] progress:nth-child(1)", container).val(that.controls.orientation.beta  + 30);
+                    $("tr[data-controlname=orientation] progress:nth-child(2)", container).val(that.controls.orientation.gamma + 30);
+                }
             };
             break;
         case "options":    

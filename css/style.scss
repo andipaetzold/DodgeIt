@@ -50,12 +50,6 @@ body {
     height: $screen-size-height;
     width:  $screen-size-width;
 
-    /* progress */
-    progress {
-        /* size */
-        width: $screen-size-width;
-    }
-
     div {
         h1 {
             text-align: center;
@@ -200,28 +194,48 @@ body {
 
         /* controls-screen */
         &#controls {
-            table tr td {
-                padding: 5px;
+            table tr {
+                td {
+                    padding: 2px;
 
-                button {
-                    width: 100%;
-                }
-            }
+                    &:nth-child(1) {
+                        width: 20%;
 
-            div#controls-gamepad-move {
-                div {
-                    input[type=radio] {
-                        margin-right: 5px;
+                        button {
+                            width: 100%;
+                        }
                     }
 
-                    progress {
-                        margin-left: 5px;
-                        margin-right: 5px;
+                    &:nth-child(2) {
+                        width: 80%;
 
-                        padding: 3px;
+                        progress {
+                            height: 5px;
+                        }
+                    }
+                }
 
-                        width: 130px;
-                        height: 5px;
+                &[data-controlname=gamepad] {
+                    td:nth-child(2) {
+                        label {
+                            input[type=radio] {
+                                width: 4%;
+
+                            }
+
+                            progress {
+                                width: 47%;
+                                margin-left: 1%;
+                            }
+                        }
+                    }
+                }
+
+                &[data-controlname=orientation] {
+                    td:nth-child(2) {
+                        progress {
+                            width: 49%;
+                        }
                     }
                 }
             }
