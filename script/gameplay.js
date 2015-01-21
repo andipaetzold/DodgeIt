@@ -242,8 +242,8 @@ DodgeIt.prototype.gameplay = function()
                 // create obstacle
                 if (this.time >= this.obstacle.next.time)
                 {
-                    var obstacle_id = Math.floor(Math.random() * this.obstacle.items.length);
-                    var obstacle_x = Math.floor(Math.random() * (this.width - this.obstacle.items[obstacle_id].width));
+                    var obstacle_id = Math.round(Math.randomRange(0, this.obstacle.items.length - 1));
+                    var obstacle_x  = Math.round(Math.randomRange(0, this.width - this.obstacle.items[obstacle_id].width));
 
                     this.obstacles.push({
                         img: this.obstacle.items[obstacle_id].img,
