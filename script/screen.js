@@ -68,7 +68,7 @@ DodgeIt.prototype.screen_init = function()
                 input.val(input.val().slice(0, -1));
                 break;
             case "cancel":
-                that.screen_show("menu");
+                that.screen_show("gameplay-restart");
                 break;
             case "submit":
                 that.leaderboard.post(input.val(), $("span.score", container["gameplay-gameover"]).html());
