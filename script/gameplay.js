@@ -86,7 +86,24 @@ DodgeIt.prototype.gameplay = function()
                             calc: function(delta, speed) { this.y += delta * speed; }
                         }
                     }
-                }
+                },
+                {
+                    img: null,          // set at start
+                    src: "",            // set at start
+                    src_suffix: "-1x1",
+                    create: function(time, screenwidth)
+                    {
+                        return {
+                            img:    this.img,
+                            x:      Math.round(Math.randomRange(0, screenwidth - 50)),
+                            y:      -50,
+                            width:  50,
+                            height: 50,
+                            spawntime: time,
+                            calc: function(delta, speed) { this.y += delta * speed * 2; }
+                        }
+                    }
+                },
             ],
 
             next: {
