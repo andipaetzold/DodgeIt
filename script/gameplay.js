@@ -40,6 +40,7 @@ DodgeIt.prototype.gameplay = function()
                     img: null,          // set at start
                     src: "",            // set at start
                     src_suffix: "-1x1",
+                    spawnprobability: 5,
                     create: function(game)
                     {
                         return {
@@ -58,6 +59,7 @@ DodgeIt.prototype.gameplay = function()
                     img: null,          // set at start
                     src: "",            // set at start
                     src_suffix: "-1x2",
+                    spawnprobability: 4,
                     create: function(game)
                     {
                         return {
@@ -76,6 +78,7 @@ DodgeIt.prototype.gameplay = function()
                     img: null,          // set at start
                     src: "",            // set at start
                     src_suffix: "-2x1",
+                    spawnprobability: 4,
                     create: function(game)
                     {
                         return {
@@ -94,6 +97,7 @@ DodgeIt.prototype.gameplay = function()
                     img: null,          // set at start
                     src: "",            // set at start
                     src_suffix: "-1x1",
+                    spawnprobability: 2,
                     create: function(game)
                     {
                         return {
@@ -112,6 +116,7 @@ DodgeIt.prototype.gameplay = function()
                     img: null,          // set at start
                     src: "",            // set at start
                     src_suffix: "-1x1",
+                    spawnprobability: 1,
                     create: function(game)
                     {
                         var range = 150;
@@ -318,7 +323,14 @@ DodgeIt.prototype.gameplay = function()
                 // create obstacle
                 if (this.time >= this.obstacle.next.time)
                 {
-                    var obstacle_id = Math.round(Math.randomRange(0, this.obstacle.items.length - 1));
+                    var spawnprobabilities = this.obstacle.items.reduce(function(pv, cv) 
+                    {
+                        pv.push(cv.spawnprobability);
+                        return pv;
+                    }, []);
+
+                    var obstacle_id = Math.randomWeighted(spawnprobabilities);
+                    console.log(obstacle_id);
                     this.obstacles.push(this.obstacle.items[obstacle_id].create(this));
 
                     // calc next spawn time
