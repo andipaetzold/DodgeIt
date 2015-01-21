@@ -90,7 +90,7 @@ DodgeIt.prototype.gameplay = function()
                         };
                     }
                 },
-                {
+                {   // moves with 2x speed
                     img: null,          // set at start
                     src: "",            // set at start
                     src_suffix: "-1x1",
@@ -105,6 +105,31 @@ DodgeIt.prototype.gameplay = function()
                             spawntime: game.time,
                             game: game,
                             calc: function(delta) { this.y += delta * game.obstacle.speed * game.getSpeedFactor() * 2; }
+                        };
+                    }
+                },
+                {   // moves left and right by 150px
+                    img: null,          // set at start
+                    src: "",            // set at start
+                    src_suffix: "-1x1",
+                    create: function(game)
+                    {
+                        var range = 150;
+                        var x = Math.round(Math.randomRange(range / 2, game.width - 50 - (range / 2)));
+                        return {
+                            img:    this.img,
+                            x:      x, // current position
+                            x_org:  x, // center of the sinus function
+                            y:      -50,
+                            width:  50,
+                            height: 50,
+                            spawntime: game.time,
+                            game: game,
+                            calc: function(delta)
+                            {
+                                this.x  = this.x_org + Math.sin((this.spawntime - game.time) * 4) * range / 2;
+                                this.y += delta * game.obstacle.speed * game.getSpeedFactor();
+                            }
                         };
                     }
                 }
