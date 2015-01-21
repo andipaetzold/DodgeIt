@@ -40,23 +40,50 @@ DodgeIt.prototype.gameplay = function()
                     img: null,          // set at start
                     src: "",            // set at start
                     src_suffix: "-1x1",
-                    height: 50,
-                    width:  50
+                    create: function(time, screenwidth)
+                    {
+                        return {
+                            img:    this.img,
+                            x:      Math.round(Math.randomRange(0, screenwidth - 50)),
+                            y:      -100,
+                            width:  50,
+                            height: 50,
+                            spawntime: time
+                        }
+                    }
                 },
                 {
                     img: null,          // set at start
                     src: "",            // set at start
                     src_suffix: "-1x2",
-                    height: 100,
-                    width:  50
+                    create: function(time, screenwidth)
+                    {
+                        return {
+                            img:    this.img,
+                            x:      Math.round(Math.randomRange(0, screenwidth - 50)),
+                            y:      -150,
+                            width:  50,
+                            height: 100,
+                            spawntime: time
+                        }
+                    }
                 },
                 {
                     img: null,          // set at start
                     src: "",            // set at start
                     src_suffix: "-2x1",
-                    height: 50,
-                    width:  100,
-                },
+                    create: function(time, screenwidth)
+                    {
+                        return {
+                            img:    this.img,
+                            x:      Math.round(Math.randomRange(0, screenwidth - 100)),
+                            y:      -100,
+                            width:  100,
+                            height: 50,
+                            spawntime: time
+                        }
+                    }
+                }
             ],
 
             next: {
@@ -243,16 +270,7 @@ DodgeIt.prototype.gameplay = function()
                 if (this.time >= this.obstacle.next.time)
                 {
                     var obstacle_id = Math.round(Math.randomRange(0, this.obstacle.items.length - 1));
-                    var obstacle_x  = Math.round(Math.randomRange(0, this.width - this.obstacle.items[obstacle_id].width));
-
-                    this.obstacles.push({
-                        img: this.obstacle.items[obstacle_id].img,
-                        x: obstacle_x,
-                        y: -this.obstacle.items[obstacle_id].height,
-                        width: this.obstacle.items[obstacle_id].width,
-                        height: this.obstacle.items[obstacle_id].height,
-                        spawntime: this.time
-                    });
+                    this.obstacles.push(this.obstacle.items[obstacle_id].create(this.time, this.width));
 
                     // calc next spawn time
                     this.obstacle.next.calc(this.time);
