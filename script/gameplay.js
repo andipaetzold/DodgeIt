@@ -56,8 +56,18 @@ DodgeIt.prototype.gameplay = function()
                     src_suffix: "-2x1",
                     height: 50,
                     width:  100,
-                }
+                },
             ],
+
+            next: {
+                time: 0,
+                min:  0.5,   // min time difference
+                max:  2.5,   // max time difference
+                calc: function(time)
+                {
+                    this.time = time + Math.randomRange(this.min, this.max);
+                }
+            },
 
             speed: 100,
             speed_time: 10,     // every x seconds the speed changes
@@ -103,12 +113,10 @@ DodgeIt.prototype.gameplay = function()
                 value.src = that.options.style + "/obstacle" + value.src_suffix;
             });
 
-            // start
-            this.start();
-        },
+            // reset next-obstacle time
+            this.obstacle.next.calc(0);
 
-        start: function()
-        {
+            // start
             this.state = this.states.create;
         },
 
@@ -232,8 +240,7 @@ DodgeIt.prototype.gameplay = function()
                 this.character.y = Math.min(this.character.y, this.height - this.character.height);
 
                 // create obstacle
-                if (this.obstacles.length == 0 ||
-                    this.time - this.obstacles[this.obstacles.length - 1].spawntime >= 1) // spawn every second
+                if (this.time >= this.obstacle.next.time)
                 {
                     var obstacle_id = Math.floor(Math.random() * this.obstacle.items.length);
                     var obstacle_x = Math.floor(Math.random() * (this.width - this.obstacle.items[obstacle_id].width));
@@ -246,6 +253,9 @@ DodgeIt.prototype.gameplay = function()
                         height: this.obstacle.items[obstacle_id].height,
                         spawntime: this.time
                     });
+
+                    // calc next spawn time
+                    this.obstacle.next.calc(this.time);
                 }
 
                 // move obstacles / collision test

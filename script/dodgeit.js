@@ -14,6 +14,12 @@ if (!window.requestAnimationFrame)
     })();
 } 
 
+// random range
+Math.randomRange = function(min, max)
+{
+    return Math.random() * (max - min) + min;
+};
+
 function DodgeIt(container)
 {
     var that = this;
