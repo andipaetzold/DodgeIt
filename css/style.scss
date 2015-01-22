@@ -200,22 +200,24 @@ body {
 
                     &:nth-child(1) {
                         width: 20%;
-
-                        button {
-                            width: 100%;
-                        }
                     }
 
                     &:nth-child(2) {
                         width: 80%;
+                    }
 
-                        progress {
-                            height: 5px;
-                        }
+                    progress {
+                        height: 5px;
                     }
                 }
 
-                &[data-controlname=gamepad] {
+                &.command {
+                    button {
+                        width: 100%;
+                    }
+                }
+
+                &.rangelist {
                     td:nth-child(2) {
                         label {
                             input[type=radio] {
@@ -231,7 +233,7 @@ body {
                     }
                 }
 
-                &[data-controlname=orientation] {
+                &.range2 {
                     td:nth-child(2) {
                         progress {
                             width: 49%;
@@ -279,7 +281,7 @@ body {
                         }
                     }
                         
-                    &[data-option=style] {
+                    &.radio {
                         label {                                
                             input[type=radio] {
                                 display: none;
@@ -300,7 +302,7 @@ body {
                         }
                     }
 
-                    &[data-option=volume] {
+                    &.checkbox.range {
                         label {
                             input[type=checkbox] {
                                 margin-left:    5px;

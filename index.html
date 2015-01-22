@@ -132,7 +132,7 @@
                         <h1>Controls</h1>
                         <table>
                             <tbody>
-                                <tr>
+                                <tr class="command" data-option="command">
                                     <td>
                                         <button data-command="up">Set Up</button>
                                     </td>
@@ -140,7 +140,7 @@
                                         <span data-command="up"></span>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="command" data-option="command">
                                     <td>
                                         <button data-command="down">Set Down</button>
                                     </td>
@@ -148,7 +148,7 @@
                                         <span data-command="down"></span>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="command" data-option="command">
                                     <td>
                                         <button data-command="left">Set Left</button>
                                     </td>
@@ -156,7 +156,7 @@
                                         <span data-command="left"></span>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="command" data-option="command">
                                     <td>
                                         <button data-command="right">Set Right</button>
                                     </td>
@@ -164,7 +164,7 @@
                                         <span data-command="right"></span>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="command" data-option="command">
                                     <td>
                                         <button data-command="enter">Set Enter</button>
                                     </td>
@@ -172,7 +172,7 @@
                                         <span data-command="enter"></span>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="command" data-option="command">
                                     <td>
                                         <button data-command="back">Set Back</button>
                                     </td>
@@ -180,16 +180,16 @@
                                         <span data-command="back"></span>
                                     </td>
                                 </tr>
-                                <tr data-controlname="gamepad">
+                                <tr class="rangelist" data-control="gamepad">
                                     <td>Gamepad (Move)</td>
                                     <td>
                                     </td>
                                 </tr>
-                                <tr data-controlname="orientation">
+                                <tr class="range2" data-control="orientation">
                                     <td>Mobile Device (Move)</td>
                                     <td>
-                                        <progress value="0" max="60"></progress>
-                                        <progress value="0" max="60"></progress>
+                                        <progress data-control="orientation" value="0" max="60"></progress>
+                                        <progress data-control="orientation" value="0" max="60"></progress>
                                     </td>
                                 </tr>
                             </tbody>
@@ -204,45 +204,56 @@
 
                         <table>
                             <tbody>
-                                <tr data-option="style">
+                                <tr class="radio">
                                     <td>Style</td>
                                     <td colspan="2">                                        
                                         <label>
-                                            <input name="style" type="radio" value="car"> 
+                                            <input data-option="style" name="style" type="radio" value="car"> 
                                             <img src="images/car/character.png" alt="Car">
                                         </label>
                                         <label>
-                                            <input name="style" type="radio" value="isaac">
+                                            <input data-option="style" name="style" type="radio" value="isaac">
                                             <img src="images/isaac/character.png" alt="Isaac">
                                         </label>
                                     </td>
                                 </tr>
-                                <tr data-option="volume">
+                                <tr class="checkbox range">
                                     <td>Music</td>
                                     <td>
                                         <label>
-                                            <input data-optionname="music"type="checkbox" checked="checked">Mute
+                                            <input data-option="music-ute"type="checkbox">Mute
                                         </label>
                                     </td>
                                     <td>
-                                        <input data-optionname="music" type="range" min="0" max="10" value="5">
+                                        <input data-option="music-volume" type="range" min="0" max="10" value="5">
                                     </td>
                                 </tr>
-                                <tr data-option="volume">
+                                <tr class="checkbox range">
                                     <td>Sound Effects</td>
                                     <td>                                        
                                         <label>
-                                            <input data-optionname="sfx" type="checkbox" checked="checked">Mute
+                                            <input data-option="sfx-mute" type="checkbox">Mute
                                         </label>
                                     </td>
                                     <td>
-                                        <input data-optionname="sfx" type="range" min="0" max="10" value="5">
+                                        <input data-option="sfx-volume" type="range" min="0" max="10" value="5">
                                     </td>
                                 </tr>
                                 <tr data-option="range">
                                     <td>Movement Speed</td>
                                     <td colspan="2">
-                                        <input data-optionname="speed" type="range" min="200" max="600" step="25" value="300">
+                                        <input data-option="speed" type="range" min="200" max="600" step="25" value="300">
+                                    </td>
+                                </tr>
+                                <tr class="checkbox range">
+                                    <td>Movement Speed</td>
+                                    <td>                                        
+                                        <label>
+                                            <input data-option="fullscreen" type="checkbox">Fullscreen
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <input data-option="size" type="range" min="1" max="10" step="1" value="1">
                                     </td>
                                 </tr>
                             </tbody>
