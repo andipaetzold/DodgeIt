@@ -136,6 +136,21 @@ DodgeIt.prototype.screen_init = function()
         that.save(); 
     });
 
+    $("input[data-option=fullscreen]", container["options"]).change(function()
+    {
+        if (screenfull.enabled)
+        {
+            if ($("input[data-option=fullscreen]", container["options"]).prop("checked"))
+            {
+                screenfull.request();
+            }
+            else
+            {
+                screenfull.exit();
+            }
+        }
+    });
+
     // about
 
     // general
