@@ -57,9 +57,8 @@ DodgeIt.prototype.controls_init = function()
 
     // keydown
     $(document).keydown(function(event)
-    {
-        var preventDefault = that.controls_down({device: "keyboard", type: null, code: event.keyCode});    
-        if (!preventDefault)
+    { 
+        if (!that.controls_down({device: "keyboard", type: null, code: event.keyCode}))
         {
             event.preventDefault();
             return false;
@@ -73,8 +72,7 @@ DodgeIt.prototype.controls_init = function()
     // keyup
     $(document).keyup(function(event)
     {
-        var preventDefault = that.controls_up({device: "keyboard", type: null, code: event.keyCode});
-        if (!preventDefault)
+        if (!that.controls_up({device: "keyboard", type: null, code: event.keyCode}))
         {
             event.preventDefault();
             return false;
@@ -454,6 +452,7 @@ DodgeIt.prototype.controls_gamepad_poll = function(poll_all)
 // controls up / down
 DodgeIt.prototype.controls_up = function(control)
 {
+    var toReturn = true;
     $.each(this.controls.command, function(commandIndex, command)
     {
         if (command.device == control.device &&
@@ -461,15 +460,17 @@ DodgeIt.prototype.controls_up = function(control)
             command.code   == control.code)
         {
             command.pressed = false;
+            toReturn = false;
             return false;
         }
     });
 
-    return true;
+    return toReturn;
 };
 
 DodgeIt.prototype.controls_down = function(control)
 {
+    var toReturn = true;
     if (!this.controls.set.active)
     {
         $.each(this.controls.command, function(commandIndex, command)
@@ -480,10 +481,10 @@ DodgeIt.prototype.controls_down = function(control)
             {
                 command.pressed = true;
                 command.fn();
+                toReturn = false;
                 return false;
             }
         });
-        return true;
     }
     else
     {
@@ -503,7 +504,7 @@ DodgeIt.prototype.controls_down = function(control)
         }
         this.controls.set.active = false;
 
-        return false;
+        toReturn = false;
     }
-
+    return toReturn;
 };
