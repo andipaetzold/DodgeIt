@@ -1,11 +1,8 @@
 @import "normalize";
 
-$screen-size-factor:        3;
-$screen-size-height:        144px * $screen-size-factor;
-$screen-size-width:         160px * $screen-size-factor;
-$screen-border-width:       1px;
-$screen-size-width-real:    $screen-size-width  - 2 * $screen-border-width;
-$screen-size-height-real:   $screen-size-height - 2 * $screen-border-width;
+$screen-ratio-height:       144;
+$screen-ratio-width:        160;
+$screen-max-fill:           0.90;
 
 *, *:before, *:after {
     /* box-sizing */
@@ -15,51 +12,56 @@ $screen-size-height-real:   $screen-size-height - 2 * $screen-border-width;
 html {
     /* box-sizing */
     box-sizing: border-box;
-}
 
-body {
+    /* font-size */    
+    $step: 0.5;
+    @for $i from 0.5 through 15 / $step {
+        $factor: $i * $step;
+        @media screen and (min-aspect-ratio: #{$screen-ratio-width} / #{$screen-ratio-height})
+                      and (min-height: #{($factor - $step) * $screen-ratio-height}px) and (max-height: #{$factor * $screen-ratio-height}px),
+               screen and (max-aspect-ratio: #{$screen-ratio-width} / #{$screen-ratio-height})
+                      and (min-width: #{($factor - $step) * $screen-ratio-width}px) and (max-width: #{$factor * $screen-ratio-width}px) {
+            font-size: 4px * $factor;
+        }
+    }
+
     /* background */
-    background-image: url('../images/background.jpg');
-    background-size: cover;
+    background-attachment: fixed;
+    background-image: url(../images/background.jpg); 
+    background-position: center center;
     background-repeat: no-repeat;
+    background-size: cover;
 }
 
-#wrapperOuter {
-    display: table;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-}
-
-#wrapperInner {
-    display: table-cell;
-    vertical-align: middle;
-}
 
 #game {
-    /* border / margin / padding */
-    border: $screen-border-width solid black;
+    width:      #{$screen-max-fill * 100}vw; 
+    height:     #{$screen-max-fill * $screen-ratio-height / $screen-ratio-width * 100}vw;
+    max-height: #{$screen-max-fill * 100}vh;
+    max-width:  #{$screen-max-fill * $screen-ratio-width / $screen-ratio-height * 100}vh;
 
-    margin-left:    auto;
-    margin-right:   auto;
+    position: absolute;
+    top:0;  bottom:0;    /* vertical center */
+    left:0; right:0;     /* horizontal center */
+
+    /* border / margin / padding */
+    border: 1px solid black;
+    margin: auto;
 
     /* color */
     background-color:   white;
 
-    /* size */
-    height: $screen-size-height;
-    width:  $screen-size-width;
-
     div {
         h1 {
+            margin-top: 2%;
+            margin-bottom: 5%;
+
             text-align: center;
-        }
-        h2 {
-            margin-left: 10px;
+            font-size: 2.25rem;
         }
 
         span.back {
-            margin: 10px;
+            margin: 1%;
 
             display: inline-block;
 
@@ -83,36 +85,35 @@ body {
             text-align: center;
 
             input[type=text] {
-                width: 360px;
-                height: 50px;
+                width: 90%;
 
-
-                font-size: 30px;
+                font-size: 1.5rem;
+                line-height: 200%;
                 text-align: center;
                 text-transform: uppercase;
             }
 
             table {
-                width: 360px;
+                width: 90%;
 
-                margin-top:     5px;
+                margin-top:     5%;
                 margin-left:    auto;
                 margin-right:   auto;
 
                 tr {
                     td {
-                        height: 40px;
-                        width:  40px;
+                        width:  (1 / 9) * 100%;
 
                         border: 1px lightgray solid;
 
-                        text-align: center;
-    
                         cursor: pointer;
 
+                        font-size: 1.5rem;
+                        line-height: 150%;
+                        text-align: center;
+
                         &.selected {
-                            font-weight:    bold;
-                            font-size:      25px;
+                            font-weight: bold;
                         }
                     }
                 }
@@ -121,23 +122,19 @@ body {
 
         /* gameplay-restart */
         &#gameplay-restart {
-            table {
-                margin-top:     100px;
-                margin-left:    auto;
-                margin-right:   auto;
+            div {
+                margin-top: 30%;
 
-                tr {
-                    td {
-                        padding-left:   15px;
-                        padding-right:  15px;
+                display: flex;
+                justify-content: space-around;
 
-                        font-size: 25px;
+                span {
+                    cursor: pointer;
 
-                        cursor: pointer;
+                    font-size: 2rem;
 
-                        &.selected {
-                            font-weight:    bold;
-                        }
+                    &.selected {
+                        font-weight: bold;
                     }
                 }
             }
@@ -146,21 +143,18 @@ body {
         /* leaderboard */
         &#leaderboard {
             table {
-                border-collapse:    collapse;
+                border-collapse: collapse;
 
-                width: 350px;
+                margin-left:  auto;
+                margin-right: auto;
 
-                margin-left:    auto;
-                margin-right:   auto;
-
-                width: $screen-size-width - 200px;
+                width: 90%;
 
                 tr {
                     td {
-                        padding-top:    2px;
-                        padding-bottom: 2px;
+                        padding-top: 1%;
 
-                        font-size: 20px;
+                        font-size: 1rem;
 
                         &:nth-child(1), &:nth-child(3) {
                             text-align: right;
@@ -196,7 +190,9 @@ body {
         &#controls {
             table tr {
                 td {
-                    padding: 2px;
+                    padding: 1%;
+
+                    font-size: 1rem;
 
                     &:nth-child(1) {
                         width: 20%;
@@ -204,10 +200,6 @@ body {
 
                     &:nth-child(2) {
                         width: 80%;
-                    }
-
-                    progress {
-                        height: 5px;
                     }
                 }
 
@@ -222,7 +214,6 @@ body {
                         label {
                             input[type=radio] {
                                 width: 4%;
-
                             }
 
                             progress {
@@ -254,22 +245,27 @@ body {
                     }
 
                     td {
-                        padding-top:    10px;
-                        padding-bottom: 10px;
+                        padding-top:    2%;
+                        padding-bottom: 2%;
 
-                        padding-left:   5px;
-                        padding-right:  5px;
+                        padding-left:   1%;
+                        padding-right:  1%;
+
+                        font-size: 1rem;
+                        max-height: 20px;
 
                         &:nth-child(1) {
-                            width: 125px;
+                            width: 25%;
                         }
-
-                        /*
-                        CSS 4
-                        &:has(> input[type=range]) {
-                            width: 100%;
+                        &[colspan="1"]:nth-child(2) {
+                            width: 20%;
                         }
-                        */
+                        &[colspan="2"]:nth-child(2) {
+                            width: 75%;
+                        }
+                        &:nth-child(3) {
+                            width: 55%;
+                        }
 
                         label {
                             cursor: pointer;
@@ -278,6 +274,10 @@ body {
                         input[type=range] {
                             width: 100%;
                             cursor: pointer;
+                        }
+
+                        input[type=checkbox] {
+                            margin-right: 10px;
                         }
                     }
                         
@@ -288,8 +288,7 @@ body {
                             }
 
                             img {
-                                max-height: 75px;
-                                max-width:  75px;
+                                width: 20%;
                             }
 
                             input[type=radio]:checked + img {
@@ -301,30 +300,23 @@ body {
                             }
                         }
                     }
-
-                    &.checkbox.range {
-                        label {
-                            input[type=checkbox] {
-                                margin-left:    5px;
-                                margin-right:   5px;
-                            }
-                        }
-                    }
                 }
             }
         }
 
         /* about-screen */
         &#about {
+            font-size: 1rem;
+
             p {
-                padding-left:   10px;
-                padding-right:  10px;
+                padding-left:   1%;
+                padding-right:  1%;
 
                 text-align: justify;
             }   
             
             div {
-                margin-top: 75px;
+                margin-top: 10%;
                 text-align: center;
             }
         }
@@ -338,20 +330,19 @@ body {
             flex-direction: column;
             justify-content: space-around;
 
+            /* font */
             text-align: center;
 
             span {
-                /* padding */
-                padding-top: 10px;
-                padding-bottom: 10px;
-
                 /* font */
-                font-size: 30px;
+                font-size: 2rem;
 
-                /* hover */
-                &:hover {
-                    cursor: pointer;
-                }
+                /* padding */
+                padding-top:    5%;
+                padding-bottom: 5%;
+
+                /* cursor */
+                cursor: pointer;
 
                 /* selected */
                 &.selected {

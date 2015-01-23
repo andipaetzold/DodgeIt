@@ -28,255 +28,246 @@
     </head>
 
     <body>
-        <div id="wrapperOuter">
-            <div id="wrapperInner">
-                <div id="game">
-                    <div id="menu">
-                        <span data-screen="gameplay">Start Game</span>
-                        <span data-screen="leaderboard">Leaderboard</span>
-                        <span data-screen="controls">Controls</span>
-                        <span data-screen="options">Options</span>
-                        <span data-screen="about">About</span>
-                    </div>
+        <div id="game">
+            <div id="menu">
+                <span data-screen="gameplay">Start Game</span>
+                <span data-screen="leaderboard">Leaderboard</span>
+                <span data-screen="controls">Controls</span>
+                <span data-screen="options">Options</span>
+                <span data-screen="about">About</span>
+            </div>
 
-                    <div id="gameplay">
-                    </div>
+            <div id="gameplay">
+            </div>
 
-                    <div id="gameplay-gameover">
-                        <h1>Game Over</h1>
+            <div id="gameplay-gameover">
+                <h1>Game Over</h1>
 
-                        <p>You scored <span class="score"></span> points.<br>Please enter your name:</p>
+                <p>You scored <span class="score"></span> points.<br>Please enter your name:</p>
 
-                        <input maxlength="16" type="text">
+                <input maxlength="16" type="text">
 
-                        <table>
-                            <tr>
-                                <td data-action="add" data-symbol="Q">Q</td>
-                                <td data-action="add" data-symbol="W">W</td>
-                                <td data-action="add" data-symbol="E">E</td>
-                                <td data-action="add" data-symbol="R">R</td>
-                                <td data-action="add" data-symbol="T">T</td>
-                                <td data-action="add" data-symbol="Y">Y</td>
-                                <td data-action="add" data-symbol="U">U</td>
-                                <td data-action="add" data-symbol="I">I</td>
-                                <td data-action="add" data-symbol="O">O</td>
-                            </tr>
+                <table>
+                    <tr>
+                        <td data-action="add" data-symbol="Q">Q</td>
+                        <td data-action="add" data-symbol="W">W</td>
+                        <td data-action="add" data-symbol="E">E</td>
+                        <td data-action="add" data-symbol="R">R</td>
+                        <td data-action="add" data-symbol="T">T</td>
+                        <td data-action="add" data-symbol="Y">Y</td>
+                        <td data-action="add" data-symbol="U">U</td>
+                        <td data-action="add" data-symbol="I">I</td>
+                        <td data-action="add" data-symbol="O">O</td>
+                    </tr>
 
-                            <tr>
-                                <td data-action="add" data-symbol="A">A</td>
-                                <td data-action="add" data-symbol="S">S</td>
-                                <td data-action="add" data-symbol="D">D</td>
-                                <td data-action="add" data-symbol="F">F</td>
-                                <td data-action="add" data-symbol="G">G</td>
-                                <td data-action="add" data-symbol="H">H</td>
-                                <td data-action="add" data-symbol="J">J</td>
-                                <td data-action="add" data-symbol="K">K</td>
-                                <td data-action="add" data-symbol="L">L</td>
-                            </tr>
+                    <tr>
+                        <td data-action="add" data-symbol="A">A</td>
+                        <td data-action="add" data-symbol="S">S</td>
+                        <td data-action="add" data-symbol="D">D</td>
+                        <td data-action="add" data-symbol="F">F</td>
+                        <td data-action="add" data-symbol="G">G</td>
+                        <td data-action="add" data-symbol="H">H</td>
+                        <td data-action="add" data-symbol="J">J</td>
+                        <td data-action="add" data-symbol="K">K</td>
+                        <td data-action="add" data-symbol="L">L</td>
+                    </tr>
 
-                            <tr>
-                                <td data-action="add" data-symbol="Z">Z</td>
-                                <td data-action="add" data-symbol="X">X</td>
-                                <td data-action="add" data-symbol="C">C</td>
-                                <td data-action="add" data-symbol="V">V</td>
-                                <td data-action="add" data-symbol="B">B</td>
-                                <td data-action="add" data-symbol="N">N</td>
-                                <td data-action="add" data-symbol="M">M</td>
-                                <td data-action="add" data-symbol="Z">Z</td>
-                                <td data-action="add" data-symbol="0">0</td>
-                            </tr>
+                    <tr>
+                        <td data-action="add" data-symbol="Z">Z</td>
+                        <td data-action="add" data-symbol="X">X</td>
+                        <td data-action="add" data-symbol="C">C</td>
+                        <td data-action="add" data-symbol="V">V</td>
+                        <td data-action="add" data-symbol="B">B</td>
+                        <td data-action="add" data-symbol="N">N</td>
+                        <td data-action="add" data-symbol="M">M</td>
+                        <td data-action="add" data-symbol="Z">Z</td>
+                        <td data-action="add" data-symbol="0">0</td>
+                    </tr>
 
-                            <tr>
-                                <td data-action="add" data-symbol="1">1</td>
-                                <td data-action="add" data-symbol="2">2</td>
-                                <td data-action="add" data-symbol="3">3</td>
-                                <td data-action="add" data-symbol="4">4</td>
-                                <td data-action="add" data-symbol="5">5</td>
-                                <td data-action="add" data-symbol="6">6</td>
-                                <td data-action="add" data-symbol="7">7</td>
-                                <td data-action="add" data-symbol="8">8</td>
-                                <td data-action="add" data-symbol="9">9</td>
-                            </tr>
+                    <tr>
+                        <td data-action="add" data-symbol="1">1</td>
+                        <td data-action="add" data-symbol="2">2</td>
+                        <td data-action="add" data-symbol="3">3</td>
+                        <td data-action="add" data-symbol="4">4</td>
+                        <td data-action="add" data-symbol="5">5</td>
+                        <td data-action="add" data-symbol="6">6</td>
+                        <td data-action="add" data-symbol="7">7</td>
+                        <td data-action="add" data-symbol="8">8</td>
+                        <td data-action="add" data-symbol="9">9</td>
+                    </tr>
 
-                            <tr>
-                                <td data-action="delete">&#x232B;</td>
-                                <td colspan="4" data-action="cancel">Cancel</td>
-                                <td colspan="4" data-action="submit">Submit</td>
-                            </tr>
-                        </table>
-                    </div>
+                    <tr>
+                        <td data-action="delete">&#x232B;</td>
+                        <td colspan="4" data-action="cancel">Cancel</td>
+                        <td colspan="4" data-action="submit">Submit</td>
+                    </tr>
+                </table>
+            </div>
 
-                    <div id="gameplay-restart">
-                        <h1>Restart?</h1>
+            <div id="gameplay-restart">
+                <h1>Restart?</h1>
 
-                        <table>
-                            <tr>
-                                <td>Yes</td>
-                                <td>No</td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div id="leaderboard">
-                        <span class="back">Back</span>
-
-                        <h1>Leaderboard</h1>
-
-                        <table>
-                        </table>
-                    </div>
-
-                    <div id="controls">
-                        <span class="back">Back</span>
-
-                        <h1>Controls</h1>
-                        <table>
-                            <tbody>
-                                <tr class="command" data-option="command">
-                                    <td>
-                                        <button data-command="up">Set Up</button>
-                                    </td>
-                                    <td>
-                                        <span data-command="up"></span>
-                                    </td>
-                                </tr>
-                                <tr class="command" data-option="command">
-                                    <td>
-                                        <button data-command="down">Set Down</button>
-                                    </td>
-                                    <td>
-                                        <span data-command="down"></span>
-                                    </td>
-                                </tr>
-                                <tr class="command" data-option="command">
-                                    <td>
-                                        <button data-command="left">Set Left</button>
-                                    </td>
-                                    <td>
-                                        <span data-command="left"></span>
-                                    </td>
-                                </tr>
-                                <tr class="command" data-option="command">
-                                    <td>
-                                        <button data-command="right">Set Right</button>
-                                    </td>
-                                    <td>
-                                        <span data-command="right"></span>
-                                    </td>
-                                </tr>
-                                <tr class="command" data-option="command">
-                                    <td>
-                                        <button data-command="enter">Set Enter</button>
-                                    </td>
-                                    <td>
-                                        <span data-command="enter"></span>
-                                    </td>
-                                </tr>
-                                <tr class="command" data-option="command">
-                                    <td>
-                                        <button data-command="back">Set Back</button>
-                                    </td>
-                                    <td>
-                                        <span data-command="back"></span>
-                                    </td>
-                                </tr>
-                                <tr class="rangelist" data-control="gamepad">
-                                    <td>Gamepad (Move)</td>
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr class="range2" data-control="orientation">
-                                    <td>Mobile Device (Move)</td>
-                                    <td>
-                                        <progress data-control="orientation" value="0" max="60"></progress>
-                                        <progress data-control="orientation" value="0" max="60"></progress>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-
-                    <div id="options">
-                        <span class="back">Back</span>
-
-                        <h1>Options</h1>
-
-                        <table>
-                            <tbody>
-                                <tr class="radio">
-                                    <td>Style</td>
-                                    <td colspan="2">                                        
-                                        <label>
-                                            <input data-option="style" name="style" type="radio" value="car"> 
-                                            <img src="images/car/character.png" alt="Car">
-                                        </label>
-                                        <label>
-                                            <input data-option="style" name="style" type="radio" value="isaac">
-                                            <img src="images/isaac/character.png" alt="Isaac">
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr class="checkbox range">
-                                    <td>Music</td>
-                                    <td>
-                                        <label>
-                                            <input data-option="music-ute"type="checkbox">Mute
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <input data-option="music-volume" type="range" min="0" max="10" value="5">
-                                    </td>
-                                </tr>
-                                <tr class="checkbox range">
-                                    <td>Sound Effects</td>
-                                    <td>                                        
-                                        <label>
-                                            <input data-option="sfx-mute" type="checkbox">Mute
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <input data-option="sfx-volume" type="range" min="0" max="10" value="5">
-                                    </td>
-                                </tr>
-                                <tr data-option="range">
-                                    <td>Movement Speed</td>
-                                    <td colspan="2">
-                                        <input data-option="speed" type="range" min="200" max="600" step="25" value="300">
-                                    </td>
-                                </tr>
-                                <tr class="checkbox range">
-                                    <td>Movement Speed</td>
-                                    <td>                                        
-                                        <label>
-                                            <input data-option="fullscreen" type="checkbox">Fullscreen
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <input data-option="size" type="range" min="1" max="10" step="1" value="1">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div> 
-
-                    <div id="about">
-                        <span class="back">Back</span>
-
-                        <h1>About</h1>
-
-                        <p>This magnificent and awesome game was created as a web-project at the <a href="http://www-en.fh-ooe.at/hagenberg-campus" target="_blank">University of Applied Sciences Hagenberg</a>. The images were created with a high end image editing tool called <a href="http://www.gimp.org" target="_blank">GIMP</a>. The original images were downloaded from a small and rarely known search engine called <a href="https://www.google.com" target="_blank">Google</a>.</p>
-
-                        <p>I hope you enjoy the game have much fun! When you're bored and you have an idea to impreve the game you can help me develop it on <a href="https://github.com/andipaetzold/DodgeIt" target="_blank">GitHub</a>.</p>
-
-                        <div>
-                            <span>©2015 Andreas Pätzold</span><br>
-                            <a href="mailto:andi.paetzold@gmail.com">andi.paetzold@gmail.com</a><br>
-                            <a href="https://github.com/andipaetzold/DodgeIt" target="_blank">GitHub</a>
-                        </div>
-                    </div> 
+                <div>
+                    <span>Yes</span>
+                    <span>No</span>
                 </div>
             </div>
+
+            <div id="leaderboard">
+                <span class="back">Back</span>
+
+                <h1>Leaderboard</h1>
+
+                <table>
+                </table>
+            </div>
+
+            <div id="controls">
+                <span class="back">Back</span>
+
+                <h1>Controls</h1>
+                <table>
+                    <tbody>
+                        <tr class="command" data-option="command">
+                            <td>
+                                <button data-command="up">Set Up</button>
+                            </td>
+                            <td>
+                                <span data-command="up"></span>
+                            </td>
+                        </tr>
+                        <tr class="command" data-option="command">
+                            <td>
+                                <button data-command="down">Set Down</button>
+                            </td>
+                            <td>
+                                <span data-command="down"></span>
+                            </td>
+                        </tr>
+                        <tr class="command" data-option="command">
+                            <td>
+                                <button data-command="left">Set Left</button>
+                            </td>
+                            <td>
+                                <span data-command="left"></span>
+                            </td>
+                        </tr>
+                        <tr class="command" data-option="command">
+                            <td>
+                                <button data-command="right">Set Right</button>
+                            </td>
+                            <td>
+                                <span data-command="right"></span>
+                            </td>
+                        </tr>
+                        <tr class="command" data-option="command">
+                            <td>
+                                <button data-command="enter">Set Enter</button>
+                            </td>
+                            <td>
+                                <span data-command="enter"></span>
+                            </td>
+                        </tr>
+                        <tr class="command" data-option="command">
+                            <td>
+                                <button data-command="back">Set Back</button>
+                            </td>
+                            <td>
+                                <span data-command="back"></span>
+                            </td>
+                        </tr>
+                        <tr class="rangelist" data-control="gamepad">
+                            <td>Gamepad (Move)</td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr class="range2" data-control="orientation">
+                            <td>Mobile Device (Move)</td>
+                            <td>
+                                <progress data-control="orientation" value="0" max="60"></progress>
+                                <progress data-control="orientation" value="0" max="60"></progress>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div id="options">
+                <span class="back">Back</span>
+
+                <h1>Options</h1>
+
+                <table>
+                    <tbody>
+                        <tr class="radio">
+                            <td>Style</td>
+                            <td colspan="2">                                        
+                                <label>
+                                    <input data-option="style" name="style" type="radio" value="car"> 
+                                    <img src="images/car/options.png" alt="Car">
+                                </label>
+                                <label>
+                                    <input data-option="style" name="style" type="radio" value="isaac">
+                                    <img src="images/isaac/options.png" alt="Isaac">
+                                </label>
+                            </td>
+                        </tr>
+                        <tr class="checkbox range">
+                            <td>Music</td>
+                            <td>
+                                <label>
+                                    <input data-option="music-mute"type="checkbox">Mute
+                                </label>
+                            </td>
+                            <td>
+                                <input data-option="music-volume" type="range" min="0" max="10" value="5">
+                            </td>
+                        </tr>
+                        <tr class="checkbox range">
+                            <td>Sound Effects</td>
+                            <td>                                        
+                                <label>
+                                    <input data-option="sfx-mute" type="checkbox">Mute
+                                </label>
+                            </td>
+                            <td>
+                                <input data-option="sfx-volume" type="range" min="0" max="10" value="5">
+                            </td>
+                        </tr>
+                        <tr class="range">
+                            <td>Speed</td>
+                            <td colspan="2">
+                                <input data-option="speed" type="range" min="200" max="600" step="25" value="300">
+                            </td>
+                        </tr>
+                        <tr class="checkbox">
+                            <td>Screen</td>
+                            <td colspan="2">                                        
+                                <label>
+                                    <input data-option="fullscreen" type="checkbox">Fullscreen
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> 
+
+            <div id="about">
+                <span class="back">Back</span>
+
+                <h1>About</h1>
+
+                <p>This magnificent and awesome game was created as a web-project at the <a href="http://www-en.fh-ooe.at/hagenberg-campus" target="_blank">University of Applied Sciences Hagenberg</a>. The images were created with a high end image editing tool called <a href="http://www.gimp.org" target="_blank">GIMP</a>. The original images were downloaded from a small and rarely known search engine called <a href="https://www.google.com" target="_blank">Google</a>.</p>
+
+                <p>I hope you enjoy the game have much fun! When you're bored and you have an idea to impreve the game you can help me develop it on <a href="https://github.com/andipaetzold/DodgeIt" target="_blank">GitHub</a>.</p>
+
+                <div>
+                    <span>©2015 Andreas Pätzold</span><br>
+                    <a href="mailto:andi.paetzold@gmail.com">andi.paetzold@gmail.com</a><br>
+                    <a href="https://github.com/andipaetzold/DodgeIt" target="_blank">GitHub</a>
+                </div>
+            </div> 
         </div>
     </body>
 </html>

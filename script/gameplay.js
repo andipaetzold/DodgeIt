@@ -6,8 +6,8 @@ DodgeIt.prototype.gameplay = function()
         container: $("div#gameplay", this.container).get(0),
 
         // size
-        width:  this.container.width(),
-        height: this.container.height(),
+        width:  160 * 3,
+        height: 144 * 3,
 
         // background
         background: {
@@ -330,7 +330,6 @@ DodgeIt.prototype.gameplay = function()
                     }, []);
 
                     var obstacle_id = Math.randomWeighted(spawnprobabilities);
-                    console.log(obstacle_id);
                     this.obstacles.push(this.obstacle.items[obstacle_id].create(this));
 
                     // calc next spawn time

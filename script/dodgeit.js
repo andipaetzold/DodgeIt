@@ -72,7 +72,9 @@ function DodgeIt(container)
             // options
             if (data.options)
             {
-                that.options = data.options;            
+                that.options.name       = (data.options.name) ? data.options.name : that.options.name;
+                that.options.car        = (data.options.car) ? data.options.car : that.options.car;
+                that.options.speed      = (data.options.speed) ? data.options.speed : that.options.speed;
             }
         }
 
@@ -103,7 +105,11 @@ function DodgeIt(container)
                 controls: {},
 
                 // options
-                options: that.options
+                options: {
+                    name:       that.options.name,
+                    style:      that.options.car,
+                    speed:      that.options.speed
+                }
             };
 
             // save

@@ -81,16 +81,16 @@ DodgeIt.prototype.screen_init = function()
     });
 
     // gameplay-restart
-    $("table tr td:nth-child(1)", container["gameplay-restart"]).click(function(event)
+    $("div span:nth-child(1)", container["gameplay-restart"]).click(function(event)
     {
         that.screen_show("gameplay");
     });
-    $("table tr td:nth-child(2)", container["gameplay-restart"]).click(function(event)
+    $("div span:nth-child(2)", container["gameplay-restart"]).click(function(event)
     {
         that.screen_show("menu");
     });
 
-    $("table tr td", container["gameplay-restart"]).hover(function()
+    $("div span", container["gameplay-restart"]).hover(function()
     {   
         $(this).siblings().removeClass("selected");
         $(this).addClass("selected");
@@ -315,24 +315,24 @@ DodgeIt.prototype.screen_show = function(screen)
         case "gameplay-restart":
             this.controls_command_set("left", function()
             {
-                $("table tr td:nth-child(1)", container).addClass("selected");
-                $("table tr td:nth-child(2)", container).removeClass("selected");
+                $("div span:nth-child(1)", container).addClass("selected");
+                $("div span:nth-child(2)", container).removeClass("selected");
             });
 
             this.controls_command_set("right", function()
             {
-                $("table tr td:nth-child(1)", container).removeClass("selected");
-                $("table tr td:nth-child(2)", container).addClass("selected");
+                $("div span:nth-child(1)", container).removeClass("selected");
+                $("div span:nth-child(2)", container).addClass("selected");
             });
 
             this.controls_command_set("enter", function()
             {
-                $("table tr td.selected", container).click();
+                $("div span.selected", container).click();
             });
 
             // select Yes
-            $("table tr td:nth-child(1)", container).addClass("selected");
-            $("table tr td:nth-child(2)", container).removeClass("selected");
+            $("div span:nth-child(1)", container).addClass("selected");
+            $("div span:nth-child(2)", container).removeClass("selected");
 
             // loop
             loop_function = function()
@@ -500,10 +500,10 @@ DodgeIt.prototype.screen_show = function(screen)
                     var step = 1;
                     if (range.attr("step"))
                     {
-                        step = parseInt(range.attr("step"));
+                        step = parseFloat(range.attr("step"));
                     }
                     range
-                        .val(parseInt(range.val()) - step)
+                        .val(parseFloat(range.val()) - step)
                         .trigger("change");;
                 }
             });
@@ -530,10 +530,10 @@ DodgeIt.prototype.screen_show = function(screen)
                     var step = 1;
                     if (range.attr("step"))
                     {
-                        step = parseInt(range.attr("step"));
+                        step = parseFloat(range.attr("step"));
                     }
                     range
-                        .val(parseInt(range.val()) + step)
+                        .val(parseFloat(range.val()) + step)
                         .trigger("change");;
                 }
             });
