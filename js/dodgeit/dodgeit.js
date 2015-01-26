@@ -130,7 +130,7 @@ function DodgeIt(container)
 
     // init
     this.controls_init();
-    this.audio.init(that);
+    this.audio.init(this);
     this.screen_init();
 
     // load options
