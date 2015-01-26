@@ -308,6 +308,17 @@ html {
         &#about {
             font-size: 1rem;
 
+            a {
+                text-decoration: none;
+
+                &:active, &:link, &:visited, &:hover {                    
+                    color: blue;
+                }
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
             p {
                 padding-left:   1%;
                 padding-right:  1%;
