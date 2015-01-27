@@ -44,14 +44,6 @@ DodgeIt.prototype.screen_init = function()
         $(this).addClass("selected");
     });
 
-    // gameplay-gameover - restrict input text
-    $("input[type=text]", container["gameplay-gameover"]).keypress(function(event)
-    {
-        var regex = /^[a-zA-Z0-9]*$/;
-        var str = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-        return regex.test(str);
-    });
-
     // gameplay-gameover - click
     $("table", container["gameplay-gameover"]).delegate("td", "click", function()
     {
@@ -61,11 +53,30 @@ DodgeIt.prototype.screen_init = function()
             case "add":
                 if (input.prop("maxlength") > input.val().length)
                 {
-                    input.val(input.val() + $(this).attr("data-symbol"));
+                    input.val(input.val() + $(this).attr("data-symbol" + ($("td[data-action=shift]", container["gameplay-gameover"]).attr("data-pressed") == "true" ? "1" : "2") ));
                 }
                 break;
+            case "shift":
+                // change pressed-state
+                var pressed = $(this).attr("data-pressed");
+                pressed = (pressed == "true" ? "false" : "true");
+                $(this).attr("data-pressed", pressed);
+
+                var symbols = $("table tr td[data-action=add]", container["gameplay-gameover"]);
+                $.each(symbols, function(index, symbol)
+                {
+                    symbol = $(symbol);
+                    if (pressed == "true")
+                    {
+                        symbol.html(symbol.html().toUpperCase());
+                    }
+                    else
+                    {
+                        symbol.html(symbol.html().toLowerCase());
+                    }
+                });
+                break;
             case "delete":
-                input.val(input.val().slice(0, -1));
                 break;
             case "cancel":
                 that.screen_show("gameplay-restart");
@@ -312,6 +323,12 @@ DodgeIt.prototype.screen_show = function(screen)
             this.controls_command_set("enter", function()
             {
                 $("table tr td.selected", container).click();
+            });
+
+            this.controls_command_set("back", function()
+            {
+                var input = $("input[type=text]", container);
+                input.val(input.val().slice(0, -1));
             });
 
             // select first
