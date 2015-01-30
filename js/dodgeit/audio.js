@@ -53,7 +53,6 @@ var Audio = {
             set: function(value)
             {
                 audioElement.get(0).muted = value;
-                DodgeIt.save();
             }
         });
         options.mute = false;
@@ -65,11 +64,10 @@ var Audio = {
             },
             set: function(value)
             {
-                if (value >= 0 && value <= this.max)
+                if (value >= 0 && value <= max)
                 {
                     audioElement.get(0).volume = value / max;
                 }
-                DodgeIt.save();
             }
         });
         options.volume = 5;
@@ -101,7 +99,6 @@ var Audio = {
                 set: function(value)
                 {
                     this.options.mute = value;
-                    DodgeIt.save();
                 }
             });
             this.mute = false;
@@ -114,7 +111,6 @@ var Audio = {
                 set: function(value)
                 {
                     this.options.volume = value;
-                    DodgeIt.save();
                 }
             });
             this.volume = 5;

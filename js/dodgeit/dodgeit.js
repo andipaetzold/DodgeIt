@@ -25,11 +25,11 @@ var DodgeIt = (function()
             // audio
             if (data.audio)
             {
-                Audio.music.mute   = data.audio.music.mute;
-                Audio.music.volume = data.audio.music.volume;
+                Audio.music.options.mute   = data.audio.music.mute;
+                Audio.music.options.volume = data.audio.music.volume;
 
-                Audio.sfx.mute     = data.audio.sfx.mute;
-                Audio.sfx.volume   = data.audio.sfx.volume;
+                Audio.sfx.options.mute     = data.audio.sfx.mute;
+                Audio.sfx.options.volume   = data.audio.sfx.volume;
             }
 
             // options
@@ -41,25 +41,25 @@ var DodgeIt = (function()
             }
         }
 
-        this.allowSaving = true;
+        allowSaving = true;
     };
 
     // save settings function
     var save = function()
     {
-        if (this.allowSaving)
+        if (allowSaving)
         {
             var data = {
                 // audio
                 audio: {
                     music: {
-                        mute:   Audio.music.mute,
-                        volume: Audio.music.volume
+                        mute:   Audio.music.options.mute,
+                        volume: Audio.music.options.volume
                     },
 
                     sfx: {
-                        mute:   Audio.sfx.mute,
-                        volume: Audio.sfx.volume
+                        mute:   Audio.sfx.options.mute,
+                        volume: Audio.sfx.options.volume
                     }
                 },
                 
