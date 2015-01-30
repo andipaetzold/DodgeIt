@@ -81,44 +81,84 @@ var Audio = {
             nexttrack: nexttrack
         };
     })(),
-    sfx: {
-        options: {
-            mute: false,
-            volume: 5            
-        },
-        max: 10,
+    sfx: (function()
+    {
+        // VARS
+        var max = 10;
+        var mute = false;
+        var volume = 5;
 
-        init: function()
+        var options = {};
+        var sounds = {
+            change: "sfx/change.mp3"
+        };
+        var audioElements = {};
+
+        // FUNCTIONS
+        var play = function(sound)
         {
-            // mute / volume
-            Object.defineProperty(this, "mute", {
-                get: function()
-                {
-                    return this.options.mute;
-                },
-                set: function(value)
-                {
-                    this.options.mute = value;
-                }
-            });
-            this.mute = false;
+            var audio = audioElements[sound].get(0);
+            if (!audio.paused)
+            {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+            audio.play();
+        };
 
-            Object.defineProperty(this, "volume", {
-                get: function()
-                {
-                    return this.options.volume;
-                },
-                set: function(value)
-                {
-                    this.options.volume = value;
-                }
-            });
-            this.volume = 5;
-        },
+        // INIT
+        // mute
+        Object.defineProperty(options, "mute", {
+            get: function()
+            {
+                return mute;
+            },
+            set: function(value)
+            {
+                mute = value;
 
-        play: function()
+                // set mute
+                $.each(audioElements, function(index, value)
+                {
+                    value.get(0).muted = mute;
+                });
+            }
+        });
+
+        // volume
+        Object.defineProperty(options, "volume", {
+            get: function()
+            {
+                return volume;
+            },
+            set: function(value)
+            {
+                volume = value;
+
+                // set volume
+                $.each(audioElements, function(index, value)
+                {
+                    value.get(0).volume = volume / max;
+                });
+            }
+        });
+
+        // create audio elements
+        $.each(sounds, function(index, value)
         {
+            audioElements[index] = $("<audio></audio>")
+                .append(
+                    $("<source>")
+                        .attr("src", value)
+                        .attr("type", "audio/mpeg")
+                );
+            audioElements[index].get(0).volume = volume / max;
+        });
 
-        }
-    }
+        // RETURN
+        return {
+            options:    options,
+            play:       play
+        };
+    })()
 };

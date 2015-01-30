@@ -40,6 +40,9 @@ var Screen = (function()
                     {
                         selected.parent().children().last().addClass("selected");   
                     }
+
+                    // sfx
+                    Audio.sfx.play("change");
                 });
 
                 Controls.command("down").set(function()
@@ -54,6 +57,9 @@ var Screen = (function()
                     {
                         selected.parent().children().first().addClass("selected");   
                     }
+
+                    // sfx
+                    Audio.sfx.play("change");
                 });
             };
 
@@ -136,6 +142,9 @@ var Screen = (function()
                 Controls.command("back").set(function()
                 {
                     Screen.show("menu");
+
+                    // sfx
+                    Audio.sfx.play("change");
                 });
 
                 // load
@@ -249,6 +258,9 @@ var Screen = (function()
                         }
 
                         selected_new.addClass("selected");
+
+                        // sfx
+                        Audio.sfx.play("change");
                     }
                 });
 
@@ -280,6 +292,9 @@ var Screen = (function()
                         }
 
                         selected_new.addClass("selected");
+
+                        // sfx
+                        Audio.sfx.play("change");
                     }
                 });
 
@@ -290,6 +305,9 @@ var Screen = (function()
                     {
                         selected.removeClass("selected");
                         selected.prev().addClass("selected");
+
+                        // sfx
+                        Audio.sfx.play("change");
                     }
                 });
 
@@ -299,7 +317,10 @@ var Screen = (function()
                     if (selected.nextAll().length > 0)
                     {
                         selected.removeClass("selected");
-                        selected.next().addClass("selected");
+                        selected.next().addClass("selected");                        
+
+                        // sfx
+                        Audio.sfx.play("change");
                     }
                 });
 
@@ -375,14 +396,26 @@ var Screen = (function()
             {
                 Controls.command("left").set(function()
                 {
-                    $("div span:nth-child(1)", container).addClass("selected");
-                    $("div span:nth-child(2)", container).removeClass("selected");
+                    if (!$("div span:nth-child(1)", container).hasClass("selected"))
+                    {
+                        $("div span:nth-child(1)", container).addClass("selected");
+                        $("div span:nth-child(2)", container).removeClass("selected");
+
+                        // sfx
+                        Audio.sfx.play("change");
+                    }
                 });
 
                 Controls.command("right").set(function()
                 {
-                    $("div span:nth-child(1)", container).removeClass("selected");
-                    $("div span:nth-child(2)", container).addClass("selected");
+                    if (!$("div span:nth-child(2)", container).hasClass("selected"))
+                    {
+                        $("div span:nth-child(1)", container).removeClass("selected");
+                        $("div span:nth-child(2)", container).addClass("selected");
+                        
+                        // sfx
+                        Audio.sfx.play("change");
+                    }
                 });
 
                 Controls.command("enter").set(function()
@@ -625,6 +658,9 @@ var Screen = (function()
                     {
                         selected.removeClass("selected");
                         selected.prev().addClass("selected");
+                        
+                        // sfx
+                        Audio.sfx.play("change");
                     }
                 });
 
@@ -635,6 +671,9 @@ var Screen = (function()
                     {
                         selected.removeClass("selected");
                         selected.next().addClass("selected");
+                        
+                        // sfx
+                        Audio.sfx.play("change");
                     }
                 });
 
@@ -662,6 +701,9 @@ var Screen = (function()
                         radio.parent("label").prev().children("input[type=radio]")
                             .prop("checked", true)
                             .trigger("change");
+                        
+                        // sfx
+                        Audio.sfx.play("change");
                     }           
 
                     // range
@@ -675,7 +717,10 @@ var Screen = (function()
                         }
                         range
                             .val(parseFloat(range.val()) - step)
-                            .trigger("change");;
+                            .trigger("change");
+                        
+                        // sfx
+                        Audio.sfx.play("change");
                     }
                 });
 
@@ -691,7 +736,10 @@ var Screen = (function()
                         radio.prop("checked", false);
                         radio.parent("label").next().children("input[type=radio]")
                             .prop("checked", true)
-                            .trigger("change");;
+                            .trigger("change");
+                        
+                        // sfx
+                        Audio.sfx.play("change");
                     }
 
                     // range
@@ -705,7 +753,10 @@ var Screen = (function()
                         }
                         range
                             .val(parseFloat(range.val()) + step)
-                            .trigger("change");;
+                            .trigger("change");
+                        
+                        // sfx
+                        Audio.sfx.play("change");
                     }
                 });
 
