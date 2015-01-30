@@ -498,6 +498,8 @@ html {
       cursor: pointer; }
       #game div span.back:hover {
         font-weight: bold; }
+    #game div#gameplay:hover {
+      cursor: pointer; }
     #game div#gameplay canvas {
       width: 100%;
       height: 100%; }

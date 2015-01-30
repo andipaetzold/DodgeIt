@@ -90,6 +90,11 @@ var Screen = (function()
                     Gameplay.pause();
                 });
 
+                DodgeIt.container.click(function()
+                {
+                    Gameplay.pause();
+                });
+
                 // init
                 Gameplay.init();
             };
