@@ -27,16 +27,31 @@ module.exports = function(grunt) {
         },
 
         /* JavaScript */
-        uglify: {
-            dist: {
-                src: ["js/dodgeit/*.js"],
+        concat: {
+            game: {
+                src: ["js/dodgeit/dodgeit.js", "js/dodgeit/audio.js", "js/dodgeit/leaderboard.js", "js/dodgeit/controls.js", "js/dodgeit/screen.js", "js/dodgeit/gameplay.js"],
+                dest: "js/dodgeit.min.js"
+            },
+
+            header: {
+                src: ["js/dodgeit/header.js", "js/dodgeit.min.js"],
                 dest: "js/dodgeit.min.js"
             }
         },
 
-        concat: {
+        wrap: {
             dist: {
-                src: ["js/dodgeit/*.js"],
+                src:    "js/dodgeit.min.js",
+                dest:   "js/dodgeit.min.js"
+            },
+            options: {
+                wrapper: ["$(function() {\n", "\n});"]
+            }
+        },
+
+        uglify: {
+            dist: {
+                src: ["js/dodgeit.min.js"],
                 dest: "js/dodgeit.min.js"
             }
         },
@@ -45,7 +60,7 @@ module.exports = function(grunt) {
         watch: {
             dist: {
                 files: ["scss/*.scss", "js/dodgeit/*.js"],
-                tasks: ["dev", "autoprefixer", "concat"]
+                tasks: ["sass", "autoprefixer", "concat:game", "wrap", "concat:header"]
             }
         },
 
@@ -64,8 +79,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-sass");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-wrap");
 
-    grunt.registerTask("dev", ["sass", "autoprefixer", "concat"]);
-    grunt.registerTask("prod", ["sass", "autoprefixer", "cssmin", "uglify"]);
+    grunt.registerTask("dev", ["sass", "autoprefixer", "concat:game", "wrap", "concat:header"]);
+    grunt.registerTask("prod", ["sass", "autoprefixer", "cssmin", "concat:game", "wrap", "concat:header", "uglify"]);
     grunt.registerTask("default", "watch");
 };

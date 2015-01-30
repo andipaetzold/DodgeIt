@@ -1,48 +1,11 @@
-// window.requestAnimationFrame         
-if (!window.requestAnimationFrame)
+var DodgeIt = (function()
 {
-    window.requestAnimationFrame = (function()
-    {
-        return window.webkitRequestAnimationFrame ||
-               window.mozRequestAnimationFrame ||
-               window.oRequestAnimationFrame ||
-               window.msRequestAnimationFrame ||
-               function(callback, element)
-               {
-                  window.setTimeout(callback, 1000 / 60);
-               };
-    })();
-} 
+    // FUNCTIONS
+    // allowed to save?
+    var allowSaving = false;
 
-// random range
-Math.randomRange = function(min, max)
-{
-    return Math.random() * (max - min) + min;
-};
-
-// weighted random
-Math.randomWeighted = function(data)
-{
-    var total = data.reduce(function(pv, cv) { return pv + cv; }, 0);
-
-    var rand = Math.randomRange(0, total);
-    var cur = 0;
-    for (var i = 0; i <= data.length - 1; i++)
-    {
-        cur += data[i];
-        if (rand < cur)
-        {
-            return i;
-        }
-    }
-};
-
-function DodgeIt(container)
-{
-    var that = this;
-
-    // load function
-    this.load = function()
+    // load settings function
+    var load = function()
     {
         allowSaving = false;
 
@@ -58,46 +21,45 @@ function DodgeIt(container)
         }
 
         if (data)
-        {            
+        {   
             // audio
             if (data.audio)
             {
-                that.audio.music.mute   = data.audio.music.mute;
-                that.audio.music.volume = data.audio.music.volume;
+                Audio.music.mute   = data.audio.music.mute;
+                Audio.music.volume = data.audio.music.volume;
 
-                that.audio.sfx.mute     = data.audio.sfx.mute;
-                that.audio.sfx.volume   = data.audio.sfx.volume;
+                Audio.sfx.mute     = data.audio.sfx.mute;
+                Audio.sfx.volume   = data.audio.sfx.volume;
             }
 
             // options
             if (data.options)
             {
-                that.options.name       = (data.options.name) ? data.options.name : that.options.name;
-                that.options.car        = (data.options.car) ? data.options.car : that.options.car;
-                that.options.speed      = (data.options.speed) ? data.options.speed : that.options.speed;
+                this.options.name       = (data.options.name)  ? data.options.name  : this.options.name;
+                this.options.car        = (data.options.car)   ? data.options.car   : this.options.car;
+                this.options.speed      = (data.options.speed) ? data.options.speed : this.options.speed;
             }
         }
 
-        allowSaving = true;
+        this.allowSaving = true;
     };
 
-    // save function
-    var allowSaving = false;
-    this.save = function()
+    // save settings function
+    var save = function()
     {
-        if (allowSaving)
+        if (this.allowSaving)
         {
             var data = {
                 // audio
                 audio: {
                     music: {
-                        mute:   that.audio.music.mute,
-                        volume: that.audio.music.volume
+                        mute:   Audio.music.mute,
+                        volume: Audio.music.volume
                     },
 
                     sfx: {
-                        mute:   that.audio.sfx.mute,
-                        volume: that.audio.sfx.volume
+                        mute:   Audio.sfx.mute,
+                        volume: Audio.sfx.volume
                     }
                 },
                 
@@ -106,9 +68,9 @@ function DodgeIt(container)
 
                 // options
                 options: {
-                    name:       that.options.name,
-                    style:      that.options.car,
-                    speed:      that.options.speed
+                    name:   this.options.name,
+                    style:  this.options.car,
+                    speed:  this.options.speed
                 }
             };
 
@@ -117,31 +79,28 @@ function DodgeIt(container)
         }
     };
 
-    // clear container
-    this.container = container;
-    this.container.children().hide();
-
-    // default options
-    this.options = {
+    // INIT
+    // options (default)
+    var options = {
         name:   "Unknown",
         style:  "car",
         speed:  300
     };
 
-    // init
-    this.controls_init();
-    this.audio.init(this);
-    this.screen_init();
+    // set container / hide
+    var container = $("div#game");
+    container.children().hide();
 
     // load options
-    this.load();
+    load();
 
-    // show menu
-    this.screen_show("menu");
-}
+    // RETURN
+    return {
+        container:  container,
 
-var g;
-$(document).ready(function()
-{
-    g = new DodgeIt($("#game"));
-});
+        options:    options,
+
+        load:       load,
+        save:       save
+    };
+})();

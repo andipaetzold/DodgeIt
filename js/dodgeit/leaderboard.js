@@ -1,4 +1,4 @@
-DodgeIt.prototype.leaderboard = {
+var Leaderboard = {
     post: function(name, score)
     {
         var url = "https://docs.google.com/forms/d/1O4OfBssi1MZZd1v7gfo_bsyU_r52IVSN8GEYH1I2Luo/formResponse";
