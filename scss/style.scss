@@ -34,7 +34,7 @@ html {
 }
 
 
-#game {
+div#game {
     width:      #{$screen-max-fill * 100}vw; 
     height:     #{$screen-max-fill * $screen-ratio-height / $screen-ratio-width * 100}vw;
     max-height: #{$screen-max-fill * 100}vh;
