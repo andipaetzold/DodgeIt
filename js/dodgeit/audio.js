@@ -17,7 +17,7 @@ var Audio = {
         {
             if (track_cur == -1)
             {
-                 track_cur = Math.floor(Math.random() * tracks.length);
+                 track_cur = Math.randomRange(0, tracks.length - 1, true);
             }
             else
             {

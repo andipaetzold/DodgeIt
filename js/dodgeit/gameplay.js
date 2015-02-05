@@ -50,7 +50,7 @@ var Gameplay = {
                         {
                             return {
                                 img:    this.img,
-                                x:      Math.round(Math.randomRange(0, game.width - 50)),
+                                x:      Math.randomRange(0, game.width - 50, true),
                                 y:      -50,
                                 width:  50,
                                 height: 50,
@@ -69,7 +69,7 @@ var Gameplay = {
                         {
                             return {
                                 img:    this.img,
-                                x:      Math.round(Math.randomRange(0, game.width - 50)),
+                                x:      Math.randomRange(0, game.width - 50, true),
                                 y:      -100,
                                 width:  50,
                                 height: 100,
@@ -88,7 +88,7 @@ var Gameplay = {
                         {
                             return {
                                 img:    this.img,
-                                x:      Math.round(Math.randomRange(0, game.width - 100)),
+                                x:      Math.randomRange(0, game.width - 100, true),
                                 y:      -50,
                                 width:  100,
                                 height: 50,
@@ -107,7 +107,7 @@ var Gameplay = {
                         {
                             return {
                                 img:    this.img,
-                                x:      Math.round(Math.randomRange(0, game.width - 50)),
+                                x:      Math.randomRange(0, game.width - 50, true),
                                 y:      -50,
                                 width:  50,
                                 height: 50,
@@ -125,7 +125,7 @@ var Gameplay = {
                         create: function(game)
                         {
                             var range = 150;
-                            var x = Math.round(Math.randomRange(range / 2, game.width - 50 - (range / 2)));
+                            var x = Math.randomRange(range / 2, game.width - 50 - (range / 2), true);
                             return {
                                 img:    this.img,
                                 x:      x, // current position

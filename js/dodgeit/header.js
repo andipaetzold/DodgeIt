@@ -15,9 +15,16 @@ if (!window.requestAnimationFrame)
 } 
 
 // random range
-Math.randomRange = function(min, max)
+Math.randomRange = function(min, max, integer)
 {
-    return Math.random() * (max - min) + min;
+    var value = Math.random() * (max - min) + min;
+
+    if (integer)
+    {
+        value = Math.floor(value);
+    }
+
+    return value;
 };
 
 // weighted random
