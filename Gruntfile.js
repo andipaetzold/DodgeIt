@@ -29,7 +29,7 @@ module.exports = function(grunt) {
         /* JavaScript */
         concat: {
             game: {
-                src: ["js/dodgeit/audio.js", "js/dodgeit/dodgeit.js", "js/dodgeit/leaderboard.js", "js/dodgeit/controls.js", "js/dodgeit/screen.js", "js/dodgeit/gameplay.js"],
+                src: ["js/dodgeit/dodgeit.js", "js/dodgeit/audio.js", "js/dodgeit/leaderboard.js", "js/dodgeit/controls.js", "js/dodgeit/screen.js", "js/dodgeit/gameplay.js"],
                 dest: "js/dodgeit.min.js"
             },
 

@@ -612,12 +612,12 @@ var Screen = (function()
                 DodgeIt.options.style = $("input[data-option=style]:checked", container).val();
 
                 // music
-                Audio.music.options.mute   = $("input[data-option=music-mute]", container).prop("checked");
-                Audio.music.options.volume = $("input[data-option=music-volume]", container).val();
+                DodgeIt.options.music.mute   = $("input[data-option=music-mute]", container).prop("checked");
+                DodgeIt.options.music.volume = $("input[data-option=music-volume]", container).val();
 
                 // sfx
-                Audio.sfx.options.mute     = $("input[data-option=sfx-mute]", container).prop("checked");
-                Audio.sfx.options.volume   = $("input[data-option=sfx-volume]", container).val();
+                DodgeIt.options.sfx.mute     = $("input[data-option=sfx-mute]", container).prop("checked");
+                DodgeIt.options.sfx.volume   = $("input[data-option=sfx-volume]", container).val();
 
                 // speed
                 DodgeIt.options.speed = $("input[data-option=speed]", container).val(); 
@@ -772,12 +772,12 @@ var Screen = (function()
                 $("input[value=" + DodgeIt.options.style + "]", container).prop("checked", true);
 
                 // music
-                $("input[data-option=music-mute]", container).prop("checked", Audio.music.options.mute);
-                $("input[data-option=music-volume]", container).val(Audio.music.options.volume);
+                $("input[data-option=music-mute]", container).prop("checked", DodgeIt.options.music.mute);
+                $("input[data-option=music-volume]", container).val(DodgeIt.options.music.volume);
 
                 // sfx
-                $("input[data-option=sfx-mute]", container).prop("checked", Audio.sfx.options.mute);
-                $("input[data-option=sfx-volume]", container).val(Audio.sfx.options.volume);
+                $("input[data-option=sfx-mute]", container).prop("checked", DodgeIt.options.sfx.mute);
+                $("input[data-option=sfx-volume]", container).val(DodgeIt.options.sfx.volume);
 
                 // speed
                 $("input[data-option=speed]", container).val(DodgeIt.options.speed);

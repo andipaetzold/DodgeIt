@@ -2,8 +2,6 @@ var Audio = {
     music: (function()
     {
         // VARS
-        var max = 10;
-
         var tracks = [
             "music/01_A_Night_Of_Dizzy_Spells.mp3",
             "music/02_Underclocked_(underunderclocked_mix).mp3",
@@ -42,10 +40,9 @@ var Audio = {
             nexttrack();
         });
 
-        var options = {};
-
         // mute / volume
-        Object.defineProperty(options, "mute", {
+        var tmpMute = DodgeIt.options.music.mute;
+        Object.defineProperty(DodgeIt.options.music, "mute", {
             get: function()
             {
                 return audioElement.get(0).muted;
@@ -55,44 +52,38 @@ var Audio = {
                 audioElement.get(0).muted = value;
             }
         });
-        options.mute = false;
+        DodgeIt.options.music.mute = tmpMute;
 
-        Object.defineProperty(options, "volume", {
+        // volume
+        var tmpVolume = DodgeIt.options.music.volume;
+        Object.defineProperty(DodgeIt.options.music, "volume", {
             get: function()
             {
-                return audioElement.get(0).volume * max;
+                return audioElement.get(0).volume;
             },
             set: function(value)
             {
-                if (value >= 0 && value <= max)
-                {
-                    audioElement.get(0).volume = value / max;
-                }
+                value = Math.max(0, Math.min(1, value));
+                audioElement.get(0).volume = value;
             }
         });
-        options.volume = 5;
+        DodgeIt.options.music.volume = tmpVolume;
 
         // start music
         nexttrack();
 
         // RETURN
         return {
-            options: options,
-            nexttrack: nexttrack
+            nexttrack:  nexttrack
         };
     })(),
     sfx: (function()
     {
         // VARS
-        var max = 10;
-        var mute = false;
-        var volume = 5;
-
-        var options = {};
         var sounds = {
             change: "sfx/change.mp3"
         };
-        var audioElements = {};
+        var audioElements = [];
 
         // FUNCTIONS
         var play = function(sound)
@@ -107,16 +98,35 @@ var Audio = {
         };
 
         // INIT
+        // create audio elements
+        $.each(sounds, function(index, value)
+        {
+            var audio = $("<audio></audio>")
+                .append(
+                    $("<source>")
+                        .attr("src", value)
+                        .attr("type", "audio/mpeg")
+                );
+            audio.get(0).volume = 0;
+            audioElements.push(audio);
+        });
+
         // mute
-        Object.defineProperty(options, "mute", {
+        var tmpMute = DodgeIt.options.sfx.mute;
+        Object.defineProperty(DodgeIt.options.sfx, "mute", {
             get: function()
             {
-                return mute;
+                if (audioElements.length >= 1)
+                {
+                    return audioElements[0].get(0).muted;
+                }
+                else
+                {
+                    return false;
+                }
             },
-            set: function(value)
+            set: function(mute)
             {
-                mute = value;
-
                 // set mute
                 $.each(audioElements, function(index, value)
                 {
@@ -124,41 +134,38 @@ var Audio = {
                 });
             }
         });
+        DodgeIt.options.sfx.mute = tmpMute;
 
         // volume
-        Object.defineProperty(options, "volume", {
+        var tmpVolume = DodgeIt.options.sfx.volume;
+        Object.defineProperty(DodgeIt.options.sfx, "volume", {
             get: function()
             {
-                return volume;
+                if (audioElements.length >= 1)
+                {
+                    return audioElements[0].get(0).volume;
+                }
+                else
+                {
+                    return 0.5;
+                }
             },
             set: function(value)
             {
-                volume = value;
+                value = Math.max(0, Math.min(1, value));
 
                 // set volume
-                $.each(audioElements, function(index, value)
+                $.each(audioElements, function(index, element)
                 {
-                    value.get(0).volume = volume / max;
+                    element.get(0).volume = value;
                 });
             }
         });
-
-        // create audio elements
-        $.each(sounds, function(index, value)
-        {
-            audioElements[index] = $("<audio></audio>")
-                .append(
-                    $("<source>")
-                        .attr("src", value)
-                        .attr("type", "audio/mpeg")
-                );
-            audioElements[index].get(0).volume = volume / max;
-        });
+        DodgeIt.options.sfx.volume = tmpVolume;
 
         // RETURN
         return {
-            options:    options,
-            play:       play
+            play:   play
         };
     })()
 };

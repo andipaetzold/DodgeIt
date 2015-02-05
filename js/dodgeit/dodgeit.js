@@ -20,26 +20,7 @@ var DodgeIt = (function()
             return;
         }
 
-        if (data)
-        {   
-            // audio
-            if (data.audio)
-            {
-                Audio.music.options.mute   = data.audio.music.mute;
-                Audio.music.options.volume = data.audio.music.volume;
-
-                Audio.sfx.options.mute     = data.audio.sfx.mute;
-                Audio.sfx.options.volume   = data.audio.sfx.volume;
-            }
-
-            // options
-            if (data.options)
-            {
-                this.options.name       = (data.options.name)  ? data.options.name  : this.options.name;
-                this.options.car        = (data.options.car)   ? data.options.car   : this.options.car;
-                this.options.speed      = (data.options.speed) ? data.options.speed : this.options.speed;
-            }
-        }
+        $.extend(true, options, data);
 
         allowSaving = true;
     };
@@ -49,33 +30,8 @@ var DodgeIt = (function()
     {
         if (allowSaving)
         {
-            var data = {
-                // audio
-                audio: {
-                    music: {
-                        mute:   Audio.music.options.mute,
-                        volume: Audio.music.options.volume
-                    },
-
-                    sfx: {
-                        mute:   Audio.sfx.options.mute,
-                        volume: Audio.sfx.options.volume
-                    }
-                },
-                
-                // controls
-                controls: {},
-
-                // options
-                options: {
-                    name:   this.options.name,
-                    style:  this.options.car,
-                    speed:  this.options.speed
-                }
-            };
-
             // save
-            localStorage.setItem("options", JSON.stringify(data));            
+            localStorage.setItem("options", JSON.stringify(options));
         }
     };
 
@@ -84,7 +40,17 @@ var DodgeIt = (function()
     var options = {
         name:   "Unknown",
         style:  "car",
-        speed:  300
+        speed:  300,
+
+        music: {
+            mute:   false,
+            volume: 0.5
+        },
+
+        sfx: {
+            mute:   false,
+            volume: 0.5
+        }
     };
 
     // set container / hide
