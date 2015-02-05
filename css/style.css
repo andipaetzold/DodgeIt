@@ -367,9 +367,6 @@ html {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover; }
-  @media screen and (min-aspect-ratio: 160 / 144) and (min-height: -72px) and (max-height: 0px), screen and (max-aspect-ratio: 160 / 144) and (min-width: -80px) and (max-width: 0px) {
-    html {
-      font-size: 0px; } }
   @media screen and (min-aspect-ratio: 160 / 144) and (min-height: 0px) and (max-height: 72px), screen and (max-aspect-ratio: 160 / 144) and (min-width: 0px) and (max-width: 80px) {
     html {
       font-size: 2px; } }
@@ -460,6 +457,9 @@ html {
   @media screen and (min-aspect-ratio: 160 / 144) and (min-height: 2088px) and (max-height: 2160px), screen and (max-aspect-ratio: 160 / 144) and (min-width: 2320px) and (max-width: 2400px) {
     html {
       font-size: 60px; } }
+  @media screen and (min-aspect-ratio: 160 / 144) and (min-height: 2160px) and (max-height: 2232px), screen and (max-aspect-ratio: 160 / 144) and (min-width: 2400px) and (max-width: 2480px) {
+    html {
+      font-size: 62px; } }
 
 div#game {
   width: 90vw;

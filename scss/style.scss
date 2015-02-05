@@ -16,7 +16,7 @@ html {
     /* font-size */
     $step: 0.5;
     @for $i from 0 through 15 / $step {
-        $factor: $i * $step;
+        $factor: $i * $step + $step;
         @media screen and (min-aspect-ratio: #{$screen-ratio-width} / #{$screen-ratio-height})
                       and (min-height: #{($factor - $step) * $screen-ratio-height}px) and (max-height: #{$factor * $screen-ratio-height}px),
                screen and (max-aspect-ratio: #{$screen-ratio-width} / #{$screen-ratio-height})
