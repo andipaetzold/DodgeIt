@@ -35,10 +35,19 @@ html {
 
 
 div#game {
+    // no fullscreen
     width:      #{$screen-max-fill * 100}vw; 
     height:     #{$screen-max-fill * $screen-ratio-height / $screen-ratio-width * 100}vw;
     max-height: #{$screen-max-fill * 100}vh;
     max-width:  #{$screen-max-fill * $screen-ratio-width / $screen-ratio-height * 100}vh;
+
+    // fullscreen
+    &.fullscreen {
+        width:      #{100}vw; 
+        height:     #{$screen-ratio-height / $screen-ratio-width * 100}vw;
+        max-height: #{100}vh;
+        max-width:  #{$screen-ratio-width / $screen-ratio-height * 100}vh;        
+    }
 
     position: absolute;
     top:0;  bottom:0;    /* vertical center */

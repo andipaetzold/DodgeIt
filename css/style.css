@@ -478,6 +478,11 @@ div#game {
   margin: auto;
   /* color */
   background-color: white; }
+  div#game.fullscreen {
+    width: 100vw;
+    height: 90vw;
+    max-height: 100vh;
+    max-width: 111.11111vh; }
   div#game div {
     /* game */
     /* gameplay-gameover */
