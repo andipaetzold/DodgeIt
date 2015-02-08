@@ -15,7 +15,10 @@ var Screen = (function()
 
             $("span", container).click(function()
             {
-                Screen.show($(this).attr("data-screen"));
+                Screen.show($(this).attr("data-screen"));                
+
+                // sfx
+                Audio.sfx.play("change");
             });
 
             $("span:first", container).addClass("selected");
@@ -132,7 +135,10 @@ var Screen = (function()
             // back
             $("span.back", container).click(function()
             {
-                Screen.show("menu");
+                Screen.show("menu");                
+
+                // sfx
+                Audio.sfx.play("change");
             });
             
             // FUNCTIONS
@@ -153,9 +159,6 @@ var Screen = (function()
                     if ($("div span:first-child", container).is(":visible"))
                     {
                         $("div span:first-child", container).click();
-
-                        // sfx
-                        Audio.sfx.play("change");
                     }
                 });
 
@@ -165,9 +168,6 @@ var Screen = (function()
                     if ($("div span:last-child", container).is(":visible"))
                     {
                         $("div span:last-child", container).click();
-
-                        // sfx
-                        Audio.sfx.play("change");
                     }
                 });
 
@@ -177,9 +177,6 @@ var Screen = (function()
                     if ($("div span:first-child", container).is(":visible"))
                     {
                         $("div span:first-child", container).click();
-
-                        // sfx
-                        Audio.sfx.play("change");
                     }
                 });
 
@@ -189,9 +186,6 @@ var Screen = (function()
                     if ($("div span:last-child", container).is(":visible"))
                     {
                         $("div span:last-child", container).click();
-
-                        // sfx
-                        Audio.sfx.play("change");
                     }
                 });
 
@@ -260,7 +254,10 @@ var Screen = (function()
                         .click(function()
                     {
                         start -= count;
-                        load();
+                        load();            
+
+                        // sfx
+                        Audio.sfx.play("change");
                     });
 
                     // next button
@@ -269,7 +266,10 @@ var Screen = (function()
                         .click(function()
                     {
                         start += count;
-                        load();
+                        load();            
+
+                        // sfx
+                        Audio.sfx.play("change");
                     });
 
                     // load
@@ -303,6 +303,9 @@ var Screen = (function()
             {
                 $("table tr td", container).removeClass("selected");
                 $(this).addClass("selected");
+
+                // sfx
+                Audio.sfx.play("change");
             });
 
             // click
@@ -351,6 +354,9 @@ var Screen = (function()
                     default:
                         break;
                 }
+
+                // sfx
+                Audio.sfx.play("change");
             });
 
             var showBefore = function(args)
@@ -499,22 +505,22 @@ var Screen = (function()
             $("div span:nth-child(1)", container).click(function(event)
             {
                 Screen.show("gameplay");
+
+                // sfx
+                Audio.sfx.play("change");
             });
             $("div span:nth-child(2)", container).click(function(event)
             {
                 Screen.show("menu");
+                
+                // sfx
+                Audio.sfx.play("change");
             });
 
             $("div span", container).hover(function()
             {   
                 $(this).siblings().removeClass("selected");
                 $(this).addClass("selected");
-            });
-
-            // back
-            $("span.back", container).click(function()
-            {
-                Screen.show("menu");
             });
             
             // FUNCTIONS
@@ -581,7 +587,7 @@ var Screen = (function()
             // gamepad
             if (!Controls.options.gamepad.available)
             {
-                $("tr[data-control=gamepad]", container).hide();   
+                $("tr[data-control=gamepad]", container).hide();
             }
 
             // orientation
@@ -594,6 +600,9 @@ var Screen = (function()
             $("span.back", container).click(function()
             {
                 Screen.show("menu");
+                
+                // sfx
+                Audio.sfx.play("change");
             });
             
             // FUNCTIONS
@@ -602,6 +611,9 @@ var Screen = (function()
                 Controls.command("back").set(function()
                 {
                     Screen.show("menu");
+                
+                    // sfx
+                    Audio.sfx.play("change");
                 });
 
                 // poll gamepad
@@ -638,8 +650,14 @@ var Screen = (function()
                         }
 
                         // unblock buttons
-                        $("button", container).prop("disabled", false);
-                    });
+                        $("button", container).prop("disabled", false);            
+
+                        // sfx
+                        Audio.sfx.play("change");
+                    });            
+
+                    // sfx
+                    Audio.sfx.play("change");
                 });
             };
 
@@ -781,13 +799,55 @@ var Screen = (function()
             // back
             $("span.back", container).click(function()
             {
-                Screen.show("menu");
+                Screen.show("menu");                
+                
+                // sfx
+                Audio.sfx.play("change");
+            });
+
+            // image click
+            $("img", container).click(function()
+            {
+                if (!$(this).prev("input").prop("checked"))
+                {
+                    // sfx
+                    Audio.sfx.play("change");
+                }
+            });
+
+            // checkboxes click
+            $("input[type=checkbox]", container).click(function()
+            {
+                // sfx
+                Audio.sfx.play("change");
             });
             
             // FUNCTIONS
             var showBefore = function()
             {
                 // controls
+                // back
+                Controls.command("back").set(function()
+                {
+                    Screen.show("menu");
+
+                    // sfx
+                    Audio.sfx.play("change");
+                });
+
+                // enter
+                Controls.command("enter").set(function()
+                {
+                    var checkbox = $("table tr.selected input[type=checkbox]", container);
+                    if (checkbox.length == 1)
+                    {
+                        checkbox
+                            .prop("checked", !checkbox.prop("checked"))
+                            .trigger("change");
+                    }
+                });
+
+                // up
                 Controls.command("up").set(function()
                 {
                     var selected = $("table tr.selected", container);
@@ -801,6 +861,7 @@ var Screen = (function()
                     }
                 });
 
+                // down
                 Controls.command("down").set(function()
                 {
                     var selected = $("table tr.selected", container);
@@ -814,17 +875,8 @@ var Screen = (function()
                     }
                 });
 
-                Controls.command("enter").set(function()
-                {
-                    var checkbox = $("table tr.selected input[type=checkbox]", container);
-                    if (checkbox.length == 1)
-                    {
-                        checkbox
-                            .prop("checked", !checkbox.prop("checked"))
-                            .trigger("change");
-                    }
-                });
 
+                // left
                 Controls.command("left").set(function()
                 {
                     var tr = $("table tr.selected", container);
@@ -861,6 +913,7 @@ var Screen = (function()
                     }
                 });
 
+                // right
                 Controls.command("right").set(function()
                 {
                     var tr = $("table tr.selected", container);
@@ -895,11 +948,6 @@ var Screen = (function()
                         // sfx
                         Audio.sfx.play("change");
                     }
-                });
-
-                Controls.command("back").set(function()
-                {
-                    Screen.show("menu");
                 });
 
 
@@ -945,7 +993,10 @@ var Screen = (function()
             // back
             $("span.back", container).click(function()
             {
-                Screen.show("menu");
+                Screen.show("menu");                
+                
+                // sfx
+                Audio.sfx.play("change");
             });
 
             // FUNCTIONS
@@ -954,6 +1005,9 @@ var Screen = (function()
                 Controls.command("back").set(function()
                 {
                     Screen.show("menu");
+                
+                    // sfx
+                    Audio.sfx.play("change");
                 });
             };
 

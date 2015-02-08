@@ -473,10 +473,16 @@ var Gameplay = {
         if (this.game.state == this.game.states.running)
         {
             this.game.state = this.game.states.pause;
+
+            // sfx
+            Audio.sfx.play("change");
         }
         else if (this.game.state == this.game.states.pause)
         {
             this.game.state = this.game.states.running;
-        }   
+
+            // sfx
+            Audio.sfx.play("change");
+        }
     }
 };
