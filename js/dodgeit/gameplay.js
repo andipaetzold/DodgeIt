@@ -449,6 +449,9 @@ var Gameplay = {
                 this.state = this.states.gameover;
                 $(this.container).html("");
 
+                // sfx
+                Audio.sfx.play("crash");
+
                 // leaderboard
                 Screen.show("gameplay-gameover", Math.floor(this.score));
             },

@@ -81,7 +81,8 @@ var Audio = {
     {
         // VARS
         var sounds = {
-            change: "sfx/change.mp3"
+            change: "sfx/change.mp3",
+            crash: "sfx/crash.mp3"
         };
         var audioElements = {};
 
