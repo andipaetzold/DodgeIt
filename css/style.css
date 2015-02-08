@@ -557,9 +557,16 @@ div#game {
           padding-right: 10px; }
       div#game div#leaderboard table tr.loading td {
         text-align: center; }
-      div#game div#leaderboard table tr.buttons td:nth-child(1) button {
+    div#game div#leaderboard div span {
+      margin-top: 25px;
+      margin-left: 5%;
+      margin-right: 5%; }
+      div#game div#leaderboard div span:hover {
+        cursor: pointer;
+        font-weight: bold; }
+      div#game div#leaderboard div span:first-child {
         float: left; }
-      div#game div#leaderboard table tr.buttons td:nth-child(2) button {
+      div#game div#leaderboard div span:last-child {
         float: right; }
     div#game div#controls table tr td {
       padding: 1%;

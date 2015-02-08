@@ -147,8 +147,134 @@ var Screen = (function()
                     Audio.sfx.play("change");
                 });
 
+                // up
+                Controls.command("up").set(function()
+                {
+                    if ($("div span:first-child", container).is(":visible"))
+                    {
+                        $("div span:first-child", container).click();
+
+                        // sfx
+                        Audio.sfx.play("change");
+                    }
+                });
+
+                // down
+                Controls.command("down").set(function()
+                {
+                    if ($("div span:last-child", container).is(":visible"))
+                    {
+                        $("div span:last-child", container).click();
+
+                        // sfx
+                        Audio.sfx.play("change");
+                    }
+                });
+
+                // left
+                Controls.command("left").set(function()
+                {
+                    if ($("div span:first-child", container).is(":visible"))
+                    {
+                        $("div span:first-child", container).click();
+
+                        // sfx
+                        Audio.sfx.play("change");
+                    }
+                });
+
+                // right
+                Controls.command("right").set(function()
+                {
+                    if ($("div span:last-child", container).is(":visible"))
+                    {
+                        $("div span:last-child", container).click();
+
+                        // sfx
+                        Audio.sfx.play("change");
+                    }
+                });
+
+                // loading
+                $("table", container)
+                    .empty()
+                    .append(
+                        $("<tr></tr>")
+                            .addClass("loading")
+                            .append(
+                                $("<td></td>")
+                                    .attr("colspan", 3)
+                                    .html("Loading...")
+                            )
+                        );
+
                 // load
-                Leaderboard.get(0, 10, $("table", container));
+                Leaderboard.get(function(data)
+                {
+                    var start = 0;
+                    var count = 10;
+                    var table = $("table", container);
+
+                    var load = function()
+                    {
+                        // clear table
+                        table.empty();
+
+                        // filter items
+                        var output = data.slice(start, start + count);
+
+                        // print table
+                        $.each(output, function(index, value)
+                        {
+                            $("<tr></tr>")
+                                .appendTo(table)
+                                .append($("<td></td>").html(start + index + 1))
+                                .append($("<td></td>").html(value.name))
+                                .append($("<td></td>").html(value.score));                       
+                        });
+
+                        // prev button
+                        if (start == 0)
+                        {
+                            $("div span:first-child", container).hide();
+                        }
+                        else
+                        {
+                            $("div span:first-child", container).show();
+                        }
+
+                        // next button
+                        if (data.length <= start + count)
+                        {
+                            $("div span:last-child", container).hide();
+                        }
+                        else
+                        {
+                            $("div span:last-child", container).show();
+                        }
+                    };
+
+                    // prev button
+                    $("div span:first-child", container)
+                        .unbind("click")
+                        .click(function()
+                    {
+                        start -= count;
+                        load();
+                    });
+
+                    // next button
+                    $("div span:last-child", container)
+                        .unbind("click")
+                        .click(function()
+                    {
+                        start += count;
+                        load();
+                    });
+
+                    // load
+                    load();
+                });
             };
 
             var showAfter = function() { };

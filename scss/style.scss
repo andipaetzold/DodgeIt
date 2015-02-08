@@ -182,17 +182,27 @@ div#game {
                             text-align: center;
                         }
                     }
+                }
+            }
 
-                    &.buttons {
-                        td {
-                            &:nth-child(1) button {
-                                float: left;
-                            }
+            div {
+                span {
+                    margin-top: 25px;
+                    margin-left:  5%;
+                    margin-right: 5%;
 
-                            &:nth-child(2) button {
-                                float: right;
-                            }
-                        }
+                    &:hover {
+                        cursor: pointer;
+                        
+                        font-weight: bold;
+                    }
+
+                    &:first-child {
+                        float: left;
+                    }
+
+                    &:last-child {
+                        float: right;
                     }
                 }
             }

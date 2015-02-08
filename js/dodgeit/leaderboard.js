@@ -8,22 +8,9 @@ var Leaderboard = {
         });
     },
 
-    get: function(start, count, table)
+    get: function(fn)
     {
         var that = this;
-
-        // loading
-        table
-            .empty()
-            .append(
-                $("<tr></tr>")
-                    .addClass("loading")
-                    .append(
-                        $("<td></td>")
-                            .attr("colspan", 3)
-                            .html("Loading...")
-                    )
-                );
 
         // get data
         var table_key = "1bWUyCx4cLJn6EXe_0Y8NxJ3iJhjqMM5pHfSCEuVD8Ec";
@@ -50,63 +37,7 @@ var Leaderboard = {
                     });
                 });
 
-                // clear table
-                table.empty();
-
-                // filter items
-                var output = [];
-                for (var i = start; i - start <= count - 1; i++)
-                {
-                    if (i <= data.length - 1)
-                    {
-                        $("<tr></tr>")
-                            .appendTo(table)
-                            .append($("<td></td>").html(i + 1))
-                            .append($("<td></td>").html(data[i].name))
-                            .append($("<td></td>").html(data[i].score));                        
-                    }
-                    else
-                    {
-                        // add empty row
-                        $("<tr></tr>")
-                            .appendTo(table)
-                            .append("<td>&nbsp;</td>")
-                            .append("<td>&nbsp;</td>")
-                            .append("<td>&nbsp;</td>");
-                    }
-
-                };
-
-                // add buttons
-                var tr_button = $("<tr></tr>").appendTo(table).addClass("buttons");
-                var td_1 = $("<td></td>").attr("colspan", 2).appendTo(tr_button);
-                var td_2 = $("<td></td>").appendTo(tr_button);
-
-                // prev
-                if (start != 0)
-                {
-                    td_1.append(
-                        $("<button></button>")
-                            .html("previous " + count)
-                            .click(function()
-                            {
-                                that.get(start - count, count, table);
-                            })
-                    );
-                }
-
-                // next
-                if (data.length >= start + count)
-                {
-                    td_2.append(
-                        $("<button></button>")
-                            .html("next " + count)
-                            .click(function()
-                            {
-                                that.get(start + count, count, table);
-                            })
-                    );
-                }
+                fn(data);
             },
 
             jsonpCallback: "success"
