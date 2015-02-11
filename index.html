@@ -28,7 +28,7 @@
     <body>
         <div id="game">
             <div id="menu">
-                <span data-screen="gameplay">Start Game</span>
+                <span class="selected" data-screen="gameplay">Start Game</span>
                 <span data-screen="leaderboard">Leaderboard</span>
                 <span data-screen="controls">Controls</span>
                 <span data-screen="options">Options</span>
@@ -47,7 +47,7 @@
 
                 <table>
                     <tr>
-                        <td data-action="add" data-symbol1="Q" data-symbol2="q">Q</td>
+                        <td class="selected" data-action="add" data-symbol1="Q" data-symbol2="q">Q</td>
                         <td data-action="add" data-symbol1="W" data-symbol2="w">W</td>
                         <td data-action="add" data-symbol1="E" data-symbol2="e">E</td>
                         <td data-action="add" data-symbol1="R" data-symbol2="r">R</td>
@@ -108,7 +108,7 @@
                 <h1>Restart?</h1>
 
                 <div>
-                    <span>Yes</span>
+                    <span class="selected">Yes</span>
                     <span>No</span>
                 </div>
             </div>
@@ -133,53 +133,29 @@
                 <h1>Controls</h1>
                 <table>
                     <tbody>
-                        <tr class="command" data-option="command">
-                            <td>
-                                <button data-command="up">Set Up</button>
-                            </td>
-                            <td>
-                                <span data-command="up"></span>
-                            </td>
+                        <tr class="command selected" data-control="command" data-command="up">
+                            <td>Up</td>
+                            <td></td>
                         </tr>
-                        <tr class="command" data-option="command">
-                            <td>
-                                <button data-command="down">Set Down</button>
-                            </td>
-                            <td>
-                                <span data-command="down"></span>
-                            </td>
+                        <tr class="command" data-control="command" data-command="down">
+                            <td>Down</td>
+                            <td></td>
                         </tr>
-                        <tr class="command" data-option="command">
-                            <td>
-                                <button data-command="left">Set Left</button>
-                            </td>
-                            <td>
-                                <span data-command="left"></span>
-                            </td>
+                        <tr class="command" data-control="command" data-command="left">
+                            <td>Left</td>
+                            <td></td>
                         </tr>
-                        <tr class="command" data-option="command">
-                            <td>
-                                <button data-command="right">Set Right</button>
-                            </td>
-                            <td>
-                                <span data-command="right"></span>
-                            </td>
+                        <tr class="command" data-control="command" data-command="right">
+                            <td>Right</td>
+                            <td></td>
                         </tr>
-                        <tr class="command" data-option="command">
-                            <td>
-                                <button data-command="enter">Set Enter</button>
-                            </td>
-                            <td>
-                                <span data-command="enter"></span>
-                            </td>
+                        <tr class="command" data-control="command" data-command="enter">
+                            <td>Enter</td>
+                            <td></td>
                         </tr>
-                        <tr class="command" data-option="command">
-                            <td>
-                                <button data-command="back">Set Back</button>
-                            </td>
-                            <td>
-                                <span data-command="back"></span>
-                            </td>
+                        <tr class="command" data-control="command" data-command="back">
+                            <td>Back</td>
+                            <td></td>
                         </tr>
                         <tr class="rangelist" data-control="gamepad">
                             <td>Gamepad (Move)</td>
@@ -205,7 +181,7 @@
 
                 <table>
                     <tbody>
-                        <tr class="radio">
+                        <tr class="radio selected">
                             <td>Style</td>
                             <td colspan="2">                                        
                                 <label>

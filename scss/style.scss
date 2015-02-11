@@ -210,47 +210,57 @@ div#game {
 
         /* controls-screen */
         &#controls {
-            table tr {
-                td {
-                    padding: 1%;
+            table {
+                width: 100%;
 
-                    font-size: 1rem;
+                tr {
+                    td {
+                        padding: 1%;
 
-                    &:nth-child(1) {
-                        width: 20%;
+                        font-size: 1rem;
+
+                        &:nth-child(1) {
+                            width: 20%;
+                        }
+
+                        &:nth-child(2) {
+                            width: 80%;
+                        }
                     }
 
-                    &:nth-child(2) {
-                        width: 80%;
-                    }
-                }
+                    &.command {
+                        cursor: pointer;
 
-                &.command {
-                    button {
-                        width: 100%;
+                        &.disabled {
+                            color: gray;
+                        }
                     }
-                }
 
-                &.rangelist {
-                    td:nth-child(2) {
-                        label {
-                            input[type=radio] {
-                                width: 4%;
+                    &.rangelist {
+                        td:nth-child(2) {
+                            label {
+                                input[type=radio] {
+                                    width: 4%;
+                                }
+
+                                progress {
+                                    width: 47%;
+                                    margin-left: 1%;
+                                }
                             }
+                        }
+                    }
 
+                    &.range2 {
+                        td:nth-child(2) {
                             progress {
-                                width: 47%;
-                                margin-left: 1%;
+                                width: 49%;
                             }
                         }
                     }
-                }
 
-                &.range2 {
-                    td:nth-child(2) {
-                        progress {
-                            width: 49%;
-                        }
+                    &.selected {
+                        font-weight: bold;
                     }
                 }
             }

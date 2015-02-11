@@ -20,8 +20,6 @@ var Screen = (function()
                 // sfx
                 Audio.sfx.play("change");
             });
-
-            $("span:first", container).addClass("selected");
             
             // FUNCTIONS
             var showBefore = function()
@@ -464,10 +462,6 @@ var Screen = (function()
                     input.val(input.val().slice(0, -1));
                 });
 
-                // select first
-                $("table tr td.selected", container).removeClass("selected");
-                $("table tr:nth-child(1) td:nth-child(1)", container).addClass("selected");
-
                 // set score
                 $("span.score", container).html(args);
 
@@ -548,10 +542,6 @@ var Screen = (function()
                 {
                     $("div span.selected", container).click();
                 });
-
-                // select Yes
-                $("div span:nth-child(1)", container).addClass("selected");
-                $("div span:nth-child(2)", container).removeClass("selected");
             };
 
             var showAfter = function() {};
@@ -575,16 +565,23 @@ var Screen = (function()
             // INIT
             var container = $("div#controls", DodgeIt.container);
             
+            // hover
+            $("table tr", container).hover(function()
+            {
+                $(this).siblings().removeClass("selected");
+                $(this).addClass("selected");
+            });
+            
             // gamepad
             if (!Controls.gamepad.available)
             {
-                $("tr[data-control=gamepad]", container).hide();
+                $("table tr[data-control=gamepad]", container).hide();
             }
 
             // orientation
             if (!Controls.orientation.available)
             {
-                $("tr[data-control=orientation]", container).hide();    
+                $("table tr[data-control=orientation]", container).hide();    
             }
 
             // back
@@ -597,13 +594,15 @@ var Screen = (function()
             });
 
             // set change action
-            $("tr[data-option=command] td button", container).click(function()
+            $("table tr[data-control=command]", container).click(function()
             {
-                // block buttons
-                $("button", $(this).parent().parent().siblings().andSelf()).prop("disabled", true);
+                if ($(this).hasClass("disabled")) return;
+
+                // disable rest
+                $("tr", container).addClass("disabled");
 
                 // text
-                var textContainer = $("span[data-command=" + $(this).attr("data-command") + "]");
+                var textContainer = $("td:nth-child(2)", this);
                 var tmp = textContainer.html();
                 textContainer.html("Please press a key... Esc to cancel")
 
@@ -619,8 +618,8 @@ var Screen = (function()
                         textContainer.html(tmp);
                     }
 
-                    // unblock buttons
-                    $("button", container).prop("disabled", false);            
+                    // reenable
+                    $("tr", container).removeClass("disabled");
 
                     // sfx
                     Audio.sfx.play("change");
@@ -633,6 +632,7 @@ var Screen = (function()
             // FUNCTIONS
             var showBefore = function()
             {
+                // back
                 Controls.command("back").set(function()
                 {
                     Screen.show("menu");
@@ -641,22 +641,76 @@ var Screen = (function()
                     Audio.sfx.play("change");
                 });
 
+                // up
+                Controls.command("up").set(function()
+                {
+                    var selected = $("table tr.selected", container);
+                    if (selected.prevAll().length > 0 &&
+                        selected.prev().is(":visible"))
+                    {
+                        selected.removeClass("selected");
+                        selected.prev().addClass("selected");
+                        
+                        // sfx
+                        Audio.sfx.play("change");
+                    }
+                });
+
+                // down
+                Controls.command("down").set(function()
+                {
+                    var selected = $("table tr.selected", container);
+                    if (selected.nextAll().length > 0 &&
+                        selected.next().is(":visible"))
+                    {
+                        selected.removeClass("selected");
+                        selected.next().addClass("selected");
+                        
+                        // sfx
+                        Audio.sfx.play("change");
+                    }
+                });
+
+                // enter
+                Controls.command("enter").set(function()
+                {
+                    var selected = $("table tr.selected", container);
+                    if (selected.attr("data-control") == "command")
+                    {
+                        selected.click();
+                    }
+                    else if (selected.attr("data-control") == "gamepad")
+                    {
+                        var selected_radio = $("td:nth-child(2) label input[type=radio]:checked", selected);
+                        if (selected_radio.parent().nextAll().length > 0)
+                        {
+                            $("input[type=radio]", selected_radio.parent().next()).prop("checked", true);
+                        }
+                        else
+                        {
+                            $("input[type=radio]", selected_radio.parent().prevAll().last()).prop("checked", true);
+                        }
+                    }
+                });
+
                 // poll gamepad
                 Controls.gamepad.poll(true);
 
                 // set keys
-                $.each($("span[data-command]", container), function()
+                $.each($("tr[data-command]", container), function()
                 {
-                    $(this).html(Controls.format(DodgeIt.options.controls[$(this).attr("data-command")]));
+                    $("td:nth-child(2)", this).html(Controls.format(DodgeIt.options.controls[$(this).attr("data-command")]));
                 });
+
+                // select first item
+                $("table tr", container).removeClass("selected");
+                $("table tr:nth-child(1)", container).addClass("selected");
             };
 
             var showAfter = function() {};
 
             var loop = function()
             {
-                var that = this;
-
                 // gamepad
                 if (Controls.gamepad.available)
                 {
@@ -670,7 +724,7 @@ var Screen = (function()
                         for (var i = 0; i <= Controls.gamepad.axes_length() - 1; i++)
                         {
                             var axes = Controls.gamepad.axes(i);
-                            $("tr[data-control=gamepad] td:nth-child(2)", that.container).append(
+                            $("tr[data-control=gamepad] td:nth-child(2)", container).append(
                                 $("<label></label>")
                                     .append(
                                         $("<input>")
@@ -702,7 +756,7 @@ var Screen = (function()
                         {
                             DodgeIt.options.gamepad.axes_selected = 0;
                         }
-                        $("tr[data-control=gamepad] td:nth-child(2) label:nth-child(" + (DodgeIt.options.gamepad.axes_selected + 1) + ") input[type=radio]", that.container).prop("checked", true);
+                        $("tr[data-control=gamepad] td:nth-child(2) label:nth-child(" + (DodgeIt.options.gamepad.axes_selected + 1) + ") input[type=radio]", container).prop("checked", true);
                     }
                     else
                     {
@@ -710,8 +764,8 @@ var Screen = (function()
                         for (var i = 0; i <= Controls.gamepad.axes_length() - 1; i++)
                         {
                             var axes = Controls.gamepad.axes(i);
-                            $("tr[data-control=gamepad] td:nth-child(2) label:nth-child(" + (i + 1) + ") progress:nth-child(2)", that.container).val(axes.x + 1);
-                            $("tr[data-control=gamepad] td:nth-child(2) label:nth-child(" + (i + 1) + ") progress:nth-child(3)", that.container).val(axes.y + 1);
+                            $("tr[data-control=gamepad] td:nth-child(2) label:nth-child(" + (i + 1) + ") progress:nth-child(2)", container).val(axes.x + 1);
+                            $("tr[data-control=gamepad] td:nth-child(2) label:nth-child(" + (i + 1) + ") progress:nth-child(3)", container).val(axes.y + 1);
                         }                        
                     }
 
@@ -720,8 +774,8 @@ var Screen = (function()
                 // mobile device orientation
                 if (Controls.orientation.available)
                 {
-                    $("progress[data-control=orientation]:nth-child(1)", that.container).val(Controls.orientation.axes().x * 30 + 30);
-                    $("progress[data-control=orientation]:nth-child(2)", that.container).val(Controls.orientation.axes().y * 30 + 30);
+                    $("progress[data-control=orientation]:nth-child(1)", container).val(Controls.orientation.axes().x * 30 + 30);
+                    $("progress[data-control=orientation]:nth-child(2)", container).val(Controls.orientation.axes().y * 30 + 30);
                 }
             };
 
@@ -946,6 +1000,7 @@ var Screen = (function()
                 });
 
 
+                $("table tr", container).removeClass("selected");
                 $("table tr:nth-child(1)", container).addClass("selected");
 
                 // style

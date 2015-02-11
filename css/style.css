@@ -568,22 +568,28 @@ div#game {
         float: left; }
       div#game div#leaderboard div span:last-child {
         float: right; }
-    div#game div#controls table tr td {
-      padding: 1%;
-      font-size: 1rem; }
-      div#game div#controls table tr td:nth-child(1) {
-        width: 20%; }
-      div#game div#controls table tr td:nth-child(2) {
-        width: 80%; }
-    div#game div#controls table tr.command button {
+    div#game div#controls table {
       width: 100%; }
-    div#game div#controls table tr.rangelist td:nth-child(2) label input[type=radio] {
-      width: 4%; }
-    div#game div#controls table tr.rangelist td:nth-child(2) label progress {
-      width: 47%;
-      margin-left: 1%; }
-    div#game div#controls table tr.range2 td:nth-child(2) progress {
-      width: 49%; }
+      div#game div#controls table tr td {
+        padding: 1%;
+        font-size: 1rem; }
+        div#game div#controls table tr td:nth-child(1) {
+          width: 20%; }
+        div#game div#controls table tr td:nth-child(2) {
+          width: 80%; }
+      div#game div#controls table tr.command {
+        cursor: pointer; }
+        div#game div#controls table tr.command.disabled {
+          color: gray; }
+      div#game div#controls table tr.rangelist td:nth-child(2) label input[type=radio] {
+        width: 4%; }
+      div#game div#controls table tr.rangelist td:nth-child(2) label progress {
+        width: 47%;
+        margin-left: 1%; }
+      div#game div#controls table tr.range2 td:nth-child(2) progress {
+        width: 49%; }
+      div#game div#controls table tr.selected {
+        font-weight: bold; }
     div#game div#options table {
       width: 100%; }
       div#game div#options table tr.selected td:nth-child(1) {
