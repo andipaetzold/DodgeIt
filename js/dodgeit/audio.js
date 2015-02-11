@@ -90,11 +90,6 @@ var Audio = {
         var play = function(sound)
         {
             var audio = audioElements[sound].get(0);
-            if (!audio.paused)
-            {
-                audio.pause();
-                audio.currentTime = 0;
-            }
             audio.play();
         };
 
