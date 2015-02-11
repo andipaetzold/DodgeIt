@@ -60,7 +60,7 @@ module.exports = function(grunt) {
         watch: {
             dist: {
                 files: ["scss/*.scss", "js/dodgeit/*.js"],
-                tasks: ["sass", "autoprefixer", "concat:game", "wrap", "concat:header"]
+                tasks: ["dev"]
             }
         },
 
@@ -74,6 +74,7 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks("grunt-autoprefixer");
+    grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-cssmin");
     grunt.loadNpmTasks("grunt-contrib-sass");
@@ -81,7 +82,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-wrap");
 
-    grunt.registerTask("dev", ["sass", "autoprefixer", "concat:game", "wrap", "concat:header"]);
-    grunt.registerTask("prod", ["sass", "autoprefixer", "cssmin", "concat:game", "wrap", "concat:header", "uglify"]);
+    grunt.registerTask("dev", ["clean", "sass", "autoprefixer", "concat:game", "wrap", "concat:header"]);
+    grunt.registerTask("prod", ["clean", "sass", "autoprefixer", "cssmin", "concat:game", "wrap", "concat:header", "uglify"]);
     grunt.registerTask("default", "watch");
 };
