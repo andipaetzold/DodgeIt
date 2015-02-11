@@ -37,13 +37,13 @@ var Screen = (function()
                 {
                     var selected = $("span.selected", container);
                     selected.removeClass("selected");
-                    if (selected.prevAll().length > 0)
+                    if (selected.prevAll("span").length > 0)
                     {
-                        selected.prev().addClass("selected");
+                        selected.prev("span").addClass("selected");
                     }
                     else
                     {
-                        selected.parent().children().last().addClass("selected");   
+                        selected.parent().children("span").last().addClass("selected");   
                     }
 
                     // sfx
@@ -55,13 +55,13 @@ var Screen = (function()
                 {
                     var selected = $("span.selected", container);
                     selected.removeClass("selected");
-                    if (selected.nextAll().length > 0)
+                    if (selected.nextAll("span").length > 0)
                     {
-                        selected.next().addClass("selected");
+                        selected.next("span").addClass("selected");
                     }
                     else
                     {
-                        selected.parent().children().first().addClass("selected");   
+                        selected.parent().children("span").first().addClass("selected");   
                     }
 
                     // sfx
