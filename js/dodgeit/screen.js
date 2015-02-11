@@ -22,13 +22,17 @@ var Screen = (function()
             });
             
             // FUNCTIONS
-            var showBefore = function()
+            var showBefore = function() {};
+
+            var showAfter = function()
             {
+                // enter
                 Controls.command("enter").set(function()
                 {
                     $("span.selected", container).click();
                 });
 
+                // up
                 Controls.command("up").set(function()
                 {
                     var selected = $("span.selected", container);
@@ -46,6 +50,7 @@ var Screen = (function()
                     Audio.sfx.play("change");
                 });
 
+                // down
                 Controls.command("down").set(function()
                 {
                     var selected = $("span.selected", container);
@@ -63,8 +68,6 @@ var Screen = (function()
                     Audio.sfx.play("change");
                 });
             };
-
-            var showAfter = function() {};
 
             var loop = function()
             {
@@ -139,51 +142,6 @@ var Screen = (function()
             // FUNCTIONS
             var showBefore = function()
             {
-                // back
-                Controls.command("back").set(function()
-                {
-                    Screen.show("menu");
-
-                    // sfx
-                    Audio.sfx.play("change");
-                });
-
-                // up
-                Controls.command("up").set(function()
-                {
-                    if ($("div span:first-child", container).is(":visible"))
-                    {
-                        $("div span:first-child", container).click();
-                    }
-                });
-
-                // down
-                Controls.command("down").set(function()
-                {
-                    if ($("div span:last-child", container).is(":visible"))
-                    {
-                        $("div span:last-child", container).click();
-                    }
-                });
-
-                // left
-                Controls.command("left").set(function()
-                {
-                    if ($("div span:first-child", container).is(":visible"))
-                    {
-                        $("div span:first-child", container).click();
-                    }
-                });
-
-                // right
-                Controls.command("right").set(function()
-                {
-                    if ($("div span:last-child", container).is(":visible"))
-                    {
-                        $("div span:last-child", container).click();
-                    }
-                });
-
                 // loading
                 $("table", container)
                     .empty()
@@ -272,7 +230,53 @@ var Screen = (function()
                 });
             };
 
-            var showAfter = function() {};
+            var showAfter = function()
+            {
+                // back
+                Controls.command("back").set(function()
+                {
+                    Screen.show("menu");
+
+                    // sfx
+                    Audio.sfx.play("change");
+                });
+
+                // up
+                Controls.command("up").set(function()
+                {
+                    if ($("div span:first-child", container).is(":visible"))
+                    {
+                        $("div span:first-child", container).click();
+                    }
+                });
+
+                // down
+                Controls.command("down").set(function()
+                {
+                    if ($("div span:last-child", container).is(":visible"))
+                    {
+                        $("div span:last-child", container).click();
+                    }
+                });
+
+                // left
+                Controls.command("left").set(function()
+                {
+                    if ($("div span:first-child", container).is(":visible"))
+                    {
+                        $("div span:first-child", container).click();
+                    }
+                });
+
+                // right
+                Controls.command("right").set(function()
+                {
+                    if ($("div span:last-child", container).is(":visible"))
+                    {
+                        $("div span:last-child", container).click();
+                    }
+                });
+            };
 
             var loop = function()
             {
@@ -356,7 +360,16 @@ var Screen = (function()
 
             var showBefore = function(args)
             {
-                // controls
+                // set score
+                $("span.score", container).html(args);
+
+                // set name
+                $("input[type=text]", container).val(DodgeIt.options.name);
+            };
+
+            var showAfter = function()
+            {
+                // up
                 Controls.command("up").set(function()
                 {
                     var selected = $("table tr td.selected", container);
@@ -391,6 +404,7 @@ var Screen = (function()
                     }
                 });
 
+                // down
                 Controls.command("down").set(function()
                 {
                     var selected = $("table tr td.selected", container);
@@ -425,6 +439,7 @@ var Screen = (function()
                     }
                 });
 
+                // left
                 Controls.command("left").set(function()
                 {
                     var selected = $("table tr td.selected", container);
@@ -438,6 +453,7 @@ var Screen = (function()
                     }
                 });
 
+                // right
                 Controls.command("right").set(function()
                 {
                     var selected = $("table tr td.selected", container);
@@ -451,25 +467,19 @@ var Screen = (function()
                     }
                 });
 
+                // enter
                 Controls.command("enter").set(function()
                 {
                     $("table tr td.selected", container).click();
                 });
 
+                // back
                 Controls.command("back").set(function()
                 {
                     var input = $("input[type=text]", container);
                     input.val(input.val().slice(0, -1));
                 });
-
-                // set score
-                $("span.score", container).html(args);
-
-                // set name
-                $("input[type=text]", container).val(DodgeIt.options.name);
             };
-
-            var showAfter = function() {};
 
             var loop = function()
             {
@@ -512,8 +522,11 @@ var Screen = (function()
             });
             
             // FUNCTIONS
-            var showBefore = function()
+            var showBefore = function() {};
+
+            var showAfter = function()
             {
+                // left
                 Controls.command("left").set(function()
                 {
                     if (!$("div span:nth-child(1)", container).hasClass("selected"))
@@ -526,6 +539,7 @@ var Screen = (function()
                     }
                 });
 
+                // right
                 Controls.command("right").set(function()
                 {
                     if (!$("div span:nth-child(2)", container).hasClass("selected"))
@@ -538,13 +552,12 @@ var Screen = (function()
                     }
                 });
 
+                // enter
                 Controls.command("enter").set(function()
                 {
                     $("div span.selected", container).click();
                 });
             };
-
-            var showAfter = function() {};
 
             var loop = function()
             {
@@ -632,6 +645,22 @@ var Screen = (function()
             // FUNCTIONS
             var showBefore = function()
             {
+                // poll gamepad
+                Controls.gamepad.poll(true);
+
+                // set keys
+                $.each($("tr[data-command]", container), function()
+                {
+                    $("td:nth-child(2)", this).html(Controls.format(DodgeIt.options.controls[$(this).attr("data-command")]));
+                });
+
+                // select first item
+                $("table tr", container).removeClass("selected");
+                $("table tr:nth-child(1)", container).addClass("selected");
+            };
+
+            var showAfter = function()
+            {
                 // back
                 Controls.command("back").set(function()
                 {
@@ -692,22 +721,7 @@ var Screen = (function()
                         }
                     }
                 });
-
-                // poll gamepad
-                Controls.gamepad.poll(true);
-
-                // set keys
-                $.each($("tr[data-command]", container), function()
-                {
-                    $("td:nth-child(2)", this).html(Controls.format(DodgeIt.options.controls[$(this).attr("data-command")]));
-                });
-
-                // select first item
-                $("table tr", container).removeClass("selected");
-                $("table tr:nth-child(1)", container).addClass("selected");
             };
-
-            var showAfter = function() {};
 
             var loop = function()
             {
@@ -874,7 +888,23 @@ var Screen = (function()
             // FUNCTIONS
             var showBefore = function()
             {
-                // controls
+                // style
+                $("input[value=" + DodgeIt.options.style + "]", container).prop("checked", true);
+
+                // music
+                $("input[data-option=music-mute]", container).prop("checked", DodgeIt.options.music.mute);
+                $("input[data-option=music-volume]", container).val(DodgeIt.options.music.volume);
+
+                // sfx
+                $("input[data-option=sfx-mute]", container).prop("checked", DodgeIt.options.sfx.mute);
+                $("input[data-option=sfx-volume]", container).val(DodgeIt.options.sfx.volume);
+
+                // speed
+                $("input[data-option=speed]", container).val(DodgeIt.options.speed);
+            };
+
+            var showAfter = function()
+            {
                 // back
                 Controls.command("back").set(function()
                 {
@@ -998,27 +1028,7 @@ var Screen = (function()
                         Audio.sfx.play("change");
                     }
                 });
-
-
-                $("table tr", container).removeClass("selected");
-                $("table tr:nth-child(1)", container).addClass("selected");
-
-                // style
-                $("input[value=" + DodgeIt.options.style + "]", container).prop("checked", true);
-
-                // music
-                $("input[data-option=music-mute]", container).prop("checked", DodgeIt.options.music.mute);
-                $("input[data-option=music-volume]", container).val(DodgeIt.options.music.volume);
-
-                // sfx
-                $("input[data-option=sfx-mute]", container).prop("checked", DodgeIt.options.sfx.mute);
-                $("input[data-option=sfx-volume]", container).val(DodgeIt.options.sfx.volume);
-
-                // speed
-                $("input[data-option=speed]", container).val(DodgeIt.options.speed);
             };
-
-            var showAfter = function() {};
 
             var loop = function()
             {
@@ -1050,7 +1060,9 @@ var Screen = (function()
             });
 
             // FUNCTIONS
-            var showBefore = function()
+            var showBefore = function() {};
+
+            var showAfter = function()
             {
                 Controls.command("back").set(function()
                 {
@@ -1061,7 +1073,6 @@ var Screen = (function()
                 });
             };
 
-            var showAfter = function() {};
             var loop = function()
             {
                 Controls.gamepad.poll(false);
