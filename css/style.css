@@ -656,12 +656,16 @@ div#game {
               justify-content: space-around;
       /* font */
       text-align: center; }
+      div#game div#menu h1 {
+        /* font */
+        font-size: 3rem;
+        letter-spacing: 0.5rem; }
       div#game div#menu span {
         /* font */
         font-size: 2rem;
         /* padding */
-        padding-top: 5%;
-        padding-bottom: 5%;
+        padding-top: 2%;
+        padding-bottom: 2%;
         /* cursor */
         cursor: pointer;
         /* selected */ }

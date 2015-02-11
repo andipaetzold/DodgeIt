@@ -376,13 +376,19 @@ div#game {
             /* font */
             text-align: center;
 
+            h1 {
+                /* font */
+                font-size: 3rem;
+                letter-spacing: 0.5rem;
+            }
+
             span {
                 /* font */
                 font-size: 2rem;
 
                 /* padding */
-                padding-top:    5%;
-                padding-bottom: 5%;
+                padding-top:    2%;
+                padding-bottom: 2%;
 
                 /* cursor */
                 cursor: pointer;
