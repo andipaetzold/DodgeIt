@@ -585,13 +585,13 @@ var Screen = (function()
             var container = $("div#controls", DodgeIt.container);
             
             // gamepad
-            if (!Controls.options.gamepad.available)
+            if (!Controls.gamepad.available)
             {
                 $("tr[data-control=gamepad]", container).hide();
             }
 
             // orientation
-            if (!Controls.options.orientation.available)
+            if (!Controls.orientation.available)
             {
                 $("tr[data-control=orientation]", container).hide();    
             }
@@ -601,6 +601,40 @@ var Screen = (function()
             {
                 Screen.show("menu");
                 
+                // sfx
+                Audio.sfx.play("change");
+            });
+
+            // set change action
+            $("tr[data-option=command] td button", container).click(function()
+            {
+                // block buttons
+                $("button", $(this).parent().parent().siblings().andSelf()).prop("disabled", true);
+
+                // text
+                var textContainer = $("span[data-command=" + $(this).attr("data-command") + "]");
+                var tmp = textContainer.html();
+                textContainer.html("Please press a key... Esc to cancel")
+
+                Controls.set($(this).attr("data-command"), function(control)
+                {
+                    // text
+                    if (control != null)
+                    {
+                        textContainer.html(Controls.format(control));
+                    }
+                    else
+                    {
+                        textContainer.html(tmp);
+                    }
+
+                    // unblock buttons
+                    $("button", container).prop("disabled", false);            
+
+                    // sfx
+                    Audio.sfx.play("change");
+                });            
+
                 // sfx
                 Audio.sfx.play("change");
             });
@@ -622,63 +656,29 @@ var Screen = (function()
                 // set keys
                 $.each($("span[data-command]", container), function()
                 {
-                    $(this).html(Controls.format(Controls.options.command[$(this).attr("data-command")]));
-                });
-
-                // set change action
-                var that = this;
-                $("tr[data-option=command] td button", container).click(function()
-                {
-                    // block buttons
-                    $("button", $(this).parent().parent().siblings().andSelf()).prop("disabled", true);
-
-                    // text
-                    var textContainer = $("span[data-command=" + $(this).attr("data-command") + "]");
-                    var tmp = textContainer.html();
-                    textContainer.html("Please press a key... Esc to cancel")
-
-                    Controls.set($(this).attr("data-command"), function(control)
-                    {
-                        // text
-                        if (control != null)
-                        {
-                            textContainer.html(Controls.format(control));
-                        }
-                        else
-                        {
-                            textContainer.html(tmp);
-                        }
-
-                        // unblock buttons
-                        $("button", container).prop("disabled", false);            
-
-                        // sfx
-                        Audio.sfx.play("change");
-                    });            
-
-                    // sfx
-                    Audio.sfx.play("change");
+                    $(this).html(Controls.format(DodgeIt.options.controls[$(this).attr("data-command")]));
                 });
             };
 
-            var showAfter = function() { };
+            var showAfter = function() {};
 
             var loop = function()
             {
                 var that = this;
 
                 // gamepad
-                if (Controls.options.gamepad.available)
+                if (Controls.gamepad.available)
                 {
                     Controls.gamepad.poll(true);
                     
-                    if (Controls.options.gamepad.axes.length != $("tr[data-control=gamepad] td:nth-child(2) label", container).length)
+                    if (Controls.gamepad.axes_length() != $("tr[data-control=gamepad] td:nth-child(2) label", container).length)
                     {
                         // create dom
                         $("tr[data-control=gamepad] td:nth-child(2)", container).html("");
 
-                        $.each(Controls.options.gamepad.axes, function(index, axes)
+                        for (var i = 0; i <= Controls.gamepad.axes_length() - 1; i++)
                         {
+                            var axes = Controls.gamepad.axes(i);
                             $("tr[data-control=gamepad] td:nth-child(2)", that.container).append(
                                 $("<label></label>")
                                     .append(
@@ -687,7 +687,8 @@ var Screen = (function()
                                             .attr("name", "controls-gamepad-move")
                                             .change(function(event)
                                             {
-                                                Controls.options.gamepad.axes_selected = $(this).parent().parent().prevAll().length;
+                                                DodgeIt.options.gamepad.axes_selected = $(this).parent().parent().prevAll().length;
+                                                DodgeIt.save();
                                             })
                                     )
                                     .append(
@@ -703,27 +704,30 @@ var Screen = (function()
                                             .val(axes.y + 1)
                                     )
                             );
-                        });
+                        }
 
                         // select
-                        if (Controls.options.gamepad.axes_selected > Controls.options.gamepad.axes.length - 1)
+                        if (DodgeIt.options.gamepad.axes_selected > Controls.gamepad.axes_length() - 1)
                         {
-                            Controls.options.gamepad.axes_selected = 0;
+                            DodgeIt.options.gamepad.axes_selected = 0;
                         }
-                        $("tr[data-control=gamepad] td:nth-child(2) label:nth-child(" + (Controls.options.gamepad.axes_selected + 1) + ") input[type=radio]", that.container).prop("checked", true);
+                        $("tr[data-control=gamepad] td:nth-child(2) label:nth-child(" + (DodgeIt.options.gamepad.axes_selected + 1) + ") input[type=radio]", that.container).prop("checked", true);
+                    }
+                    else
+                    {
+                        // update progress bars
+                        for (var i = 0; i <= Controls.gamepad.axes_length() - 1; i++)
+                        {
+                            var axes = Controls.gamepad.axes(i);
+                            $("tr[data-control=gamepad] td:nth-child(2) label:nth-child(" + (i + 1) + ") progress:nth-child(2)", that.container).val(axes.x + 1);
+                            $("tr[data-control=gamepad] td:nth-child(2) label:nth-child(" + (i + 1) + ") progress:nth-child(3)", that.container).val(axes.y + 1);
+                        }                        
                     }
 
-
-                    // update progress bars
-                    $.each(Controls.options.gamepad.axes, function(index, axes)
-                    {
-                        $("tr[data-control=gamepad] td:nth-child(2) label:nth-child(" + (index + 1) + ") progress:nth-child(2)", that.container).val(axes.x + 1);
-                        $("tr[data-control=gamepad] td:nth-child(2) label:nth-child(" + (index + 1) + ") progress:nth-child(3)", that.container).val(axes.y + 1);
-                    });
                 }
 
                 // mobile device orientation
-                if (Controls.options.orientation.available)
+                if (Controls.orientation.available)
                 {
                     $("progress[data-control=orientation]:nth-child(1)", that.container).val(Controls.orientation.axes().x * 30 + 30);
                     $("progress[data-control=orientation]:nth-child(2)", that.container).val(Controls.orientation.axes().y * 30 + 30);

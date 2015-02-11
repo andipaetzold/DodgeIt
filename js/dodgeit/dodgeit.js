@@ -50,6 +50,43 @@ var DodgeIt = (function()
         sfx: {
             mute:   false,
             volume: 0.5
+        },
+
+        controls: {
+            up: {
+                device: "keyboard",
+                type:   null,
+                code:   38
+            },
+            down: {
+                device: "keyboard",
+                type:   null,
+                code:   40
+            },
+            left: {
+                device: "keyboard",
+                type:   null,
+                code:   37
+            },
+            right: {
+                device: "keyboard",
+                type:   null,
+                code:   39
+            },
+            enter: {
+                device: "keyboard",
+                type:   null,
+                code:   13
+            },
+            back: {
+                device: "keyboard",
+                type:   null,
+                code:   8
+            }
+        },
+
+        gamepad: {
+            axes_selected: 0
         }
     };
 
