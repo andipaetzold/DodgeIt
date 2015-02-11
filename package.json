@@ -2,15 +2,11 @@
   "name": "DodgeIt",
   "version": "1.0.0",
   "main": "index.html",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "https://andipaetzold@github.com/andipaetzold/DodgeIt.git"
   },
   "author": "Andreas Pätzold",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/andipaetzold/DodgeIt/issues"
   },
