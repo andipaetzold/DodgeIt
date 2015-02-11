@@ -66,10 +66,7 @@ var Screen = (function()
                 });
             };
 
-            var showAfter = function()
-            {
-
-            };
+            var showAfter = function() {};
 
             var loop = function()
             {
@@ -277,7 +274,7 @@ var Screen = (function()
                 });
             };
 
-            var showAfter = function() { };
+            var showAfter = function() {};
 
             var loop = function()
             {
@@ -478,10 +475,7 @@ var Screen = (function()
                 $("input[type=text]", container).val(DodgeIt.options.name);
             };
 
-            var showAfter = function()
-            {
-
-            };
+            var showAfter = function() {};
 
             var loop = function()
             {
@@ -560,10 +554,7 @@ var Screen = (function()
                 $("div span:nth-child(2)", container).removeClass("selected");
             };
 
-            var showAfter = function()
-            {
-
-            };
+            var showAfter = function() {};
 
             var loop = function()
             {
@@ -972,7 +963,7 @@ var Screen = (function()
                 $("input[data-option=speed]", container).val(DodgeIt.options.speed);
             };
 
-            var showAfter = function() { };
+            var showAfter = function() {};
 
             var loop = function()
             {
@@ -1015,7 +1006,7 @@ var Screen = (function()
                 });
             };
 
-            var showAfter = function() { };
+            var showAfter = function() {};
             var loop = function()
             {
                 Controls.gamepad.poll(false);
@@ -1034,6 +1025,31 @@ var Screen = (function()
     // FUNCTIONS
     var show = function(screen, args)
     {
+        var after = function()
+        {
+            // loop
+            if (screen.loop)
+            {
+                var loop = function()
+                {
+                    var again = screen.loop();
+                    if (again == undefined) again = true;
+
+                    // next update
+                    if (screen.container.is(":visible") &&
+                        again)
+                    {
+                        window.requestAnimationFrame(loop);
+                    }
+                }
+
+                window.setTimeout(function() { window.requestAnimationFrame(loop); }, 500); // start getting visible
+            }
+
+            // show after
+            screen.showAfter(args);
+        };
+
         // reset keys
         Controls.reset();
 
@@ -1048,35 +1064,14 @@ var Screen = (function()
         {
             screen.container.siblings(":visible").fadeOut(250, function()
             {
-                screen.container.fadeIn(250);
+                screen.container.fadeIn(250, after);
             });
         }
         else
         {
             screen.container.show();
+            after();
         }
-
-        // loop
-        if (screen.loop)
-        {
-            var loop = function()
-            {
-                var again = screen.loop();
-                if (again == undefined) again = true;
-
-                // next update
-                if (screen.container.is(":visible") &&
-                    again)
-                {
-                    window.requestAnimationFrame(loop);
-                }
-            }
-
-            window.setTimeout(function() { window.requestAnimationFrame(loop); }, 500); // start getting visible
-        }
-
-        // show after
-        screen.showAfter(args);
     };
 
     // INIT
